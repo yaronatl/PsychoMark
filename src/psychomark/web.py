@@ -30,6 +30,7 @@ from .store import Conflict, Store
 
 OMR_LOCK = threading.Lock()  # PDFium and OpenCV's RNG are shared process resources.
 STATIC = Path(__file__).with_name("static")
+TORPH_STYLE_HASH = (STATIC / "vendor" / "torph-style-hash.txt").read_text().strip()
 
 
 class ExamUpdate(ConfigModel):
@@ -94,7 +95,9 @@ def create_app(
         response.headers["Referrer-Policy"] = "same-origin"
         response.headers["Cache-Control"] = "no-store"
         response.headers["Content-Security-Policy"] = (
-            "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'"
+            "default-src 'self'; script-src 'self'; "
+            f"style-src 'self' 'sha256-{TORPH_STYLE_HASH}'; "
+            "img-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'"
         )
         return response
 

@@ -9,6 +9,8 @@
 | 2026-10-08¹ | [01](2026-10-08-01-beui-access.md) | Accès Be UI vérifié sans écriture dans la configuration globale |
 | 2026-10-08¹ | [02](2026-10-08-02-visual-references.md) | Références originales archivées et direction Renance proposée |
 
+| 2026-10-08¹ | [03](2026-10-08-03-paper-ink-proposal.md) | Première proposition papier/encre, Torph, adaptation Be UI et parcours vérifiés |
+
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 
 Les étapes antérieures sont présentes dans le commit initial `ad0b4bc` ; aucun journal

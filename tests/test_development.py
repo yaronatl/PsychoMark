@@ -47,6 +47,13 @@ def test_private_forwarded_origin_can_write_without_accepting_arbitrary_hosts(sh
         assert client.get("/api/health").json() == {"app": "psychomark", "development": False}
         assert client.get("/api/dev/revision").status_code == 404
         assert "live.js" not in client.get("/").text
+        # Only Torph's exact, locally built stylesheet is allowed inline.
+        from psychomark.web import TORPH_STYLE_HASH
+
+        policy = client.get("/").headers["Content-Security-Policy"]
+        assert f"'sha256-{TORPH_STYLE_HASH}'" in policy
+        assert "'unsafe-inline'" not in policy
+        assert client.get("/assets/vendor/torph.mjs").status_code == 200
 
 
 def test_development_mode_serves_live_reload_separately(sheet, tmp_path):

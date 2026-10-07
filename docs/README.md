@@ -18,6 +18,7 @@ Pour reprendre le développement : [état actuel](memory/current.md) →
 | Outils visuels | [Skills installés et connexion Be UI](development/design-tools.md) |
 | `product/` | [Priorités](product/roadmap.md) et [choix visuels](product/ui.md) |
 | Inspirations | [Direction Renance](product/visual-direction.md) et [originaux](product/references/README.md) |
+| Système visuel | [DESIGN.md](../DESIGN.md), description et tokens de la proposition construite ; [PRODUCT.md](../PRODUCT.md), contexte produit destiné aux outils de design |
 | `memory/` | [Protocole de reprise](memory/README.md), [état courant](memory/current.md), [sessions](memory/sessions/README.md) |
 | `templates/` | Modèles de [session](templates/session.md) et de [décision](templates/decision.md) |
 

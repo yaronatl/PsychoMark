@@ -20,7 +20,11 @@ de développement. Le démarrage du serveur dans un environnement cloud ne rend
 pas automatiquement son port accessible depuis un ordinateur personnel.
 L'interface fonctionne sans compilation JavaScript et sans CDN.
 
-Le bouton **Essayer la démonstration** crée un examen de 20 questions et analyse
+L’accueil présente la première proposition visuelle. **Ouvrir mon espace** mène aux
+examens ; l’adresse `/#/exams` permet aussi d’y arriver directement.
+
+Le bouton **Découvrir la démonstration** de l’accueil (ou **Essayer la démonstration**
+dans les examens) crée un examen de 20 questions et analyse
 une copie synthétique. Il présente 12 bonnes réponses, 2 absences de réponse et
 6 cas à vérifier. Aucune note finale n'est affichée avant résolution de ces cas.
 
@@ -41,6 +45,9 @@ Parcours normal :
    compte comme incorrecte. On peut aussi rectifier une lecture automatique
    initialement jugée nette, ou rétablir la décision du moteur.
 6. **Obtenir la note et exporter** la correction en CSV ou JSON.
+
+Sur un écran étroit, sélectionner une question amène directement au panneau de
+vérification. **Retour aux questions** ramène à la ligne sélectionnée.
 
 Barème actuel : **1 point par bonne réponse, 0 sinon**, conversion en pourcentage
 et note sur 20. Les questions non sélectionnées n'entrent pas dans le dénominateur.

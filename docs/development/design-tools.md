@@ -123,3 +123,37 @@ Les licences fournies sont conservées : [Anthropic](../../.agents/skills/fronte
 [shadcn](../vendor-licenses/shadcn-ui--ui.txt),
 [Taste](../vendor-licenses/Leonxlnx--taste-skill.txt),
 [UI/UX Pro Max](../vendor-licenses/nextlevelbuilder--ui-ux-pro-max-skill.txt).
+
+## Torph et adaptation Be UI dans la première proposition
+
+À la demande de l’utilisateur, **Torph 0.1.3** est installé dans
+[package.json](../../package.json), avec [verrou npm](../../package-lock.json).
+Son API JavaScript native suffit : aucun framework n’est ajouté.
+[motion.js](../../src/psychomark/static/motion.js) utilise `TextMorph` pour le libellé
+« Analyse en cours… » des boutons de démonstration, pendant la vraie requête.
+Durée 220 ms, réduction de mouvement respectée, nettoyage après succès ou erreur.
+
+Le catalogue Be UI a été consulté pour [Button](https://beui.dev/components/motion/button).
+Le retour à la pression est **adapté en CSS natif** : échelle 0,98, courbe de sortie
+douce, ni rebond, ni magnétisme, ni ripple. Les composants React du catalogue ne sont
+pas installés. Cette adaptation n’est pas présentée comme le composant officiel.
+
+Commandes de maintenance pour le développeur (pas une action utilisateur requise) :
+
+```bash
+npm ci --ignore-scripts
+npm run build
+```
+
+[build-web.mjs](../../scripts/build-web.mjs) copie le module vanilla et sa licence MIT
+sans les modifier vers `static/vendor/`. Il capture le style injecté par Torph pour
+calculer son empreinte CSP exacte : ce style seul est autorisé, sans `unsafe-inline`
+ni ouverture vers un CDN. Les styles créés par la bibliothèque et ses écouteurs sont
+retirés lorsque l’action termine. Les assets générés sont versionnés pour permettre
+au serveur Python de fonctionner sans Node. La CI vérifie leur reproductibilité.
+Après une mise à jour de Torph et reconstruction, redémarrer le serveur pour charger
+la nouvelle empreinte CSP ; la modification habituelle des pages/CSS reste automatique.
+
+Node 22 est prévu dans le conteneur et la CI ; Node >=20 est accepté par le manifeste.
+L’installation/build ont été vérifiés ici sous Node 24.19.0. Le rebuild complet de
+l’image Codespaces avec sa nouvelle feature Node n’a pas été exécuté dans ce cloud.

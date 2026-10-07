@@ -23,6 +23,10 @@ Vérifier `git status` avant toute modification ; préserver le travail existant
   l'utilisateur. Lire [la direction visuelle](docs/product/visual-direction.md) et ouvrir
   l'original conservé avant une tâche UI ; distinguer les préférences confirmées des
   propositions encore ouvertes. Ne pas mélanger les références à parts égales.
+- La première proposition papier/encre est décrite dans `DESIGN.md` et le contexte
+  produit dans `PRODUCT.md`. Son implémentation ne vaut pas validation visuelle par
+  l'utilisateur. Torph est choisi explicitement ; les boutons Be UI sont adaptés en
+  natif, pas installés en React. Lire le cadre UI avant une migration.
 
 ## Communication avec l'utilisateur
 

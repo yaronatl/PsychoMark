@@ -1,45 +1,55 @@
-# Cadre de l'interface et décisions visuelles
+# Cadre de l’interface et décisions visuelles
 
-[Documentation](../README.md)
+[Documentation](../README.md) · [Direction visuelle](visual-direction.md) · [Système implémenté](../../DESIGN.md)
 
-**La direction visuelle, les outils de design et la bibliothèque UI seront choisis
-par l'utilisateur.** Aucune décision React, Vue, Tailwind, shadcn ou autre n'est prise.
-La présence de HTML/CSS/JS natifs décrit le prototype, pas le futur design system.
-
-Les six [skills de design sélectionnés par l'utilisateur](../development/design-tools.md)
-sont maintenant installés dans le dépôt. Le skill shadcn prépare son utilisation éventuelle ;
-il ne signifie pas que ses composants sont déjà intégrés ou que la stack frontend est décidée.
-Les premières inspirations ont été reçues : **Renance (`HEg1RfvbwAIpjJa`) est la référence
-préférée de l'utilisateur**. Lire la [direction visuelle](visual-direction.md) et les
-[originaux conservés](references/README.md) avant de modifier l'interface. La traduction
-en palette, typographie et écrans est encore une proposition. Une demande de retouche ne remplace pas
-implicitement toute la direction visuelle. Les recommandations des skills restent subordonnées
-à ces références et aux choix explicites de l'utilisateur.
+L’utilisateur dirige la partie visuelle. Il a autorisé une première refonte dans un
+univers calme de papier et d’encre, avec Renance comme inspiration principale et
+reMarkable comme référence d’ambiance. **Cette première proposition est implémentée,
+mais son rendu reste à valider ensemble.** La stack frontend future n’est pas décidée.
 
 ## Ce qui existe
 
-L'interface provisoire réside dans [static/](../../src/psychomark/static/).
-`app.js` gère les vues et événements, `style.css` les styles, `index.html` la structure,
-`live.js` le rafraîchissement en développement. Ce ne sont pas des composants d'une
-bibliothèque UI réutilisable. Les styles comportent déjà quelques variables CSS,
-sans catalogue de tokens ou de composants validé.
+L’interface est servie par FastAPI, en HTML/CSS/JavaScript natifs, sans nouvelle chaîne
+de compilation. Les [skills installés](../development/design-tools.md) guident le
+travail. L’utilisateur a aussi demandé **Torph**, installé pour la transition du
+libellé des boutons de démonstration pendant l’analyse. Les composants React de
+shadcn/Be UI ne sont pas intégrés : le comportement de pression du Button Be UI
+est adapté en CSS natif avec une amplitude réduite. Cette adaptation n’est pas une
+installation du composant React officiel.
 
-| Élément fonctionnel | Comportement à conserver pendant une refonte |
+| Source | Responsabilité |
 |---|---|
-| Liste et éditeur d'examens | Modèle choisi, sections et questions explicites, corrigé complet |
-| Import de copies | Indiquer traitement en cours, erreurs de fichier/page et résultats |
-| Tableau de correction | Distinguer lecture automatique, décision humaine et bonne réponse |
-| Panneau de vérification | Voir la zone d'origine, choisir, confirmer ou revenir à l'automatique |
-| Résumé de note | Afficher une note provisoire tant que des réponses restent en attente |
-| Historique et exports | Conserver la traçabilité et permettre de récupérer les résultats |
+| [index.html](../../src/psychomark/static/index.html) | Structure, navigation de l’atelier, chargement des assets locaux |
+| [landing.js](../../src/psychomark/static/landing.js) | Présentation éditoriale et scène illustrative, sans logique de notation |
+| [app.js](../../src/psychomark/static/app.js) | Routes, vues de travail, formulaires et appels API |
+| [style.css](../../src/psychomark/static/style.css) | Tokens partagés, composants natifs, atelier, accueil et adaptation mobile |
+| [live.js](../../src/psychomark/static/live.js) | Rafraîchissement du navigateur en développement |
+| [motion.js](../../src/psychomark/static/motion.js) | Libellé d’analyse animé avec Torph, réduction du mouvement et nettoyage |
+| [DESIGN.md](../../DESIGN.md) | Description du système réellement construit, à préserver lors des évolutions |
 
-## À préparer après le choix de l'utilisateur
+`/` et `#/home` ouvrent la présentation. `#/exams` ouvre directement les examens.
+Les liens existants vers un examen ou une copie conservent leur fonctionnement.
+La démonstration utilise l’API existante et crée une copie synthétique à vérifier.
 
-Consigner la référence de design et la bibliothèque retenue dans un ADR, puis définir
-les couleurs, espacements, typographie, états et composants avec cette bibliothèque.
-Prévoir les états vide, chargement, succès, erreur, conflit et ambiguïté dès chaque vue.
-La couleur seule ne doit pas porter un statut ; conserver labels, focus visible et
-utilisation au clavier. Tester les parcours desktop/mobile et les textes français.
+## Comportements à conserver
 
-Un catalogue visuel et des outils comme Storybook pourront être évalués à ce moment-là.
-Ne pas installer un outillage frontend complet avant que ce choix ait été exprimé.
+| Surface | Invariant |
+|---|---|
+| Liste et éditeur | Modèle choisi, sections/questions explicites, corrigé complet |
+| Import | Traitement en cours, erreurs de fichier/page et résultats |
+| Correction | Lecture automatique, décision humaine et réponse attendue distinctes |
+| Vérification | Extrait original, confirmer ou rétablir l’automatique |
+| Note | Provisoire tant que des réponses restent en attente |
+| Historique et exports | Traçabilité et récupération des résultats |
+
+Les scans restent sur un fond blanc, sans filtre. Les statuts sont exprimés en texte
+et en couleur. Conserver les labels de champs, le focus clavier visible, les états
+vide/chargement/erreur et la réduction de mouvement. Tester les textes français et
+l’absence de débordement sur téléphone.
+
+## Choix futurs
+
+React, Tailwind, shadcn ou toute autre migration nécessitent un choix explicite de
+l’utilisateur et un ADR. Le catalogue de composants, un éventuel Storybook et un
+outillage frontend complet pourront être définis à ce moment. Installer les skills
+n’équivaut pas à choisir cette stack.

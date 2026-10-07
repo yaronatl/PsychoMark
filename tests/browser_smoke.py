@@ -67,31 +67,62 @@ def main():
                         ),
                     )
                     page.goto(base)
+                    expect(page.get_by_role("heading", level=1)).to_have_text(
+                        "Moins de correction.Plus de transmission."
+                    )
+                    page.evaluate("document.fonts.ready")
+                    page.screenshot(path=str(args.output / "landing.png"), full_page=True)
+                    page.get_by_role("button", name="L’approche", exact=True).click()
+                    expect(page.locator("#approach")).to_be_focused()
+                    # Skip navigation must not become an application route.
+                    page.locator(".skip").focus()
+                    page.keyboard.press("Enter")
+                    expect(page.locator("#main")).to_be_focused()
+                    expect(page.get_by_role("heading", level=1)).to_contain_text("transmission")
+                    page.emulate_media(reduced_motion="reduce")
+                    assert (
+                        page.locator(".scene-composition").evaluate(
+                            "el => getComputedStyle(el).animationName"
+                        )
+                        == "none"
+                    )
+                    for width in (320, 390, 768):
+                        page.set_viewport_size({"width": width, "height": 844})
+                        assert page.evaluate(
+                            "document.documentElement.scrollWidth <= window.innerWidth"
+                        ), f"Landing overflow at {width}px"
+                        if width == 390:
+                            page.locator("#main").focus()
+                            page.evaluate("window.scrollTo(0,0)")
+                            page.screenshot(
+                                path=str(args.output / "landing-mobile.png"), full_page=True
+                            )
+                    page.set_viewport_size({"width": 1440, "height": 1050})
+                    page.get_by_role("link", name="Ouvrir mon espace").click()
                     expect(
                         page.get_by_role("heading", name="Mes examens", exact=True)
                     ).to_be_visible()
                     page.screenshot(path=str(args.output / "dashboard.png"), full_page=True)
-                    page.get_by_role("link", name="＋ Créer un examen").click()
+                    page.get_by_role("link", name="Créer un examen").click()
                     page.get_by_label("Nom de l’examen").fill("Examen blanc — Groupe A")
                     page.locator('[data-section-questions="1"]').fill("1-5")
                     page.locator('[data-section-questions="1"]').press("Tab")
                     page.get_by_label("Coller le corrigé de la section 1").fill("2 1 1 2 3")
                     page.get_by_role("button", name="Remplir les réponses").click()
-                    expect(
-                        page.get_by_role("button", name="Enregistrer l’examen →")
-                    ).to_be_enabled()
+                    expect(page.get_by_role("button", name="Enregistrer l’examen")).to_be_enabled()
                     page.locator("#main").focus()
                     page.evaluate("window.scrollTo(0,0)")
                     page.screenshot(path=str(args.output / "configuration.png"), full_page=True)
-                    page.get_by_role("button", name="Enregistrer l’examen →").click()
+                    page.get_by_role("button", name="Enregistrer l’examen").click()
                     expect(
                         page.get_by_role("heading", name="Examen blanc — Groupe A", exact=True)
                     ).to_be_visible()
                     page.locator("#copy-files").set_input_files(root / "data" / "demo" / "copy.png")
-                    page.get_by_role("link", name="Voir la correction →").wait_for(timeout=30000)
-                    page.get_by_role("link", name="Voir la correction →").click()
+                    page.get_by_role("link", name="Voir la correction").wait_for(timeout=30000)
+                    page.get_by_role("link", name="Voir la correction").click()
                     expect(page.get_by_text("Note à confirmer", exact=True)).to_be_visible()
                     expect(page.get_by_role("button", name="À vérifier (2)")).to_be_visible()
+                    assert page.locator(".crop-view").bounding_box()["height"] <= 300
                     page.screenshot(
                         path=str(args.output / "correction-provisoire.png"), full_page=True
                     )
@@ -112,20 +143,44 @@ def main():
                     ).to_be_visible()
                     page.screenshot(path=str(args.output / "correction-finale.png"), full_page=True)
                     with page.expect_download() as download:
-                        page.get_by_role("link", name="↓ CSV", exact=True).click()
+                        page.get_by_role("link", name="CSV", exact=True).click()
                     download.value.save_as(args.output / "correction.csv")
                     assert "correct" in (args.output / "correction.csv").read_text(
                         encoding="utf-8-sig"
                     )
                     page.set_viewport_size({"width": 390, "height": 844})
+                    page.get_by_role("button", name="S1 · Q3", exact=True).click()
+                    expect(page.locator(".review-panel")).to_be_focused()
+                    expect(
+                        page.get_by_role("button", name="Retour aux questions")
+                    ).to_be_in_viewport()
+                    page.get_by_role("button", name="Retour aux questions").click()
+                    expect(page.get_by_role("button", name="S1 · Q3", exact=True)).to_be_focused()
+                    page.evaluate("window.scrollTo(0,0)")
                     page.screenshot(path=str(args.output / "mobile.png"), full_page=True)
                     assert page.evaluate(
                         "document.documentElement.scrollWidth <= window.innerWidth"
                     ), "Unexpected mobile horizontal overflow"
+                    # The landing's action opens a real, reviewable demo, not its illustration.
+                    page.goto(base)
+                    page.emulate_media(reduced_motion="no-preference")
+                    pending_demo = []
+                    page.route("**/api/demo", lambda route: pending_demo.append(route))
+                    page.get_by_role("button", name="Découvrir la démonstration").click()
+                    expect(page.get_by_role("button", name="Analyse en cours…")).to_be_disabled()
+                    expect(page.locator("[torph-root]")).to_be_visible()
+                    assert pending_demo, "Expected a real demo request"
+                    pending_demo.pop().continue_()
+                    expect(page.get_by_text("Note à confirmer", exact=True)).to_be_visible(
+                        timeout=30000
+                    )
+                    expect(page.get_by_role("button", name="Valider et recalculer")).to_be_visible()
+                    assert page.locator("style[data-torph]").count() == 0, "Torph must clean up"
                     assert not errors, errors
                     browser.close()
                 print(
-                    "Browser workflow passed: create exam, key entry, upload, provisional score, manual review, final 12/20, reload, CSV, mobile."
+                    "Browser workflow passed: landing, keyboard, responsive, reduced motion, "
+                    "create exam, upload, review, final 12/20, persistence, CSV, real demo."
                 )
             finally:
                 process.terminate()
