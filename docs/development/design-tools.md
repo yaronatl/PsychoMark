@@ -64,31 +64,51 @@ IMPECCABLE_HOME=/workspace/.cache/impeccable sh .agents/skills/impeccable/script
 L'état réellement observé de ce moteur est consigné dans la session d'installation.
 Ses références Markdown restent lisibles même si son exécutable est indisponible.
 
-## Be UI : configuration préparée, connexion non validée
+## Be UI : accès vérifié depuis le projet
 
 L'URL fournie est `https://mcp.beui.dev/mcp`. Elle est déclarée dans
 [la configuration Codex](../../.codex/config.toml) et
 [la configuration VS Code/Codespaces](../../.vscode/mcp.json).
-Ce sont deux clients possibles du même serveur ; ils ne sont pas automatiquement
-connectés par l'écriture de ces fichiers. Aucun secret n'y est enregistré.
 
-La commande demandée a aussi été exécutée sous sa syntaxe Codex correcte :
-`codex mcp add beui --url https://mcp.beui.dev/mcp`. Elle échoue car le dossier global
-`/run/codex-environment/codex-home` est en lecture seule. `codex mcp get beui --json`
-confirme qu'aucun serveur de ce nom n'est chargé par cette instance de Codex. La
-configuration de projet ci-dessus est donc une préparation, pas une activation réussie.
+Au 8 octobre 2026 (Asia/Jerusalem), la connexion HTTPS et l'initialisation MCP
+fonctionnent. Les outils disponibles sont `list_components`, `search_components`,
+`get_component` et `get_install_command`. Une recherche et une récupération du composant
+Button ont été vérifiées. Aucun composant n'a été installé dans l'application.
 
-Le proxy de l'environnement actuel refuse la connexion HTTPS avec une erreur 403,
-avant même un échange MCP. Le domaine `mcp.beui.dev` a été ajouté au **brouillon** de
-configuration réseau Codex, en conservant les domaines des gestionnaires de paquets.
-Cette sauvegarde n'active pas la règle dans la session actuelle. Le serveur n'est donc
-pas présenté comme connecté et ses outils n'ont pas pu être recensés ou testés.
+La configuration globale de ce Codex cloud reste sur un système de fichiers en lecture
+seule : la commande `codex mcp add` ne peut pas y écrire. Le projet est accessible en
+écriture, et Codex accepte un paramètre explicite pour lire la définition de Be UI :
 
-Pour lever ce blocage dans Codex cloud, les paramètres de l'environnement doivent être
-enregistrés puis publiés avec cette règle. Un client prenant en charge MCP doit ensuite
-charger la configuration du projet (et sa confiance, si demandée). Une configuration
-de dépôt ne permet pas à l'agent d'ajouter lui-même des outils à une conversation déjà
-ouverte. Refaire une initialisation MCP et une liste des outils avant de le déclarer prêt.
+```bash
+codex -c 'mcp_servers.beui.url="https://mcp.beui.dev/mcp"' mcp get beui --json
+```
+
+Cette commande de référence a été exécutée par l'agent : elle confirme la définition du
+serveur pour ce processus CLI, mais n'ajoute pas un outil natif à la conversation ouverte.
+Les autorisations du système ne sont pas changées ; `HOME` et `CODEX_HOME` restent intacts.
+
+Pour utiliser Be UI ici sans dépendre de cette écriture globale, le petit client
+[scripts/beui.py](../../scripts/beui.py) lit directement la configuration du projet et
+appelle le serveur MCP. Il utilise `httpx`, déjà présent dans l'extra `dev`.
+Commandes de référence pour l'agent ou un développeur, sans action utilisateur requise :
+
+```bash
+.venv/bin/python scripts/beui.py tools
+.venv/bin/python scripts/beui.py components --category motion
+.venv/bin/python scripts/beui.py search button
+.venv/bin/python scripts/beui.py component button
+.venv/bin/python scripts/beui.py install-command button --package-manager npm
+```
+
+Ce client sait consulter le catalogue Be UI au format JSON ; ce n'est pas un client MCP
+universel. Il valide les réponses et signale les erreurs avec un code de sortie non nul.
+Les sources et commandes retournées sont affichées seulement, jamais exécutées.
+Les requêtes sont des termes de recherche ou identifiants publics, pas des copies d'élèves.
+
+Les fichiers de configuration restent utilisables par des clients compatibles dans un
+projet de confiance. Leur chargement natif dépend du client hôte ; il n'est pas activé
+rétroactivement dans ce chat par la création d'un fichier. L'accès direct ci-dessus est
+opérationnel et permet de poursuivre le travail sans intervention de l'utilisateur.
 
 ## Maintenance
 

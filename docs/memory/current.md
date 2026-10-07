@@ -1,6 +1,6 @@
 # État actuel
 
-Mis à jour le 2026-10-07. Cette page décrit le dépôt, pas un état garanti de déploiement.
+Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas un état garanti de déploiement.
 
 ## Disponible
 
@@ -12,6 +12,8 @@ Mis à jour le 2026-10-07. Cette page décrit le dépôt, pas un état garanti d
   à vérifier dans GitHub Actions après publication.
 - Six [skills de design](../development/design-tools.md) installés pour Codex dans le dépôt,
   avec sources et empreintes. Recherche UI/UX Pro Max et moteur Impeccable vérifiés.
+- Be UI accessible via `scripts/beui.py`, qui lit la configuration du projet :
+  connexion MCP, outils, recherche, détail d'un composant et commande d'installation vérifiés.
 
 ## Limites et décisions en attente
 
@@ -21,9 +23,9 @@ Mis à jour le 2026-10-07. Cette page décrit le dépôt, pas un état garanti d
 - Le framework frontend, la bibliothèque UI et la direction visuelle restent à choisir
   par l'utilisateur. Ne pas interpréter le prototype comme une décision de design system.
 - Pas encore de typage complet, de lint frontend ou d'outil de mesure de corpus réel.
-- Be UI : configurations Codex/VS Code préparées, connexion refusée par le proxy réseau.
-  Domaine ajouté au brouillon réseau, non activé dans cette session ; outils MCP non testés.
-  La commande d'ajout globale échoue aussi car la configuration Codex est en lecture seule.
+- La configuration globale Codex reste en lecture seule. Be UI fonctionne via le client
+  du projet, sans cette écriture. L'ajout natif à une conversation déjà ouverte reste
+  sous le contrôle du client hôte ; une commande CLI avec `-c` ne modifie pas ce chat.
 
 ## Prochaine reprise
 
@@ -34,5 +36,5 @@ prochain essai de l'utilisateur. Ensuite préparer une feuille vierge et quelque
 copies réelles autorisées pour un premier modèle pilote et la vérité de référence.
 Suivre les [priorités](../product/roadmap.md) et le [workflow](../development/workflow.md).
 
-Dernière session : [skills de design et Be UI](sessions/2026-10-07-02-design-skills.md).
+Dernière session : [accès Be UI sans écriture globale](sessions/2026-10-08-01-beui-access.md).
 Les preuves de validation et les contrôles non exécutés y sont consignés.
