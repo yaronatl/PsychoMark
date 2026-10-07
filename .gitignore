@@ -6,3 +6,7 @@ __pycache__/
 dist/
 artifacts/
 .coverage
+.ruff_cache/
+.env
+.env.*
+!.env.example
