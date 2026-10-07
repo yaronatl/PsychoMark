@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "template_id": "demo_eight_sections_v1",
+  "width": 1800,
+  "height": 1320,
+  "sections": [
+    {
+      "id": "1",
+      "questions": 30,
+      "choices": 4,
+      "bounds": [
+        80.0,
+        280.0,
+        795.0,
+        158.0
+      ],
+      "first_center": [
+        94.0,
+        320.0
+      ],
+      "question_step": [
+        26.5,
+        0.0
+      ],
+      "choice_step": [
+        0.0,
+        30.0
+      ],
+      "bubble_radius": [
+        8.0,
+        11.0
+      ]
+    },
+    {
+      "id": "2",
+      "questions": 30,
+      "choices": 4,
+      "bounds": [
+        80.0,
+        470.0,
+        795.0,
+        158.0
+      ],
+      "first_center": [
+        94.0,
+        510.0
+      ],
+      "question_step": [
+        26.5,
+        0.0
+      ],
+      "choice_step": [
+        0.0,
+        30.0
+      ],
+      "bubble_radius": [
+        8.0,
+        11.0
+      ]
+    },
+    {
+      "id": "3",
+      "questions": 30,
+      "choices": 4,
+      "bounds": [
+        80.0,
+        660.0,
+        795.0,
+        158.0
+      ],
+      "first_center": [
+        94.0,
+        700.0
+      ],
+      "question_step": [
+        26.5,
+        0.0
+      ],
+      "choice_step": [
+        0.0,
+        30.0
+      ],
+      "bubble_radius": [
+        8.0,
+        11.0
+      ]
+    },
+    {
+      "id": "4",
+      "questions": 30,
+      "choices": 4,
+      "bounds": [
+        80.0,
+        850.0,
+        795.0,
+        158.0
+      ],
+      "first_center": [
+        94.0,
+        890.0
+      ],
+      "question_step": [
+        26.5,
+        0.0
+      ],
+      "choice_step": [
+        0.0,
+        30.0
+      ],
+      "bubble_radius": [
+        8.0,
+        11.0
+      ]
+    },
+    {
+      "id": "5",
+      "questions": 30,
+      "choices": 4,
+      "bounds": [
+        80.0,
+        1040.0,
+        795.0,
+        158.0
+      ],
+      "first_center": [
+        94.0,
+        1080.0
+      ],
+      "question_step": [
+        26.5,
+        0.0
+      ],
+      "choice_step": [
+        0.0,
+        30.0
+      ],
+      "bubble_radius": [
+        8.0,
+        11.0
+      ]
+    },
+    {
+      "id": "6",
+      "questions": 30,
+      "choices": 4,
+      "bounds": [
+        930.0,
+        660.0,
+        795.0,
+        158.0
+      ],
+      "first_center": [
+        944.0,
+        700.0
+      ],
+      "question_step": [
+        26.5,
+        0.0
+      ],
+      "choice_step": [
+        0.0,
+        30.0
+      ],
+      "bubble_radius": [
+        8.0,
+        11.0
+      ]
+    },
+    {
+      "id": "7",
+      "questions": 30,
+      "choices": 4,
+      "bounds": [
+        930.0,
+        850.0,
+        795.0,
+        158.0
+      ],
+      "first_center": [
+        944.0,
+        890.0
+      ],
+      "question_step": [
+        26.5,
+        0.0
+      ],
+      "choice_step": [
+        0.0,
+        30.0
+      ],
+      "bubble_radius": [
+        8.0,
+        11.0
+      ]
+    },
+    {
+      "id": "8",
+      "questions": 30,
+      "choices": 4,
+      "bounds": [
+        930.0,
+        1040.0,
+        795.0,
+        158.0
+      ],
+      "first_center": [
+        944.0,
+        1080.0
+      ],
+      "question_step": [
+        26.5,
+        0.0
+      ],
+      "choice_step": [
+        0.0,
+        30.0
+      ],
+      "bubble_radius": [
+        8.0,
+        11.0
+      ]
+    }
+  ],
+  "thresholds": {
+    "marked_coverage": 0.22,
+    "trace_coverage": 0.08,
+    "dark_delta": 75,
+    "trace_delta": 28,
+    "min_sharpness_ratio": 0.25,
+    "min_bubble_edge_ratio": 0.15,
+    "min_frame_support": 0.78,
+    "min_source_bubble_diameter": 9
+  }
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>PsychoMark — Correction d’examens</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Aller au contenu</a>
+  <aside class="sidebar">
+    <a class="brand" href="#/exams"><span class="brand-icon" aria-hidden="true">P<span>✓</span></span><span>PsychoMark<small>Atelier de correction</small></span></a>
+    <p class="nav-label">ESPACE ENSEIGNANT</p>
+    <nav aria-label="Navigation principale">
+      <a href="#/exams" id="nav-exams"><span aria-hidden="true">▦</span> Mes examens</a>
+      <a href="#/new" id="nav-new"><span aria-hidden="true">＋</span> Nouvel examen</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="local-dot" aria-hidden="true"></span> Prototype local<p>Vos examens et corrections sont enregistrés sur cette machine.</p></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>Examens blancs <span class="slash">/</span> Correction</span><span class="version">MVP · Sans IA</span></header>
+    <main id="main" tabindex="-1"><div class="loading" role="status">Chargement de votre espace…</div></main>
+    <footer>Note brute d’entraînement · Aucune conversion en score psychométrique officiel.</footer>
+  </div>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

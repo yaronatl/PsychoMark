@@ -1,0 +1,28 @@
+{
+  "name": "PsychoMark",
+  "build": {"dockerfile": "Dockerfile"},
+  "remoteUser": "vscode",
+  "hostRequirements": {"cpus": 2, "memory": "4gb"},
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "PsychoMark — aperçu de développement",
+      "onAutoForward": "openBrowser",
+      "protocol": "http"
+    }
+  },
+  "otherPortsAttributes": {"onAutoForward": "ignore"},
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": ".venv/bin/python .devcontainer/start.py",
+  "waitFor": "postStartCommand",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"],
+      "settings": {
+        "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
+        "python.testing.pytestEnabled": true,
+        "python.testing.unittestEnabled": false
+      }
+    }
+  }
+}
