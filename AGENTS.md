@@ -15,6 +15,19 @@ Vérifier `git status` avant toute modification ; préserver le travail existant
 - Les modèles synthétiques ne prouvent pas la précision sur des feuilles réelles.
 - Les outils visuels, la bibliothèque UI et la direction artistique sont choisis par
   l'utilisateur. Consulter [le cadre UI](docs/product/ui.md) avant de proposer une migration.
+- Pour le travail visuel, consulter [les skills installés](docs/development/design-tools.md)
+  puis charger uniquement le ou les SKILL.md pertinents. Les inspirations et décisions
+  de l'utilisateur priment sur leurs styles par défaut. Installer un skill ne décide
+  pas d'une migration React/Tailwind/shadcn et ne déclenche pas une refonte.
+
+## Communication avec l'utilisateur
+
+Effectuer les opérations accessibles et expliquer le résultat et les étapes importantes.
+L'utilisateur connaît les bases du développement ; préciser surtout ce qui est déjà fait,
+ce qui reste à faire et ce qui exige réellement son intervention. Ne pas donner une commande
+sans préciser si elle est une référence facultative ou une action nécessaire maintenant.
+Si son intervention est indispensable, donner l'emplacement, les étapes et le résultat attendu,
+en expliquant pourquoi l'agent ne peut pas l'effectuer. Ne pas déléguer les tâches accessibles.
 
 ## Organisation et validation
 

@@ -6,6 +6,14 @@
 par l'utilisateur.** Aucune décision React, Vue, Tailwind, shadcn ou autre n'est prise.
 La présence de HTML/CSS/JS natifs décrit le prototype, pas le futur design system.
 
+Les six [skills de design sélectionnés par l'utilisateur](../development/design-tools.md)
+sont maintenant installés dans le dépôt. Le skill shadcn prépare son utilisation éventuelle ;
+il ne signifie pas que ses composants sont déjà intégrés ou que la stack frontend est décidée.
+Les inspirations précises restent attendues. À réception, enregistrer les références et
+ce qu'on en retient avant de modifier l'interface. Une demande de retouche ne remplace pas
+implicitement toute la direction visuelle. Les recommandations des skills restent subordonnées
+à ces références et aux choix explicites de l'utilisateur.
+
 ## Ce qui existe
 
 L'interface provisoire réside dans [static/](../../src/psychomark/static/).

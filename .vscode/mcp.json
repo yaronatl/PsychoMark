@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "beui": {
+      "type": "http",
+      "url": "https://mcp.beui.dev/mcp"
+    }
+  }
+}
