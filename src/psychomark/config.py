@@ -44,10 +44,19 @@ class Section(ConfigModel):
         q, c = np.array(self.question_step), np.array(self.choice_step)
         if abs(q[0] * c[1] - q[1] * c[0]) < 1:
             raise ValueError("Question and choice axes must be distinct")
-        centers = np.array([self.center(i, j) for i in range(1, self.questions + 1)
-                            for j in range(1, self.choices + 1)])
-        if np.any(centers[:, 0] - rx < x) or np.any(centers[:, 0] + rx > x + w) or \
-           np.any(centers[:, 1] - ry < y) or np.any(centers[:, 1] + ry > y + h):
+        centers = np.array(
+            [
+                self.center(i, j)
+                for i in range(1, self.questions + 1)
+                for j in range(1, self.choices + 1)
+            ]
+        )
+        if (
+            np.any(centers[:, 0] - rx < x)
+            or np.any(centers[:, 0] + rx > x + w)
+            or np.any(centers[:, 1] - ry < y)
+            or np.any(centers[:, 1] + ry > y + h)
+        ):
             raise ValueError("Every bubble must fit inside its section bounds")
         normalized = centers / np.array([rx, ry])
         distances = np.linalg.norm(normalized[:, None] - normalized[None, :], axis=2)
@@ -95,7 +104,7 @@ class Layout(ConfigModel):
                 raise ValueError(f"Section {s.id} is outside the reference image")
         for i, a in enumerate(self.sections):
             ax, ay, aw, ah = a.bounds
-            for b in self.sections[i + 1:]:
+            for b in self.sections[i + 1 :]:
                 bx, by, bw, bh = b.bounds
                 if min(ax + aw, bx + bw) > max(ax, bx) and min(ay + ah, by + bh) > max(ay, by):
                     raise ValueError("Section bounds must not overlap")
@@ -130,4 +139,6 @@ def read_config(path: Path, cls):
 
 
 def write_json(path: Path, value: dict | list) -> None:
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8"
+    )

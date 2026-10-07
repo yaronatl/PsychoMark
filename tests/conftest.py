@@ -19,5 +19,12 @@ def sheet(tmp_path_factory):
     filled, truth = render_filled(blank, layout)
     template_path = root / "template.json"
     calibrate(blank, layout, template_path)
-    return {"root": root, "layout": layout, "blank": blank, "filled": filled, "truth": truth,
-            "template_path": template_path, "engine": Engine.from_file(template_path)}
+    return {
+        "root": root,
+        "layout": layout,
+        "blank": blank,
+        "filled": filled,
+        "truth": truth,
+        "template_path": template_path,
+        "engine": Engine.from_file(template_path),
+    }

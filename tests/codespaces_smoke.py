@@ -1,7 +1,6 @@
 """Exercise the Codespaces start hook and live reload without a GitHub account."""
 
 import os
-from pathlib import Path
 import shutil
 import signal
 import socket
@@ -9,9 +8,11 @@ import subprocess
 import sys
 import tempfile
 import time
+from pathlib import Path
 
 import httpx
-from playwright.sync_api import Error as PlaywrightError, expect, sync_playwright
+from playwright.sync_api import Error as PlaywrightError
+from playwright.sync_api import expect, sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -42,16 +43,32 @@ def main():
     logfile = ROOT / "artifacts/codespaces" / f"server-{port}.log"
     try:
         with tempfile.TemporaryDirectory(prefix="psychomark-codespaces-") as temporary:
-            command = [sys.executable, str(ROOT / ".devcontainer/start.py"), "--port", str(port), "--data-dir", temporary]
+            command = [
+                sys.executable,
+                str(ROOT / ".devcontainer/start.py"),
+                "--port",
+                str(port),
+                "--data-dir",
+                temporary,
+            ]
             subprocess.run(command, cwd=ROOT, check=True, timeout=45)
             first_pid = pidfile.read_text()
             subprocess.run(command, cwd=ROOT, check=True, timeout=10)
             assert pidfile.read_text() == first_pid, "Start hook launched a duplicate server"
             base = f"http://127.0.0.1:{port}"
-            exam = httpx.post(base + "/api/exams", json={"name": "Retained on reload", "template_id": "demo_eight_sections_v1",
-                "sections": {"1": [1]}, "answer_key": {"1": {"1": 2}}}).json()
+            exam = httpx.post(
+                base + "/api/exams",
+                json={
+                    "name": "Retained on reload",
+                    "template_id": "demo_eight_sections_v1",
+                    "sections": {"1": [1]},
+                    "answer_key": {"1": {"1": 2}},
+                },
+            ).json()
             with sync_playwright() as playwright:
-                browser = playwright.chromium.launch(executable_path=shutil.which("chromium") or None, headless=True)
+                browser = playwright.chromium.launch(
+                    executable_path=shutil.which("chromium") or None, headless=True
+                )
                 page = browser.new_page()
                 with page.expect_response("**/api/dev/revision"):
                     page.goto(base)
@@ -82,8 +99,13 @@ def main():
                 time.sleep(0.2)
             else:
                 raise AssertionError("Python change did not restart the server")
-            assert httpx.get(base + f"/api/exams/{exam['id']}").json()["exam"]["name"] == "Retained on reload"
-            print("Codespaces hooks passed: idempotent start, browser refresh, unsaved form protection, Python restart, database retained.")
+            assert (
+                httpx.get(base + f"/api/exams/{exam['id']}").json()["exam"]["name"]
+                == "Retained on reload"
+            )
+            print(
+                "Codespaces hooks passed: idempotent start, browser refresh, unsaved form protection, Python restart, database retained."
+            )
     finally:
         if pidfile.exists():
             try:

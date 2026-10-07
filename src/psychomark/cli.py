@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 import csv
 import hashlib
-from pathlib import Path
 import re
 import sys
+from collections import Counter
+from pathlib import Path
 
 import cv2
 
@@ -22,19 +22,35 @@ from .images import SUPPORTED, iter_pages, read_image, save_image
 def parser():
     root = argparse.ArgumentParser(description="PsychoMark — deterministic local OMR (no AI)")
     commands = root.add_subparsers(dest="command", required=True)
-    demo = commands.add_parser("demo", help="Generate a synthetic sheet, marked examples and ground truth")
+    demo = commands.add_parser(
+        "demo", help="Generate a synthetic sheet, marked examples and ground truth"
+    )
     demo.add_argument("--output", type=Path, required=True)
-    demo.add_argument("--vertical", action="store_true", help="Generate a different 5-choice vertical layout")
-    calibration = commands.add_parser("calibrate", help="Create a template from a blank IMAGE and a pixel layout")
+    demo.add_argument(
+        "--vertical", action="store_true", help="Generate a different 5-choice vertical layout"
+    )
+    calibration = commands.add_parser(
+        "calibrate", help="Create a template from a blank IMAGE and a pixel layout"
+    )
     calibration.add_argument("reference", type=Path)
     calibration.add_argument("--layout", type=Path, required=True)
     calibration.add_argument("--output", type=Path, required=True, help="Destination template JSON")
-    analysis = commands.add_parser("analyze", help="Analyze one or more images, PDFs or flat image directories")
+    analysis = commands.add_parser(
+        "analyze", help="Analyze one or more images, PDFs or flat image directories"
+    )
     analysis.add_argument("inputs", nargs="+", type=Path)
     analysis.add_argument("--template", type=Path, required=True)
-    analysis.add_argument("--exam", type=Path, help="Explicit section/question selection; default: all template questions")
-    analysis.add_argument("--output", type=Path, required=True, help="New or empty output directory")
-    analysis.add_argument("--dpi", type=int, default=200, choices=range(100, 401), metavar="100..400")
+    analysis.add_argument(
+        "--exam",
+        type=Path,
+        help="Explicit section/question selection; default: all template questions",
+    )
+    analysis.add_argument(
+        "--output", type=Path, required=True, help="New or empty output directory"
+    )
+    analysis.add_argument(
+        "--dpi", type=int, default=200, choices=range(100, 401), metavar="100..400"
+    )
     return root
 
 
@@ -42,7 +58,9 @@ def expand_inputs(inputs):
     files = []
     for path in inputs:
         if path.is_dir():
-            found = sorted(p for p in path.iterdir() if p.is_file() and p.suffix.lower() in SUPPORTED)
+            found = sorted(
+                p for p in path.iterdir() if p.is_file() and p.suffix.lower() in SUPPORTED
+            )
             if not found:
                 raise ValueError(f"No supported input files in {path}")
             files.extend(found)
@@ -59,7 +77,9 @@ def analyze(args):
         exam.validate_for(engine.template)
     files = expand_inputs(args.inputs)
     if args.output.exists() and (not args.output.is_dir() or any(args.output.iterdir())):
-        raise ValueError("Output directory must be new or empty; existing results are never overwritten")
+        raise ValueError(
+            "Output directory must be new or empty; existing results are never overwritten"
+        )
     args.output.mkdir(parents=True, exist_ok=True)
     report = {"schema_version": 1, "template_id": engine.template.template_id, "pages": []}
     failure = False
@@ -74,7 +94,12 @@ def analyze(args):
             safe_name = re.sub(r"[^A-Za-z0-9_-]", "_", path.stem)[:60] or "file"
             stem = f"{index:03d}-{safe_name}-page{page.number:03d}"
             if page.error:
-                result = {"schema_version": 1, "status": "input_error", "error": page.error, "answers": []}
+                result = {
+                    "schema_version": 1,
+                    "status": "input_error",
+                    "error": page.error,
+                    "answers": [],
+                }
                 failure = True
             else:
                 result, preview = engine.analyze(page.image, exam)
@@ -83,14 +108,30 @@ def analyze(args):
             result.update({"file": path.name, "file_sha256": file_digest, "page": page.number})
             write_json(args.output / (stem + ".json"), result)
             with (args.output / (stem + ".csv")).open("w", newline="", encoding="utf-8") as handle:
-                writer = csv.DictWriter(handle, fieldnames=["section", "question", "status", "answer", "candidates", "reason"])
+                writer = csv.DictWriter(
+                    handle,
+                    fieldnames=["section", "question", "status", "answer", "candidates", "reason"],
+                )
                 writer.writeheader()
                 for answer in result["answers"]:
-                    writer.writerow({key: ",".join(map(str, answer[key])) if key == "candidates" else answer[key]
-                                     for key in writer.fieldnames})
+                    writer.writerow(
+                        {
+                            key: ",".join(map(str, answer[key]))
+                            if key == "candidates"
+                            else answer[key]
+                            for key in writer.fieldnames
+                        }
+                    )
             counts = dict(Counter(a["status"] for a in result["answers"]))
-            report["pages"].append({"file": path.name, "page": page.number, "status": result["status"],
-                                    "counts": counts, "result": stem + ".json"})
+            report["pages"].append(
+                {
+                    "file": path.name,
+                    "page": page.number,
+                    "status": result["status"],
+                    "counts": counts,
+                    "result": stem + ".json",
+                }
+            )
             print(f"{path.name} / page {page.number}: {result['status']} {counts}")
     report["has_failures"] = failure
     write_json(args.output / "summary.json", report)

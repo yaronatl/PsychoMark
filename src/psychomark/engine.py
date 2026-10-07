@@ -14,15 +14,20 @@ from .config import Exam, Section, Template, read_config
 from .images import normalized_gray, read_image
 from .registration import Registrar, RegistrationError, frame_mask
 
-COLORS = {"single": (40, 155, 30), "blank": (155, 155, 155), "multiple": (0, 80, 230),
-          "uncertain": (0, 175, 240), "unreadable": (0, 0, 230)}
+COLORS = {
+    "single": (40, 155, 30),
+    "blank": (155, 155, 155),
+    "multiple": (0, 80, 230),
+    "uncertain": (0, 175, 240),
+    "unreadable": (0, 0, 230),
+}
 
 
 def edge_energy(gray):
     # A smoothed first derivative is less sensitive to pixel phase / ordinary
     # perspective resampling than an unsmoothed second derivative on tiny rings.
     smoothed = cv2.GaussianBlur(gray, (0, 0), 1)
-    return cv2.Sobel(smoothed, cv2.CV_32F, 1, 0)**2 + cv2.Sobel(smoothed, cv2.CV_32F, 0, 1)**2
+    return cv2.Sobel(smoothed, cv2.CV_32F, 1, 0) ** 2 + cv2.Sobel(smoothed, cv2.CV_32F, 0, 1) ** 2
 
 
 def bubble_roi(section: Section, question: int, choice: int):
@@ -48,7 +53,9 @@ def validate_reference(reference: np.ndarray, template: Template):
                 roi, interior = bubble_roi(section, q, c)
                 paper = interior & (gray[roi] > 200)
                 if paper.sum() < 12 or paper.sum() < interior.sum() * 0.45:
-                    raise ValueError(f"Reference bubble {section.id}/{q}/{c} is too small, marked or misconfigured")
+                    raise ValueError(
+                        f"Reference bubble {section.id}/{q}/{c} is too small, marked or misconfigured"
+                    )
 
 
 class Engine:
@@ -59,25 +66,38 @@ class Engine:
         self.gray_reference = normalized_gray(reference)
         self.reference_edge_energy = edge_energy(self.gray_reference)
         self.registrar = Registrar(cv2.cvtColor(reference, cv2.COLOR_BGR2GRAY), template)
-        self.template_digest = hashlib.sha256(json.dumps(template.model_dump(), sort_keys=True).encode()).hexdigest()
+        self.template_digest = hashlib.sha256(
+            json.dumps(template.model_dump(), sort_keys=True).encode()
+        ).hexdigest()
 
     @classmethod
     def from_file(cls, path: Path):
         template = read_config(path, Template)
         reference_path = path.parent / template.reference
         if hashlib.sha256(reference_path.read_bytes()).hexdigest() != template.reference_sha256:
-            raise ValueError("Reference checksum mismatch; recalibrate rather than editing a template reference")
+            raise ValueError(
+                "Reference checksum mismatch; recalibrate rather than editing a template reference"
+            )
         return cls(template, read_image(reference_path))
 
     def analyze(self, image: np.ndarray, exam: Exam | None = None) -> tuple[dict, np.ndarray]:
         template = self.template
         if exam is None:
-            exam = Exam(template_id=template.template_id, sections={s.id: list(range(1, s.questions + 1)) for s in template.sections})
+            exam = Exam(
+                template_id=template.template_id,
+                sections={s.id: list(range(1, s.questions + 1)) for s in template.sections},
+            )
         exam.validate_for(template)
         result = {
-            "schema_version": 1, "engine_version": __version__, "template_id": template.template_id,
-            "template_sha256": self.template_digest, "reference_sha256": template.reference_sha256,
-            "exam": exam.model_dump(), "status": "complete", "diagnostics": {}, "answers": [],
+            "schema_version": 1,
+            "engine_version": __version__,
+            "template_id": template.template_id,
+            "template_sha256": self.template_digest,
+            "reference_sha256": template.reference_sha256,
+            "exam": exam.model_dump(),
+            "status": "complete",
+            "diagnostics": {},
+            "answers": [],
         }
         try:
             aligned, valid, inverse, diagnostic = self.registrar.align(image)
@@ -87,9 +107,19 @@ class Engine:
             result["diagnostics"]["error"] = str(exc)
             for section in template.sections:
                 for question in exam.sections.get(section.id, []):
-                    result["answers"].append(self.unreadable(section.id, question, "registration_failed"))
+                    result["answers"].append(
+                        self.unreadable(section.id, question, "registration_failed")
+                    )
             preview = image.copy()
-            cv2.putText(preview, "UNREADABLE: alignment failed", (15, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, COLORS["unreadable"], 2)
+            cv2.putText(
+                preview,
+                "UNREADABLE: alignment failed",
+                (15, 35),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                COLORS["unreadable"],
+                2,
+            )
             return result, preview
 
         gray = normalized_gray(aligned)
@@ -118,8 +148,15 @@ class Engine:
 
     @staticmethod
     def unreadable(section: str, question: int, reason: str) -> dict:
-        return {"section": section, "question": question, "status": "unreadable", "answer": None,
-                "candidates": [], "reason": reason, "scores": []}
+        return {
+            "section": section,
+            "question": question,
+            "status": "unreadable",
+            "answer": None,
+            "candidates": [],
+            "reason": reason,
+            "scores": [],
+        }
 
     def section_quality(self, gray, valid, inverse, section):
         thresholds = self.template.thresholds
@@ -130,16 +167,18 @@ class Engine:
         support = float(np.mean(nearest_ink[printed] <= 2))
         ref_edges = cv2.Laplacian(self.gray_reference, cv2.CV_32F)[frame]
         sample_edges = cv2.Laplacian(gray, cv2.CV_32F)[frame]
-        sharpness = float(np.mean(sample_edges ** 2) / max(float(np.mean(ref_edges ** 2)), 1))
-        visible = float(np.mean(valid[y:y+h, x:x+w] > 250))
+        sharpness = float(np.mean(sample_edges**2) / max(float(np.mean(ref_edges**2)), 1))
+        visible = float(np.mean(valid[y : y + h, x : x + w] > 250))
         rx, ry = section.bubble_radius
         diameters = []
         for q in (1, section.questions):
             for c in (1, section.choices):
                 cx, cy = section.center(q, c)
-                p = np.float32([[cx-rx, cy], [cx+rx, cy], [cx, cy-ry], [cx, cy+ry]])
+                p = np.float32([[cx - rx, cy], [cx + rx, cy], [cx, cy - ry], [cx, cy + ry]])
                 p = cv2.perspectiveTransform(p[None], inverse)[0]
-                diameters.extend([float(np.linalg.norm(p[0]-p[1])), float(np.linalg.norm(p[2]-p[3]))])
+                diameters.extend(
+                    [float(np.linalg.norm(p[0] - p[1])), float(np.linalg.norm(p[2] - p[3]))]
+                )
         issues = []
         if visible < 0.995:
             issues.append("cropped_section")
@@ -149,8 +188,13 @@ class Engine:
             issues.append("frame_mismatch")
         if sharpness < thresholds.min_sharpness_ratio:
             issues.append("blurred_section")
-        return {"frame_support": round(support, 4), "sharpness_ratio": round(sharpness, 4),
-                "visible_fraction": round(visible, 4), "min_source_bubble_diameter": round(min(diameters), 3), "issues": issues}
+        return {
+            "frame_support": round(support, 4),
+            "sharpness_ratio": round(sharpness, 4),
+            "visible_fraction": round(visible, 4),
+            "min_source_bubble_diameter": round(min(diameters), 3),
+            "issues": issues,
+        }
 
     def read_question(self, gray, valid, edges, section, question):
         thresholds = self.template.thresholds
@@ -162,7 +206,7 @@ class Engine:
             cx, cy = section.center(question, choice)
             rx, ry = section.bubble_radius
             yy, xx = np.mgrid[roi[0], roi[1]]
-            radius = ((xx-cx)/rx)**2 + ((yy-cy)/ry)**2
+            radius = ((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2
             ring = (radius >= 0.82**2) & (radius <= 1.15**2)
             reference_energy = float(np.mean(self.reference_edge_energy[roi][ring]))
             sample_energy = float(np.mean(edges[roi][ring]))
@@ -173,23 +217,42 @@ class Engine:
                 return self.unreadable(section.id, question, "cropped_bubble")
             delta = self.gray_reference[roi].astype(np.float32) - gray[roi].astype(np.float32)
             values = delta[mask]
-            scores.append({"choice": choice,
-                           "dark_coverage": round(float(np.mean(values >= thresholds.dark_delta)), 4),
-                           "trace_coverage": round(float(np.mean(values >= thresholds.trace_delta)), 4),
-                           "mean_delta": round(float(np.clip(values, 0, 255).mean()), 2)})
+            scores.append(
+                {
+                    "choice": choice,
+                    "dark_coverage": round(float(np.mean(values >= thresholds.dark_delta)), 4),
+                    "trace_coverage": round(float(np.mean(values >= thresholds.trace_delta)), 4),
+                    "mean_delta": round(float(np.clip(values, 0, 255).mean()), 2),
+                }
+            )
         strong = [s["choice"] for s in scores if s["dark_coverage"] >= thresholds.marked_coverage]
         traces = [s["choice"] for s in scores if s["trace_coverage"] >= thresholds.trace_coverage]
         answer = None
         if len(strong) > 1:
-            status, reason, candidates = "multiple", "multiple_dark_marks", sorted(set(strong + traces))
+            status, reason, candidates = (
+                "multiple",
+                "multiple_dark_marks",
+                sorted(set(strong + traces)),
+            )
         elif len(strong) == 1 and not set(traces) - set(strong):
             status, reason, candidates, answer = "single", "one_clear_mark", strong, strong[0]
         elif traces or strong:
-            status, reason, candidates = "uncertain", "weak_or_competing_marks", sorted(set(strong + traces))
+            status, reason, candidates = (
+                "uncertain",
+                "weak_or_competing_marks",
+                sorted(set(strong + traces)),
+            )
         else:
             status, reason, candidates = "blank", "no_detectable_mark", []
-        return {"section": section.id, "question": question, "status": status, "answer": answer,
-                "candidates": candidates, "reason": reason, "scores": scores}
+        return {
+            "section": section.id,
+            "question": question,
+            "status": status,
+            "answer": answer,
+            "candidates": candidates,
+            "reason": reason,
+            "scores": scores,
+        }
 
     @staticmethod
     def annotate(preview, section, answer):
@@ -201,5 +264,12 @@ class Engine:
             selected = choice == answer["answer"] or choice in answer["candidates"]
             cv2.ellipse(preview, center, axes, 0, 0, 360, color, 2 if selected else 1)
         first = section.center(question, 1)
-        cv2.putText(preview, str(question), (round(first[0])-5, round(first[1]-section.bubble_radius[1])-4),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.3, color, 1)
+        cv2.putText(
+            preview,
+            str(question),
+            (round(first[0]) - 5, round(first[1] - section.bubble_radius[1]) - 4),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.3,
+            color,
+            1,
+        )

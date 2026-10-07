@@ -22,13 +22,16 @@ def calibrate(reference, layout: Layout, output: Path) -> Template:
     if not ok:
         raise ValueError("Could not encode reference")
     data = encoded.tobytes()
-    template = Template(**layout.model_dump(), reference=reference_path.name,
-                        reference_sha256=hashlib.sha256(data).hexdigest())
+    template = Template(
+        **layout.model_dump(),
+        reference=reference_path.name,
+        reference_sha256=hashlib.sha256(data).hexdigest(),
+    )
     Engine(template, reference)  # Fail before writing an unusable template.
     preview = reference.copy()
     for section in template.sections:
         x, y, w, h = (round(v) for v in section.bounds)
-        cv2.rectangle(preview, (x, y), (x+w, y+h), (255, 100, 0), 2)
+        cv2.rectangle(preview, (x, y), (x + w, y + h), (255, 100, 0), 2)
         for q in range(1, section.questions + 1):
             for c in range(1, section.choices + 1):
                 center = tuple(round(v) for v in section.center(q, c))

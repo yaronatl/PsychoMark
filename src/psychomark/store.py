@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from contextlib import contextmanager
-from datetime import datetime, timezone
 import json
-from pathlib import Path
 import sqlite3
 import uuid
+from contextlib import contextmanager
+from datetime import datetime, timezone
+from pathlib import Path
 
 
 def now():
@@ -56,12 +56,19 @@ class Store:
 
     @staticmethod
     def exam_record(row):
-        return {"id": row["id"], "revision": row["revision"], "created_at": row["created_at"],
-                "updated_at": row["updated_at"], "exam": json.loads(row["payload"])}
+        return {
+            "id": row["id"],
+            "revision": row["revision"],
+            "created_at": row["created_at"],
+            "updated_at": row["updated_at"],
+            "exam": json.loads(row["payload"]),
+        }
 
     def list_exams(self):
         with self.connection() as db:
-            rows = db.execute("SELECT e.*, (SELECT COUNT(*) FROM copies c WHERE c.exam_id=e.id) AS copy_count FROM exams e ORDER BY updated_at DESC").fetchall()
+            rows = db.execute(
+                "SELECT e.*, (SELECT COUNT(*) FROM copies c WHERE c.exam_id=e.id) AS copy_count FROM exams e ORDER BY updated_at DESC"
+            ).fetchall()
         return [dict(self.exam_record(row), copy_count=row["copy_count"]) for row in rows]
 
     def get_exam(self, identifier):
@@ -74,22 +81,40 @@ class Store:
     def create_exam(self, payload):
         identifier, timestamp = uuid.uuid4().hex, now()
         with self.connection() as db:
-            db.execute("INSERT INTO exams VALUES (?,1,?,?,?)", (identifier, json.dumps(payload), timestamp, timestamp))
+            db.execute(
+                "INSERT INTO exams VALUES (?,1,?,?,?)",
+                (identifier, json.dumps(payload), timestamp, timestamp),
+            )
         return self.get_exam(identifier)
 
     def update_exam(self, identifier, payload, expected_revision):
         with self.connection() as db:
-            changed = db.execute("UPDATE exams SET payload=?, revision=revision+1, updated_at=? WHERE id=? AND revision=?",
-                                 (json.dumps(payload), now(), identifier, expected_revision)).rowcount
+            changed = db.execute(
+                "UPDATE exams SET payload=?, revision=revision+1, updated_at=? WHERE id=? AND revision=?",
+                (json.dumps(payload), now(), identifier, expected_revision),
+            ).rowcount
             if not changed:
                 raise Conflict("Cet examen a changé. Recharge la page avant de l’enregistrer.")
         return self.get_exam(identifier)
 
     def create_copy(self, identifier, exam, layout, filename, page, extraction):
         with self.connection() as db:
-            db.execute("INSERT INTO copies VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                       (identifier, exam["id"], exam["revision"], json.dumps(exam["exam"]), json.dumps(layout),
-                        filename, page, json.dumps(extraction), "{}", 1, now()))
+            db.execute(
+                "INSERT INTO copies VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    identifier,
+                    exam["id"],
+                    exam["revision"],
+                    json.dumps(exam["exam"]),
+                    json.dumps(layout),
+                    filename,
+                    page,
+                    json.dumps(extraction),
+                    "{}",
+                    1,
+                    now(),
+                ),
+            )
 
     def get_copy(self, identifier):
         with self.connection() as db:
@@ -103,16 +128,25 @@ class Store:
 
     def copy_ids(self, exam_id):
         with self.connection() as db:
-            return [row[0] for row in db.execute("SELECT id FROM copies WHERE exam_id=? ORDER BY created_at DESC", (exam_id,))]
+            return [
+                row[0]
+                for row in db.execute(
+                    "SELECT id FROM copies WHERE exam_id=? ORDER BY created_at DESC", (exam_id,)
+                )
+            ]
 
     def review(self, identifier, review):
         with self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
-            row = db.execute("SELECT reviews, revision FROM copies WHERE id=?", (identifier,)).fetchone()
+            row = db.execute(
+                "SELECT reviews, revision FROM copies WHERE id=?", (identifier,)
+            ).fetchone()
             if row is None:
                 raise KeyError(identifier)
             if row["revision"] != review.expected_revision:
-                raise Conflict("Cette copie a changé. Recharge-la avant de poursuivre la vérification.")
+                raise Conflict(
+                    "Cette copie a changé. Recharge-la avant de poursuivre la vérification."
+                )
             reviews = json.loads(row["reviews"])
             key = f"{review.section}:{review.question}"
             previous = reviews.get(key)
@@ -121,12 +155,34 @@ class Store:
                 reviews.pop(key, None)
             else:
                 reviews[key] = decision
-            db.execute("UPDATE copies SET reviews=?, revision=revision+1 WHERE id=?", (json.dumps(reviews), identifier))
-            db.execute("INSERT INTO review_events(copy_id,revision,section,question,previous,decision,created_at) VALUES(?,?,?,?,?,?,?)",
-                       (identifier, row["revision"]+1, review.section, review.question,
-                        json.dumps(previous), json.dumps(decision), now()))
+            db.execute(
+                "UPDATE copies SET reviews=?, revision=revision+1 WHERE id=?",
+                (json.dumps(reviews), identifier),
+            )
+            db.execute(
+                "INSERT INTO review_events(copy_id,revision,section,question,previous,decision,created_at) VALUES(?,?,?,?,?,?,?)",
+                (
+                    identifier,
+                    row["revision"] + 1,
+                    review.section,
+                    review.question,
+                    json.dumps(previous),
+                    json.dumps(decision),
+                    now(),
+                ),
+            )
 
     def history(self, identifier):
         with self.connection() as db:
-            rows = db.execute("SELECT revision,section,question,previous,decision,created_at FROM review_events WHERE copy_id=? ORDER BY revision", (identifier,)).fetchall()
-        return [{**dict(row), "previous": json.loads(row["previous"]), "decision": json.loads(row["decision"])} for row in rows]
+            rows = db.execute(
+                "SELECT revision,section,question,previous,decision,created_at FROM review_events WHERE copy_id=? ORDER BY revision",
+                (identifier,),
+            ).fetchall()
+        return [
+            {
+                **dict(row),
+                "previous": json.loads(row["previous"]),
+                "decision": json.loads(row["decision"]),
+            }
+            for row in rows
+        ]

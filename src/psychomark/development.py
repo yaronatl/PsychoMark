@@ -2,8 +2,8 @@
 
 import hashlib
 import os
-from pathlib import Path
 import re
+from pathlib import Path
 
 
 def codespaces_origin(port: int) -> str | None:
@@ -13,7 +13,14 @@ def codespaces_origin(port: int) -> str | None:
     domain = os.environ.get("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN", "")
     if not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", name):
         return None
-    if not domain or len(domain) > 253 or not all(re.fullmatch(r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", label) and len(label) <= 63 for label in domain.split(".")):
+    if (
+        not domain
+        or len(domain) > 253
+        or not all(
+            re.fullmatch(r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", label) and len(label) <= 63
+            for label in domain.split(".")
+        )
+    ):
         return None
     return f"https://{name}-{port}.{domain}"
 
@@ -21,7 +28,11 @@ def codespaces_origin(port: int) -> str | None:
 def source_revision(root: Path) -> str:
     digest = hashlib.sha256()
     for path in sorted(root.rglob("*")):
-        if path.is_file() and path.suffix in {".py", ".js", ".css", ".html", ".svg"} and "__pycache__" not in path.parts:
+        if (
+            path.is_file()
+            and path.suffix in {".py", ".js", ".css", ".html", ".svg"}
+            and "__pycache__" not in path.parts
+        ):
             try:
                 data = path.read_bytes()
             except FileNotFoundError:

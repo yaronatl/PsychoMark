@@ -19,7 +19,9 @@ class Assessment(Exam):
         limits = {s.id: s.choices for s in template.sections}
         for sid, questions in self.sections.items():
             if set(self.answer_key[sid]) != {str(q) for q in questions}:
-                raise ValueError(f"Le corrigé de la section {sid} doit couvrir chaque question sélectionnée.")
+                raise ValueError(
+                    f"Le corrigé de la section {sid} doit couvrir chaque question sélectionnée."
+                )
             if any(choice > limits[sid] for choice in self.answer_key[sid].values()):
                 raise ValueError(f"Choix hors limites dans la section {sid}.")
 
@@ -37,7 +39,9 @@ class Review(ConfigModel):
     @model_validator(mode="after")
     def choice_value(self):
         if (self.decision == "choice") != (self.answer is not None):
-            raise ValueError("Une réponse est nécessaire uniquement pour une décision de type choice.")
+            raise ValueError(
+                "Une réponse est nécessaire uniquement pour une décision de type choice."
+            )
         return self
 
     def validate_for(self, assessment: Assessment, layout: Layout):
@@ -53,7 +57,9 @@ def grade(assessment: Assessment, extraction: dict, reviews: dict) -> dict:
     rows = []
     for sid, questions in assessment.sections.items():
         for q in questions:
-            original = detected.get((sid, q), {"status": "unreadable", "answer": None, "reason": "missing_result"})
+            original = detected.get(
+                (sid, q), {"status": "unreadable", "answer": None, "reason": "missing_result"}
+            )
             review = reviews.get(f"{sid}:{q}")
             answer = review["answer"] if review else original["answer"]
             status = review["decision"] if review else original["status"]
@@ -66,16 +72,36 @@ def grade(assessment: Assessment, extraction: dict, reviews: dict) -> dict:
                 verdict = "incorrect"
             else:
                 verdict = "pending"
-            rows.append({"section": sid, "question": q, "expected": expected,
-                         "detected_status": original["status"], "detected_answer": original["answer"],
-                         "answer": answer if verdict != "pending" else None, "verdict": verdict,
-                         "reviewed": review is not None, "decision": status,
-                         "reason": original.get("reason"), "candidates": original.get("candidates", [])})
+            rows.append(
+                {
+                    "section": sid,
+                    "question": q,
+                    "expected": expected,
+                    "detected_status": original["status"],
+                    "detected_answer": original["answer"],
+                    "answer": answer if verdict != "pending" else None,
+                    "verdict": verdict,
+                    "reviewed": review is not None,
+                    "decision": status,
+                    "reason": original.get("reason"),
+                    "candidates": original.get("candidates", []),
+                }
+            )
     total = len(rows)
-    counts = {state: sum(row["verdict"] == state for row in rows) for state in ["correct", "incorrect", "blank", "pending"]}
+    counts = {
+        state: sum(row["verdict"] == state for row in rows)
+        for state in ["correct", "incorrect", "blank", "pending"]
+    }
     correct, pending = counts["correct"], counts["pending"]
-    return {"status": "provisional" if pending else "final", "total": total, **counts,
-            "points": None if pending else correct, "max_points": total,
-            "percentage": None if pending else round(100 * correct / total, 2),
-            "out_of_20": None if pending else round(20 * correct / total, 2),
-            "min_points": correct, "max_possible_points": correct + pending, "rows": rows}
+    return {
+        "status": "provisional" if pending else "final",
+        "total": total,
+        **counts,
+        "points": None if pending else correct,
+        "max_points": total,
+        "percentage": None if pending else round(100 * correct / total, 2),
+        "out_of_20": None if pending else round(20 * correct / total, 2),
+        "min_points": correct,
+        "max_possible_points": correct + pending,
+        "rows": rows,
+    }

@@ -28,11 +28,22 @@ def test_source_revision_includes_assets_but_ignores_generated_data(tmp_path):
 def test_private_forwarded_origin_can_write_without_accepting_arbitrary_hosts(sheet, tmp_path):
     origin = "https://example-codespace-8000.app.github.dev"
     app = create_app(tmp_path, [sheet["template_path"]], external_origin=origin)
-    exam = {"name": "Proxy test", "template_id": sheet["layout"].template_id,
-            "sections": {"1": [1]}, "answer_key": {"1": {"1": 2}}}
+    exam = {
+        "name": "Proxy test",
+        "template_id": sheet["layout"].template_id,
+        "sections": {"1": [1]},
+        "answer_key": {"1": {"1": 2}},
+    }
     with TestClient(app) as client:
         assert client.post("/api/exams", json=exam, headers={"Origin": origin}).status_code == 201
-        assert client.post("/api/exams", json=exam, headers={"Origin": "https://evil.example", "X-Forwarded-Host": "evil.example"}).status_code == 403
+        assert (
+            client.post(
+                "/api/exams",
+                json=exam,
+                headers={"Origin": "https://evil.example", "X-Forwarded-Host": "evil.example"},
+            ).status_code
+            == 403
+        )
         assert client.get("/api/health").json() == {"app": "psychomark", "development": False}
         assert client.get("/api/dev/revision").status_code == 404
         assert "live.js" not in client.get("/").text

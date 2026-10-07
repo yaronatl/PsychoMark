@@ -11,20 +11,29 @@ from psychomark.engine import Engine
 
 
 def decisions(result):
-    return [{key: a[key] for key in ("section", "question", "status", "answer")} for a in result["answers"]]
+    return [
+        {key: a[key] for key in ("section", "question", "status", "answer")}
+        for a in result["answers"]
+    ]
 
 
 def test_all_240_questions_with_fills_ticks_crosses_blanks_and_erasure_traces(sheet):
     result, preview = sheet["engine"].analyze(sheet["filled"])
     assert decisions(result) == sheet["truth"]
     assert Counter(a["status"] for a in result["answers"]) == {
-        "single": 208, "multiple": 8, "uncertain": 16, "blank": 8}
+        "single": 208,
+        "multiple": 8,
+        "uncertain": 16,
+        "blank": 8,
+    }
     assert result["status"] == "needs_review"
     assert preview.shape == sheet["filled"].shape
     assert not np.array_equal(preview, sheet["filled"])
 
 
-@pytest.mark.parametrize("rotation", [cv2.ROTATE_90_CLOCKWISE, cv2.ROTATE_180, cv2.ROTATE_90_COUNTERCLOCKWISE])
+@pytest.mark.parametrize(
+    "rotation", [cv2.ROTATE_90_CLOCKWISE, cv2.ROTATE_180, cv2.ROTATE_90_COUNTERCLOCKWISE]
+)
 def test_right_angle_rotations_keep_question_mapping(sheet, rotation):
     result, _ = sheet["engine"].analyze(cv2.rotate(sheet["filled"], rotation))
     assert decisions(result) == sheet["truth"]
@@ -84,7 +93,7 @@ def test_cut_off_bottom_section_is_rejected(sheet):
 def test_frame_damage_blocks_just_the_affected_active_section(sheet):
     source = sheet["filled"].copy()
     x, y, w, h = (int(v) for v in sheet["layout"].sections[0].bounds)
-    cv2.rectangle(source, (x, y), (x+w, y+h), (255, 255, 255), 10)
+    cv2.rectangle(source, (x, y), (x + w, y + h), (255, 255, 255), 10)
     result, _ = sheet["engine"].analyze(source)
     assert all(a["status"] == "unreadable" for a in result["answers"] if a["section"] == "1")
     assert any(a["status"] == "single" for a in result["answers"] if a["section"] == "8")
@@ -93,7 +102,7 @@ def test_frame_damage_blocks_just_the_affected_active_section(sheet):
 def test_locally_blurred_bubbles_are_not_read_as_blank_despite_sharp_frame(sheet):
     source = sheet["filled"].copy()
     x, y, w, h = (int(v) for v in sheet["layout"].sections[0].bounds)
-    region = (slice(y+22, y+h-5), slice(x+5, x+w-5))
+    region = (slice(y + 22, y + h - 5), slice(x + 5, x + w - 5))
     source[region] = cv2.GaussianBlur(source[region], (0, 0), 5)
     result, _ = sheet["engine"].analyze(source)
     assert all(a["status"] == "unreadable" for a in result["answers"] if a["section"] == "1")

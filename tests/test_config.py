@@ -21,7 +21,9 @@ def test_exam_for_another_template_rejected(sheet):
         Exam(template_id="other", sections={"1": [1]}).validate_for(sheet["layout"])
 
 
-@pytest.mark.parametrize("change", ["overlap", "outside", "duplicate", "unknown_field", "nonfinite"])
+@pytest.mark.parametrize(
+    "change", ["overlap", "outside", "duplicate", "unknown_field", "nonfinite"]
+)
 def test_bad_geometry_fails_before_analysis(change):
     value = make_layout().model_dump()
     if change == "overlap":
