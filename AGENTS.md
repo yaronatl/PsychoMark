@@ -19,6 +19,10 @@ Vérifier `git status` avant toute modification ; préserver le travail existant
   puis charger uniquement le ou les SKILL.md pertinents. Les inspirations et décisions
   de l'utilisateur priment sur leurs styles par défaut. Installer un skill ne décide
   pas d'une migration React/Tailwind/shadcn et ne déclenche pas une refonte.
+- Référence visuelle principale : Renance, fichier `HEg1RfvbwAIpjJa.avif` fourni par
+  l'utilisateur. Lire [la direction visuelle](docs/product/visual-direction.md) et ouvrir
+  l'original conservé avant une tâche UI ; distinguer les préférences confirmées des
+  propositions encore ouvertes. Ne pas mélanger les références à parts égales.
 
 ## Communication avec l'utilisateur
 

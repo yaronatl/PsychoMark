@@ -9,8 +9,10 @@ La présence de HTML/CSS/JS natifs décrit le prototype, pas le futur design sys
 Les six [skills de design sélectionnés par l'utilisateur](../development/design-tools.md)
 sont maintenant installés dans le dépôt. Le skill shadcn prépare son utilisation éventuelle ;
 il ne signifie pas que ses composants sont déjà intégrés ou que la stack frontend est décidée.
-Les inspirations précises restent attendues. À réception, enregistrer les références et
-ce qu'on en retient avant de modifier l'interface. Une demande de retouche ne remplace pas
+Les premières inspirations ont été reçues : **Renance (`HEg1RfvbwAIpjJa`) est la référence
+préférée de l'utilisateur**. Lire la [direction visuelle](visual-direction.md) et les
+[originaux conservés](references/README.md) avant de modifier l'interface. La traduction
+en palette, typographie et écrans est encore une proposition. Une demande de retouche ne remplace pas
 implicitement toute la direction visuelle. Les recommandations des skills restent subordonnées
 à ces références et aux choix explicites de l'utilisateur.
 

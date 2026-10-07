@@ -11,7 +11,7 @@ Les étapes sont ordonnées par dépendance ; ce ne sont pas des promesses de da
 | Modèle réel pilote | À faire, attend les fichiers autorisés | Feuille vierge calibrée et copies annotées manuellement |
 | Mesure de fiabilité | À faire | Rapport reproductible sur un jeu réservé, erreurs et charge humaine mesurées |
 | Renforcement du moteur | À définir selon les erreurs | Comparaison avant/après sur le même protocole ; IA spécialisée seulement si utile |
-| Évolution visuelle | Attend les choix de l'utilisateur | Bibliothèque et design validés, parcours et accessibilité testés |
+| Évolution visuelle | Inspirations reçues, Renance prioritaire ; traduction proposée | Bibliothèque et design validés, parcours et accessibilité testés |
 | Pilote entreprise | À cadrer | Usage, volume, données, fiabilité et exploitation acceptés avec le pilote |
 | SaaS multi-entreprises | Non implémenté | Authentification, isolation, stockage, migrations et restauration éprouvés |
 

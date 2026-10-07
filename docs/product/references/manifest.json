@@ -1,0 +1,22 @@
+{
+  "received": "2026-10-08",
+  "timezone": "Asia/Jerusalem",
+  "preferred": "HEg1RfvbwAIpjJa.avif",
+  "files": [
+    {
+      "filename": "HEg1RfvbwAIpjJa.avif",
+      "bytes": 3957781,
+      "sha256": "d93f9c0f2c16294cb982c9bfb0078e1fd72428098dd1b413513a1f854189aad3"
+    },
+    {
+      "filename": "HHEr1HiaIAAhGLw.avif",
+      "bytes": 546933,
+      "sha256": "fcce974d3673baf8b2f8c672960ee99d75a3891d509f64cfb6cd186750908e25"
+    },
+    {
+      "filename": "Z07pUWrefPf7Wknj-optimized.mp4",
+      "bytes": 10684830,
+      "sha256": "eb7b995f628cd5fce545e402cc96ff2cf95d232a585e7c0ad760f4969bec5422"
+    }
+  ]
+}

@@ -17,6 +17,7 @@ Pour reprendre le développement : [état actuel](memory/current.md) →
 | `development/` | [Stack](development/stack.md), [workflow](development/workflow.md), [validation](development/testing.md), [données](development/data.md) |
 | Outils visuels | [Skills installés et connexion Be UI](development/design-tools.md) |
 | `product/` | [Priorités](product/roadmap.md) et [choix visuels](product/ui.md) |
+| Inspirations | [Direction Renance](product/visual-direction.md) et [originaux](product/references/README.md) |
 | `memory/` | [Protocole de reprise](memory/README.md), [état courant](memory/current.md), [sessions](memory/sessions/README.md) |
 | `templates/` | Modèles de [session](templates/session.md) et de [décision](templates/decision.md) |
 

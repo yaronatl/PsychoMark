@@ -7,6 +7,7 @@
 | 2026-10-07 | [01](2026-10-07-01-project-foundation.md) | Organisation, mémoire, stack et workflow de qualité |
 | 2026-10-07 | [02](2026-10-07-02-design-skills.md) | Six skills de design installés, configuration Be UI préparée |
 | 2026-10-08¹ | [01](2026-10-08-01-beui-access.md) | Accès Be UI vérifié sans écriture dans la configuration globale |
+| 2026-10-08¹ | [02](2026-10-08-02-visual-references.md) | Références originales archivées et direction Renance proposée |
 
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 
