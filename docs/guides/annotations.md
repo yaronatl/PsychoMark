@@ -91,11 +91,19 @@ originale dans une fenêtre dédiée, en plein écran sur téléphone :
   puis de le déplacer avec quatre grandes flèches. Le pas fin vaut 1 pixel de la
   photo source, le pas large 10 pixels, indépendamment du zoom. Un bord ne peut pas
   traverser le bord opposé ou sortir de l’image.
-- **Autres options et coordonnées** contient **Retracer le cadre**, la saisie des
-  quatre bornes et **Reprendre le dernier cadre**. Ce dernier récupère sa taille et
-  sa position : le déplacer sur la question actuelle avant de confirmer. Ce n’est
-  pas un repérage automatique. Le zoom et la position de lecture sont conservés
-  pendant la séance ; les coordonnées saisies doivent être appliquées explicitement.
+- **Réutiliser l’ancien cadre** est directement visible au-dessus de la photo. Par
+  défaut, **À droite** reprend le dernier cadre appliqué sur cette copie et le décale
+  de sa propre largeur ; sa hauteur et sa position verticale restent identiques.
+  **À gauche** fait le décalage inverse ; **Même endroit** retrouve la position initiale.
+  Deux appuis successifs repartent du même ancien cadre : ils ne sautent pas deux questions.
+  Le bouton est désactivé tant qu’aucun cadre n’a été appliqué dans cette séance.
+- Ce décalage est une proposition pour les questions côte à côte, pas une détection.
+  Vérifier les espaces entre colonnes et le numéro de question. Au changement de
+  section/ligne, choisir **Même endroit** puis déplacer le cadre. Un décalage hors de
+  la photo est refusé sans modifier ni couper le cadre actuel.
+- **Autres options et coordonnées** contient **Retracer le cadre** et la saisie des
+  quatre bornes. Le zoom et la position de lecture sont conservés pendant la séance ;
+  les coordonnées saisies doivent être appliquées explicitement.
 - **Utiliser ce cadre** confirme explicitement la position de cette question et montre
   son extrait immédiatement. **Annuler** ou Échap abandonne les changements de la fenêtre.
 

@@ -6,11 +6,12 @@ export function openCropEditor({image, bounds, previousBounds, title, viewport, 
   const arrow=path=>`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="${path}"/></svg>`;
   dialog.innerHTML=`<header><h2 id="crop-title"></h2><button type="button" class="button" data-crop="cancel">Annuler</button></header>
     <div class="crop-tools"><button type="button" class="button" data-crop="pan" aria-label="Déplacer la photo">Photo</button><button type="button" class="button" data-crop="adjust" aria-label="Modifier le cadre">Cadre</button><label>Zoom <select aria-label="Zoom de la photo">${[1,2,3,5,8,12].map(v=>`<option value="${v}">${v*100} %</option>`).join("")}</select></label><button type="button" class="button" data-crop="focus">Agrandir le cadre</button></div>
+    <div class="crop-reuse"><button type="button" class="button" data-crop="reuse" ${previousBounds?"":"disabled"}>Réutiliser l’ancien cadre</button><select aria-label="Position du cadre réutilisé" ${previousBounds?"":"disabled"}><option value="right">À droite</option><option value="same">Même endroit</option><option value="left">À gauche</option></select></div>
     <p class="crop-hint" role="status"></p>
     <div class="crop-viewport"><div class="crop-stage"><canvas aria-label="Photo à cadrer. Pincez pour zoomer. Des boutons d’ajustement sont disponibles sous l’image."></canvas>${["haut gauche","haut droit","bas gauche","bas droit"].map((name,i)=>`<button type="button" class="crop-handle" data-handle="${i}" aria-label="Ajuster le coin ${name}" hidden><span aria-hidden="true"></span></button>`).join("")}</div></div>
     <details class="crop-fine"><summary>Ajuster avec les boutons</summary><div class="crop-fine-tools"><label>À déplacer<select aria-label="Partie du cadre"><option value="frame">Tout le cadre</option><option value="left">Bord gauche</option><option value="right">Bord droit</option><option value="top">Bord haut</option><option value="bottom">Bord bas</option></select></label><label>Pas<select aria-label="Précision du déplacement"><option value="1">Fin · 1 px</option><option value="10">Large · 10 px</option></select></label></div>
     <div class="crop-nudges">${[["left","Vers la gauche","M19 12H5m7-7-7 7 7 7"],["up","Vers le haut","M12 19V5m-7 7 7-7 7 7"],["down","Vers le bas","M12 5v14m-7-7 7 7 7-7"],["right","Vers la droite","M5 12h14m-7-7 7 7-7 7"]].map(([dir,label,path])=>`<button type="button" class="button" data-nudge="${dir}" aria-label="${label}">${arrow(path)}</button>`).join("")}</div></details>
-    <details class="crop-keyboard"><summary>Autres options et coordonnées</summary><div class="crop-extra"><button type="button" class="button" data-crop="new">Retracer le cadre</button><button type="button" class="button" data-crop="reuse" ${previousBounds?"":"disabled"}>Reprendre le dernier cadre</button></div><div class="corpus-coordinates">${["Gauche","Haut","Droite","Bas"].map((label,i)=>`<label class="field">${label}<input type="number" data-crop-bound="${i}" min="0" step="1"></label>`).join("")}</div><button type="button" class="button" data-crop="coordinates">Appliquer les coordonnées</button></details>
+    <details class="crop-keyboard"><summary>Autres options et coordonnées</summary><div class="crop-extra"><button type="button" class="button" data-crop="new">Retracer le cadre</button></div><div class="corpus-coordinates">${["Gauche","Haut","Droite","Bas"].map((label,i)=>`<label class="field">${label}<input type="number" data-crop-bound="${i}" min="0" step="1"></label>`).join("")}</div><button type="button" class="button" data-crop="coordinates">Appliquer les coordonnées</button></details>
     <p class="error" role="alert" tabindex="-1"></p>
     <footer><span>Vérifiez la question et tous ses choix.</span><button type="button" class="button primary" data-crop="apply">Utiliser ce cadre</button></footer>`;
   dialog.querySelector("h2").textContent=title;
@@ -181,7 +182,18 @@ export function openCropEditor({image, bounds, previousBounds, title, viewport, 
       if(action==="new")$(".crop-keyboard").open=false;
     }
     if(action==="focus")focusCrop();
-    if(action==="reuse"&&previousBounds) {draft=[...previousBounds];mode="adjust";sync();$(".crop-keyboard").open=false;focusCrop();}
+    if(action==="reuse"&&previousBounds) {
+      if(pointers.size){error("Terminez le geste avant de réutiliser le cadre.");return;}
+      if(coordinatesDirty){error("Appliquez les coordonnées avant de réutiliser le cadre.");return;}
+      const position=$("[aria-label='Position du cadre réutilisé']").value;
+      // Always start from the last applied rectangle: repeated taps must not advance it again.
+      const [x0,y0,x1,y1]=previousBounds,step=x1-x0;
+      const dx=position==="right"?step:position==="left"?-step:0;
+      const candidate=[x0+dx,y0,x1+dx,y1];
+      if(!valid(candidate)){error("Ce décalage dépasse la photo. Choisissez « Même endroit », puis déplacez le cadre manuellement.");return;}
+      draft=candidate;mode="adjust";sync();$(".crop-keyboard").open=false;focusCrop();
+      $(".crop-hint").textContent=position==="same"?"Ancien cadre repris. Déplacez-le sur la question avant de confirmer.":"Cadre décalé d’une largeur. Vérifiez la question et ajustez sa position avant de confirmer.";
+    }
     if(action==="coordinates") {
       const candidate=fields.map(el=>el.value===""?NaN:Number(el.value));
       if(!valid(candidate)){error("Renseignez quatre coordonnées entières délimitant un cadre dans la photo.");return;}

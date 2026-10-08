@@ -20,6 +20,8 @@
 
 | 2026-10-08 | [12](2026-10-08-12-touch-crop-precision.md) | Cadrage mobile précis : poignées déportées, pincement, centrage et réglage des bords |
 
+| 2026-10-08 | [13](2026-10-08-13-reuse-next-crop.md) | Réemploi visible du cadre et décalage d’une largeur pour la question suivante |
+
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 
 Les étapes antérieures sont présentes dans le commit initial `ad0b4bc` ; aucun journal

@@ -212,6 +212,9 @@ def exercise_mobile_corpus(parent: Page, base: str, acquisition: str, output: Pa
     )
     page.get_by_role("button", name="Ajuster le cadre", exact=True).tap()
     expect(page.get_by_role("dialog")).to_be_visible()
+    expect(
+        page.get_by_role("button", name="Réutiliser l’ancien cadre", exact=True)
+    ).to_be_disabled()
     page.get_by_label("Zoom de la photo", exact=True).select_option("3")
     page.locator(".crop-viewport").evaluate("el=>{el.scrollLeft=0;el.scrollTop=0}")
     box = page.locator(".crop-stage canvas").bounding_box()
@@ -311,9 +314,24 @@ def exercise_mobile_corpus(parent: Page, base: str, acquisition: str, output: Pa
     expect(page.locator("#corpus-position")).not_to_be_checked()
     # The previous size is opt-in and cancellable; no mark or confirmation carries over.
     page.get_by_role("button", name="Ajuster le cadre", exact=True).tap()
-    page.get_by_text("Autres options et coordonnées", exact=True).tap()
-    page.get_by_role("button", name="Reprendre le dernier cadre", exact=True).tap()
+    reuse = page.get_by_role("button", name="Réutiliser l’ancien cadre", exact=True)
+    expect(reuse).to_be_in_viewport()
+    reuse.tap()
+    step = resized[2] - resized[0]
+    shifted = [resized[0] + step, resized[1], resized[2] + step, resized[3]]
+    assert bounds() == shifted
+    reuse.tap()
+    assert bounds() == shifted, "Repeated taps must not skip another question"
+    page.get_by_label("Position du cadre réutilisé", exact=True).select_option("left")
+    reuse.tap()
+    expect(page.locator(".crop-editor .error")).to_contain_text("dépasse la photo")
+    assert bounds() == shifted, "Out-of-image reuse must not clip or change the draft"
+    page.get_by_label("Position du cadre réutilisé", exact=True).select_option("same")
+    reuse.tap()
     assert bounds() == resized
+    page.get_by_label("Position du cadre réutilisé", exact=True).select_option("right")
+    reuse.tap()
+    page.screenshot(path=str(output / "corpus-crop-reuse.png"))
     page.get_by_role("button", name="Annuler", exact=True).tap()
     assert page.evaluate("window.psychomarkCanReload()") is True
     page.get_by_role("button", name="Revoir la dernière", exact=True).tap()

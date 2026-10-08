@@ -150,3 +150,12 @@ body:has(.crop-editor[open]) { overflow: hidden; }
 .crop-handle[data-handle="2"]::before { transform: rotate(-45deg); }
 .crop-handle[data-handle="3"]::before { transform: rotate(-135deg); }
 .crop-handle span { position: relative; }
+
+.crop-reuse { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; padding: 0 20px 4px; flex-shrink: 0; }
+.crop-reuse .button { min-height: 44px; white-space: normal; }
+.crop-reuse select { min-width: 0; max-width: 150px; }
+@media (max-width:580px) {
+  .crop-reuse { padding-inline: 12px; }
+  .crop-reuse .button { padding-inline: 8px; }
+  .crop-reuse select { max-width: 130px; }
+}
