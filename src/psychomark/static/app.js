@@ -1,15 +1,17 @@
 "use strict";
 
 import { mountSheetBuilder, sheetList } from "./sheets.js";
+import { mountCorpus } from "./corpus.js";
 
 import { renderLanding } from "./landing.js";
 import { showBusyLabel } from "./motion.js";
 
 const main = document.querySelector("#main");
 const state = {templates: [], draft: null, exam: null, copy: null, filter: "all", selected: null, busy: false, dirty: false};
-let sheetController=null, previousHash=location.hash;
-window.psychomarkCanReload = () => !state.busy && !state.dirty && (!sheetController || sheetController.canReload());
-window.addEventListener("beforeunload",event=>{if(sheetController&&!sheetController.canReload()){event.preventDefault();event.returnValue="";}});
+let sheetController=null, corpusController=null, previousHash=location.hash;
+const controllersReady = () => (!sheetController || sheetController.canReload()) && (!corpusController || corpusController.canReload());
+window.psychomarkCanReload = () => !state.busy && !state.dirty && controllersReady();
+window.addEventListener("beforeunload",event=>{if(!controllersReady()){event.preventDefault();event.returnValue="";}});
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const number = value => value == null ? "—" : new Intl.NumberFormat("fr-FR", {maximumFractionDigits: 2}).format(value);
 const date = value => new Date(value).toLocaleDateString("fr-FR", {day:"numeric", month:"short", year:"numeric"});
@@ -145,10 +147,10 @@ function focusReviewOnSmallScreen() {
   panel?.scrollIntoView({block:"start",behavior:"instant"});
 }
 async function route() {
-  if(sheetController && location.hash!==previousHash && !sheetController.canReload() && !confirm("Des repères ne sont pas sauvegardés ou une opération est en cours. Quitter cette feuille ?")) {
+  if(location.hash!==previousHash && !controllersReady() && !confirm("Des modifications ne sont pas sauvegardées ou une opération est en cours. Quitter cette page ?")) {
     history.replaceState(null,"",previousHash||"#/home");return;
   }
-  sheetController?.dispose();sheetController=null;previousHash=location.hash;
+  sheetController?.dispose();sheetController=null;corpusController?.dispose();corpusController=null;previousHash=location.hash;
   state.dirty=false;
   const version=++routeVersion, path=(location.hash.slice(1)||"/home").split("/").filter(Boolean);
   const landing=path[0]==="home";
@@ -160,8 +162,9 @@ async function route() {
     return;
   }
   document.querySelector("#nav-new").classList.toggle("active",["new","edit"].includes(path[0]));
-  document.querySelector("#nav-exams").classList.toggle("active",!["new","edit","sheets"].includes(path[0]));
+  document.querySelector("#nav-exams").classList.toggle("active",!["new","edit","sheets","annotations"].includes(path[0]));
   document.querySelector("#nav-sheets").classList.toggle("active",path[0]==="sheets");
+  document.querySelector("#nav-annotations").classList.toggle("active",path[0]==="annotations");
   main.innerHTML='<div class="loading" role="status">Chargement…</div>';
   try {
     state.templates=await api("/api/templates");
@@ -171,6 +174,7 @@ async function route() {
       if(path[1])sheetController=mountSheetBuilder(main,path[1]);
       else {const html=await sheetList();if(version===routeVersion)main.innerHTML=html;}
     }
+    else if(path[0]==="annotations") {corpusController=mountCorpus(main,path[1],state.templates);}
     else if(path[0]==="new") {state.exam=null;state.draft=newDraft(template(path[1])||state.templates[0]);renderEditor();}
     else if(path[0]==="edit") {const e=await api(`/api/exams/${path[1]}`);if(version!==routeVersion)return;state.exam=e;state.draft=structuredClone(e.exam);renderEditor();}
     else if(path[0]==="exam") {const e=await api(`/api/exams/${path[1]}`);if(version!==routeVersion)return;renderExam(e);}

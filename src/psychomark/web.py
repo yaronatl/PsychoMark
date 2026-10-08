@@ -21,6 +21,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import Field
 
 from .config import ConfigModel, Layout
+from .corpus import corpus_router
 from .demo import create_demo
 from .development import codespaces_origin, source_revision
 from .engine import Engine
@@ -68,6 +69,7 @@ def create_app(
     app.state.store = store
     app.state.engines = engines
     app.include_router(sheet_router(library, engines, OMR_LOCK))
+    app.include_router(corpus_router(data_dir, engines, OMR_LOCK))
 
     @app.get("/api/health")
     def health():

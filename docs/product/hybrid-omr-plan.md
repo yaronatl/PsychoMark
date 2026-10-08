@@ -1,6 +1,6 @@
 # Plan de développement — OMR hybride robuste aux photographies
 
-Date utilisateur : 2026-10-08. État : **S01 implémenté ; lots suivants à réaliser**.
+Date utilisateur : 2026-10-08. État : **S01 et outillage S02 implémentés ; collecte et lots suivants à réaliser**.
 
 [Priorités](roadmap.md) · [Architecture actuelle](../architecture/overview.md) ·
 [ADR proposé](../architecture/decisions/0004-hybrid-omr-experiment.md) ·
@@ -104,7 +104,21 @@ Livrable de session : rapport initial, contrats, tests de correspondance et lot 
 État livré : outil offline, rapport local de 90 questions du diagnostic, extraction
 inchangée, géométrie/masques/provenance et annotations laissées vides. Les correspondances
 sont testées sur synthétique ; un contrôle visuel exploratoire ne valide pas l’ensemble
-des positions ni les réponses de la photo. Prochaine session : S02.
+des positions ni les réponses de la photo. L’annotation est maintenant disponible dans S02.
+
+### S02 : outillage d’annotation livré
+
+L’espace **Annotations** importe images/PDF ou diagnostics et conserve observations,
+révisions, provenance et groupes privés. Un échec d’alignement permet une annotation
+sur source et un cadre manuel de question, sans inventer de coordonnées validées par
+case. Les doublons de pixels et les usages incohérents d’un groupe sont refusés.
+Voir [le guide](../guides/annotations.md) et [ADR 0005](../architecture/decisions/0005-private-annotation-corpus.md).
+
+Le parcours création/reprise/export est vérifié sur synthétique. Les deux diagnostics
+connus ont été importés en développement, sans autorisation d’entraînement et sans
+labels humains inventés. La collecte d’observations réelles, une seconde lecture
+indépendante et le jeu réservé restent à constituer. Les photos proches doivent être
+regroupées par l’opérateur ; aucun détecteur de quasi-doublons n’est installé.
 
 ### S03/S04 : améliorer les images sans fabriquer de marques
 

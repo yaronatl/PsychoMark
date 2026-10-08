@@ -27,6 +27,9 @@ import, cas en attente, validation humaine, note 12/20, rechargement, CSV et lar
 mobile. Il exerce aussi l’import d’une feuille vierge, le placement des repères,
 la sauvegarde/reprise, l’essai optique et un examen utilisant le nouveau modèle.
 Les repères non sauvegardés protègent la navigation et le rechargement automatique.
+Le parcours couvre aussi l’import d’exemples, la saisie/révision des observations,
+la reprise, le conflit entre fenêtres, le cadrage manuel après échec d’alignement et
+l’export privé. Les tests Python contrôlent les doublons, groupes et archives invalides.
 Ses captures synthétiques vont dans `artifacts/browser/`. Il ne constitue
 pas un audit complet d'accessibilité ou de compatibilité de tous les navigateurs.
 
@@ -38,7 +41,8 @@ en rechargement. Il ne remplace pas une construction Docker et une ouverture de 
 
 ## Évaluer le moteur sur de vraies copies
 
-Le protocole suivant est prévu ; le corpus et l'outil de mesure ne sont pas encore livrés.
+Le [rejeu S01](omr-baseline.md) et l’[outil d’annotation S02](../guides/annotations.md)
+sont disponibles. La collecte humaine et l’évaluation indépendante restent à réaliser.
 
 1. Constituer un corpus autorisé et identifier chaque modèle de feuille/version.
 2. Établir une vérité de référence par vérification humaine. Conserver « indéterminable »

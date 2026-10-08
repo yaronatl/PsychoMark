@@ -32,6 +32,9 @@ Pour vos propres feuilles, commencer par **Mes feuilles → Ajouter une feuille*
 [Le guide de création](sheets.md) explique les repères, la vérification et l’essai
 sans terminal. Les modèles enregistrés sont immédiatement proposés dans les examens.
 
+Pour préparer les exemples du futur lecteur hybride, utiliser **Annotations**.
+[Le guide dédié](annotations.md) décrit ce parcours séparé de la notation.
+
 Parcours normal :
 
 1. **Créer un examen** : nom, modèle, sections actives et questions (par exemple
@@ -76,9 +79,9 @@ Pour utiliser vos modèles calibrés ou un autre dossier de données :
 ```
 
 Sans `--template`, une feuille synthétique est générée au premier démarrage.
-**Elle ne permet pas de lire arbitrairement une photo NITE ou Adar.** L'ajout et
-la calibration de modèles restent des opérations en ligne de commande, décrites
-dans le [guide du moteur](cli.md). Le modèle disponible au moment de l'import doit correspondre à la copie.
+**Elle ne permet pas de lire arbitrairement une photo NITE ou Adar.** L’ajout et
+la calibration sont accessibles dans **Mes feuilles**, ou en ligne de commande via
+le [guide du moteur](cli.md). Le modèle disponible au moment de l'import doit correspondre à la copie.
 
 L'application est un **prototype local pour un seul opérateur**, sans comptes
 ni isolation entre organismes. Elle écoute par défaut sur `127.0.0.1` et ne doit

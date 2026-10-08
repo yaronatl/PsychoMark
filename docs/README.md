@@ -3,7 +3,7 @@
 ## Parcours de lecture
 
 Pour tester : [Codespaces](guides/codespaces.md) → [interface web](guides/web.md) →
-[ajouter une feuille](guides/sheets.md).
+[ajouter une feuille](guides/sheets.md) → [annoter des exemples](guides/annotations.md).
 Pour reprendre le développement : [état actuel](memory/current.md) →
 [architecture](architecture/overview.md) → [stack](development/stack.md) →
 [workflow](development/workflow.md).

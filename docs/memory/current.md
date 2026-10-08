@@ -29,7 +29,11 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 - S01 livré : [outil offline de comparaison](../development/omr-baseline.md), rapport HTML
   local, extraits, masques, provenance et [contrats](../architecture/regions.md). Aucun
-  changement de décision optique ; annotation humaine et modèle ML à venir.
+  changement de décision optique.
+- S02 livré : **Annotations** (`#/annotations`), import d’exemples, labels humains
+  révisables, source/cadrage manuel après échec d’alignement, groupes et exports privés.
+  [Guide](../guides/annotations.md), [ADR 0005](../architecture/decisions/0005-private-annotation-corpus.md).
+  Collecte réelle et ML restent à faire.
 
 ## Limites et choix ouverts
 
@@ -46,17 +50,17 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : analyser le deuxième diagnostic, photographie de photocopie monochrome.**
+**Demande actuelle : poursuivre S02 et appliquer les skills visuels installés.**
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
-est soutenue par l’utilisateur ; S01 est implémenté, aucune implémentation ML
+est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-08-09-monochrome-diagnostic.md) et vérifier Git.
-La branche documentaire est `docs/monochrome-findings`, issue de `feat/omr-baseline`.
-S01 reste livré sur `feat/omr-baseline`. L’assistant et ses diagnostics sont
-sur `feat/sheet-builder` ; publier une branche ne synchronise pas le Codespace distinct
-ni ne prouve une fusion dans `main`.
+Consulter [la dernière session](sessions/2026-10-08-10-annotation-corpus.md) et vérifier Git.
+Branche de cette livraison : `feat/annotation-corpus`, issue de
+`docs/monochrome-findings` (`dfaa622`). Les changements précédents sont inclus par
+ascendance. Publier cette branche ne synchronise pas le Codespace distinct et ne
+prouve pas une fusion dans `main`.
 
 Le diagnostic fourni reste dans `artifacts/private/photo-diagnostic/`, hors Git.
 L’alignement réussit et la netteté passe. La résolution des cases et la correspondance
@@ -72,10 +76,13 @@ leurs masques et leur provenance. Les 90 refus historiques sont conservés. Rapp
 privé : `artifacts/private/baselines/s01-photo-v1/summary.md` et `review.html` ; aucune
 image réelle ajoutée à Git. Les labels humains sont vides, la précision reste non mesurée.
 
-Prochain lot : **S02, données et annotation humaine**. Préparer une saisie accessible,
-les identifiants de feuilles physiques et les groupes d’apprentissage/évaluation.
-S03 (recalage local) peut avancer sur des fichiers distincts, avec les contrats S01.
-Ce cas connu sert au développement, pas au test final indépendant.
+Prochain lot : **S03, recalage local**, puis comparaison des traitements S04.
+La collecte peut commencer dans **Annotations → Ajouter une copie**, sans scripts.
+Les deux diagnostics connus ont été importés dans un dossier de vérification privé
+isolé, 90 questions chacun, aucune annotation humaine ni autorisation d’entraînement.
+Le premier fournit 90 extraits proposés ; le second exige une lecture sur source ou
+un cadrage manuel. Ce sont des cas de développement, pas un test final indépendant.
+Le moteur optique et ses refus restent inchangés dans S02.
 
 Second diagnostic disponible sous `artifacts/private/monochrome-diagnostic/`, rapport
 historique sous `artifacts/private/baselines/s01-monochrome-v1/`. Référence inchangée,
@@ -83,10 +90,12 @@ photo différente. Refus global reproduit : repères cohérents concentrés sur 
 de la référence, seuil 12 %. Une normalisation avant ORB passe en expérience privée
 les contrôles globaux et locaux, mais donne 76 `multiple` et 14 `uncertain` : aucune
 lecture automatique validée. Ne pas présenter cette expérience comme un correctif actif.
-S02 doit permettre d’annoter la source lorsque le recalage historique échoue, sans
+S02 permet d’annoter la source lorsque le recalage historique échoue, sans
 inventer des régions validées. Les deux cas sont du développement connu, pas un test final.
 
 La normalisation locale d’éclairage existe déjà. Mesurer son apport avant de la modifier.
 Le futur modèle ne reçoit jamais le corrigé et démarre en observation, sans effet sur
 les notes. PyTorch est seulement proposé pour S06, aucune dépendance ML installée.
-L’interface et sa direction papier/encre restent hors du périmètre de ce plan.
+L’écran S02 réutilise la direction papier/encre et les composants natifs. Les skills
+frontend-design, Emil, Impeccable et UI UX Pro Max ont guidé la finition ; Be UI Button
+a été consulté. Shadcn et Taste n’ont pas entraîné de migration React ou de refonte.

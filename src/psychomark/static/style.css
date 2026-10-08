@@ -303,7 +303,7 @@ summary { font-size: 13px; font-weight: 500; }
 @media (max-width: 800px) {
   .sidebar { position: static; width: auto; padding: 18px 24px; border-right: 0; border-bottom: 1px solid var(--line); }
   .sidebar .brand small, .sidebar-bottom { display: none; }
-  .sidebar nav { display: flex; margin-top: 18px; gap: 12px; }
+  .sidebar nav { display: flex; flex-wrap: wrap; margin-top: 18px; gap: 12px; }
   .sidebar nav a { padding: 8px 12px; }
   .workspace { margin-left: 0; }
   .topbar { height: 56px; margin-inline: 24px; }

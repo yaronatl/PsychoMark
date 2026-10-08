@@ -1,0 +1,27 @@
+/* Annotation workbench: existing paper/ink tokens, neutral scan surfaces. */
+.corpus-message:empty { display: none; }
+.corpus-message { color: var(--green); }
+.corpus-import { max-width: 850px; }
+.corpus-import > .field { margin-bottom: 18px; }
+.corpus-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
+.corpus-toolbar .field { min-width: 250px; flex: 1; max-width: 450px; }
+.corpus-layout { display: grid; grid-template-columns: minmax(0,1fr) 350px; gap: 28px; align-items: start; }
+.corpus-images { min-width: 0; }
+.corpus-crops { display: flex; gap: 24px; align-items: start; padding: 24px; margin-bottom: 24px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: auto; }
+.corpus-crops figure { margin: 0; flex: 1; min-width: 105px; }
+.corpus-crops figcaption { color: var(--muted); font-size: 12px; margin-bottom: 16px; }
+.corpus-crops img { display: block; min-height: 140px; max-height: 330px; max-width: 100%; width: auto; object-fit: contain; object-position: left top; image-rendering: pixelated; }
+.corpus-mark { display: grid; grid-template-columns: 75px minmax(0,1fr); align-items: center; gap: 12px; margin-top: 10px; }
+.corpus-mark select { width: 100%; min-width: 0; }
+.corpus-observation { padding: 22px; }
+.corpus-observation fieldset { padding: 0; border: 0; }
+.corpus-observation legend { font-weight: 550; }
+.corpus-conclusion { padding: 12px 0; margin: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.corpus textarea { width: 100%; resize: vertical; padding: 10px 12px; color: var(--ink); background: var(--surface); border: 1px solid #b4bdab; border-radius: 6px; }
+.corpus-source-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 14px; }
+.corpus-source-scroll { width: 100%; max-height: 650px; overflow: auto; border: 1px solid var(--line); background: #fff; }
+#corpus-source-canvas { display: block; width: 100%; height: auto; cursor: crosshair; }
+.corpus-coordinates { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; margin: 16px 0; }
+.corpus .notice { margin: 0 0 22px; }
+@media (max-width:1100px) { .corpus-layout { grid-template-columns: minmax(0,1fr); } .corpus-observation { max-width: none; } }
+@media (max-width:580px) { .corpus-toolbar .field { min-width: 0; flex-basis: 100%; } .corpus-crops { padding: 14px; gap: 14px; } .corpus-coordinates { grid-template-columns: repeat(2,minmax(0,1fr)); } .corpus-observation { padding: 18px; } }

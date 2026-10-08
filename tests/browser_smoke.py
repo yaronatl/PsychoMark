@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 
 import httpx
+from browser_corpus import exercise_corpus
 from browser_sheets import exercise_sheets
 from playwright.sync_api import expect, sync_playwright
 
@@ -178,12 +179,18 @@ def main():
                     expect(page.get_by_role("button", name="Valider et recalculer")).to_be_visible()
                     assert page.locator("style[data-torph]").count() == 0, "Torph must clean up"
                     exercise_sheets(page, base, root, args.output)
+                    exercise_corpus(page, base, root, args.output)
+                    # The corpus deliberately submits one stale revision and asserts its 409.
+                    expected_conflict = "Failed to load resource: the server responded with a status of 409 (Conflict)"
+                    assert errors.count(expected_conflict) == 1, errors
+                    errors.remove(expected_conflict)
                     assert not errors, errors
                     browser.close()
                 print(
                     "Browser workflow passed: landing, keyboard, responsive, reduced motion, "
                     "create exam, upload, review, final 12/20, persistence, CSV, real demo, "
-                    "manual sheet calibration, test and exam using the new template."
+                    "manual sheet calibration, test and exam using the new template, corpus annotation, "
+                    "manual crops, stale revisions and private export."
                 )
             finally:
                 process.terminate()
