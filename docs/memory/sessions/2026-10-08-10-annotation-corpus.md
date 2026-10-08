@@ -68,3 +68,8 @@ Le cadrage manuel valide une question, pas chacune de ses cases. Métadonnées f
 pas de détection de quasi-doublons ni d’accord inter-annotateurs automatisé. Aucun
 modèle ML entraîné. Prochain lot technique : S03, puis comparaisons photographiques S04.
 Publication de branche et synchronisation du Codespace sont des opérations distinctes.
+
+Publication : commit `48715cf` poussé sur `origin/feat/annotation-corpus`. La création
+automatique de PR via `gh pr create` échoue : `Post https://api.github.com/graphql:
+Forbidden`. La branche est disponible sur GitHub ; aucune PR créée, fusion dans
+`main` ou synchronisation du Codespace n’est annoncée.

@@ -57,10 +57,11 @@ est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, 
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
 Consulter [la dernière session](sessions/2026-10-08-10-annotation-corpus.md) et vérifier Git.
-Branche de cette livraison : `feat/annotation-corpus`, issue de
+Branche publiée : `feat/annotation-corpus` (implémentation `48715cf`), issue de
 `docs/monochrome-findings` (`dfaa622`). Les changements précédents sont inclus par
 ascendance. Publier cette branche ne synchronise pas le Codespace distinct et ne
-prouve pas une fusion dans `main`.
+prouve pas une fusion dans `main`. La création de PR par l’API GitHub reste refusée
+(`Forbidden`) ; aucune PR créée pour S02.
 
 Le diagnostic fourni reste dans `artifacts/private/photo-diagnostic/`, hors Git.
 L’alignement réussit et la netteté passe. La résolution des cases et la correspondance
