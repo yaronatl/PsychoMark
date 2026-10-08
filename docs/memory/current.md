@@ -105,6 +105,8 @@ Codespace de ce dépôt accessible à cette session ; les nouvelles annotations 
 sont pas récupérées automatiquement.
 La [PR S05 #2](https://github.com/yaronatl/PsychoMark/pull/2) est ouverte en brouillon
 sur la branche de #1 pour isoler les changements S05. Les deux PR restent non fusionnées.
+La [PR S06 #3](https://github.com/yaronatl/PsychoMark/pull/3) est créée en brouillon
+sur `feat/classic-reader` ; code S06 publié au commit `00312ba`. Aucune fusion réalisée.
 
 Le diagnostic fourni reste dans `artifacts/private/photo-diagnostic/`, hors Git.
 L’alignement réussit et la netteté passe. La résolution des cases et la correspondance
