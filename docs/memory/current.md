@@ -33,6 +33,12 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
+**Priorité actuelle : prendre en charge la feuille NITE montrée par l’utilisateur**
+comme modèle fourni avec le produit, avant un assistant générique de création de modèles.
+Lire [le cadrage du pilote](../product/nite-pilot.md). Le PNG est visible dans le chat,
+mais son fichier n’est pas accessible au programme ici ; demander le fichier téléchargeable
+ou le PDF source pour calibrer. Ne pas annoncer de compatibilité NITE à ce stade.
+
 Consulter [la dernière session](sessions/2026-10-08-03-paper-ink-proposal.md) et Git.
 Recueillir le retour visuel sur l’accueil et la correction, puis affiner dans la direction
 exprimée. Les captures de revue sont locales sous `.impeccable/review/` (ignorées par Git).
