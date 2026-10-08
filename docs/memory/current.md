@@ -96,6 +96,8 @@ autorisé dans le réseau et son accès testé. La création automatique de la
 était un blocage réseau avant GitHub. La liste API des Codespaces n’a retourné aucun
 Codespace de ce dépôt accessible à cette session ; les nouvelles annotations ne
 sont pas récupérées automatiquement.
+La [PR S05 #2](https://github.com/yaronatl/PsychoMark/pull/2) est ouverte en brouillon
+sur la branche de #1 pour isoler les changements S05. Les deux PR restent non fusionnées.
 
 Le diagnostic fourni reste dans `artifacts/private/photo-diagnostic/`, hors Git.
 L’alignement réussit et la netteté passe. La résolution des cases et la correspondance
