@@ -37,7 +37,7 @@
 .corpus-savebar .primary { flex: 1; }
 .corpus-secondary { margin-top: 32px; }
 .corpus .notice { margin: 0 0 22px; }
-.corpus button { touch-action: manipulation; }
+.corpus button, .crop-editor :is(button,summary) { touch-action: manipulation; }
 .corpus-coordinates { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; margin: 12px 0; }
 /* Protected focus for precision cropping; native dialog handles Escape and focus containment. */
 .crop-editor { width: min(1100px,96vw); max-width: none; height: 94dvh; max-height: none; margin: auto; padding: 0; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--paper); }
@@ -51,7 +51,7 @@
 .crop-editor .crop-hint { padding: 0 20px 12px; }
 .crop-viewport { flex: 1; min-height: 100px; overflow: auto; overscroll-behavior: contain; background: #fff; margin-inline: 20px; border: 1px solid var(--line); }
 .crop-viewport canvas { display: block; height: auto; max-width: none; touch-action: none; cursor: crosshair; }
-.crop-viewport canvas.is-panning { touch-action: pan-x pan-y pinch-zoom; cursor: grab; }
+
 .crop-keyboard { padding: 8px 20px; max-height: 35dvh; overflow: auto; }
 .crop-keyboard summary { padding-block: 10px; }
 .crop-editor .error:not(:empty) { margin: 0 20px 8px; }
@@ -113,3 +113,40 @@ body:has(.crop-editor[open]) { overflow: hidden; }
   .corpus-toolbar select { padding-inline: 6px; font-size: 14px; }
   .corpus-confirm { margin-top: 0; margin-bottom: 14px; padding-block: 0; }
 }
+/* Large handles live outside the image corners; precision controls need no dragging. */
+.crop-viewport { padding: 48px; touch-action: none; }
+.crop-stage { position: relative; width: 100%; }
+.crop-stage canvas { width: 100%; }
+.crop-handle { position: absolute; width: 48px; height: 48px; padding: 0; border: 0; background: transparent; transform: translate(-50%,-50%); display: grid; place-items: center; touch-action: none; cursor: nwse-resize; }
+.crop-handle span { display: block; width: 30px; height: 30px; border: 3px solid var(--red); border-radius: 50%; background: var(--surface); }
+.crop-handle[data-handle="1"], .crop-handle[data-handle="2"] { cursor: nesw-resize; }
+.crop-handle:active { transform: translate(-50%,-50%) !important; }
+.crop-handle:focus-visible { outline-offset: 0; }
+.crop-fine, .crop-keyboard { flex-shrink: 0; padding: 4px 20px; max-height: 32dvh; overflow: auto; }
+.crop-fine summary { padding-block: 10px; }
+.crop-fine-tools, .crop-extra { display: flex; gap: 10px; flex-wrap: wrap; }
+.crop-fine-tools label { flex: 1; min-width: 120px; font-size: 13px; }
+.crop-fine-tools select { display: block; width: 100%; }
+.crop-nudges { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; margin: 10px 0; }
+.crop-nudges .button { min-height: 48px; padding: 8px; }
+.crop-tools select { max-width: 110px; }
+.crop-editor header, .crop-tools, .crop-editor footer, .crop-hint { flex-shrink: 0; }
+@media (max-width:580px) {
+  .crop-fine, .crop-keyboard { padding-inline: 12px; }
+  .crop-tools { gap: 6px; }
+  .crop-tools .button { min-height: 44px; padding-inline: 10px; }
+  .crop-editor footer span { display: none; }
+  .crop-editor footer .primary { width: 100%; }
+  .crop-editor .crop-hint { font-size: 12px; line-height: 1.4; }
+}
+@media (max-height:500px) {
+  .crop-editor { overflow-y: auto; }
+  .crop-viewport { flex: 0 0 230px; }
+  .crop-editor .crop-hint { display: none; }
+  .crop-editor footer { position: sticky; bottom: 0; background: var(--paper); }
+}
+.crop-handle::before { content: ""; position: absolute; left: 50%; top: 50%; width: 34px; height: 2px; background: var(--red); transform-origin: 0 50%; transform: rotate(45deg); pointer-events: none; }
+.crop-handle[data-handle="1"]::before { transform: rotate(135deg); }
+.crop-handle[data-handle="2"]::before { transform: rotate(-45deg); }
+.crop-handle[data-handle="3"]::before { transform: rotate(-135deg); }
+.crop-handle span { position: relative; }

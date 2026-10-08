@@ -78,15 +78,24 @@ hors ligne et rien n’est entraîné automatiquement.
 **Cadrer cette question**, **Ouvrir la photo** ou **Ajuster le cadre** ouvre la photo
 originale dans une fenêtre dédiée, en plein écran sur téléphone :
 
-- En mode **Cadrer**, glisser d’un coin au coin opposé pour tracer le rectangle.
-- Glisser **à l’intérieur** pour le déplacer ; utiliser un **coin** pour changer sa taille.
-- Choisir le zoom, puis **Déplacer la photo** pour faire défiler l’image sans déplacer
-  le rectangle. Revenir à **Cadrer** pour modifier la sélection.
-- **Reprendre le dernier cadre** récupère sa taille et sa position sur cette photo.
-  Le déplacer sur la question actuelle avant de confirmer. Ce n’est pas un repérage
-  automatique ; le zoom et la position de lecture sont également conservés pendant la séance.
-- **Coordonnées / alternative au glissement** permet de renseigner les quatre bornes
-  puis de les appliquer, au clavier ou par appuis simples sur les champs.
+- Sans cadre, glisser d’un coin au coin opposé pour tracer le rectangle.
+- En mode **Cadre**, glisser à l’intérieur pour déplacer le rectangle. Les quatre
+  grandes poignées (zones tactiles de 48 px) sont déportées vers l’extérieur pour
+  éviter de cacher les coins avec le doigt ; les tirer pour redimensionner.
+- Glisser à côté du cadre pour déplacer la photo, ou choisir **Photo** pour la
+  déplacer depuis n’importe quel endroit sans toucher au rectangle.
+- **Pincer à deux doigts** zoome et déplace la photo. Le menu Zoom propose aussi des
+  grossissements jusqu’à 1 200 %. **Agrandir le cadre** centre la sélection et adapte
+  le zoom à l’écran. Le zoom n’ajoute aucun détail à la photo et ne modifie pas les bornes.
+- **Ajuster avec les boutons** permet de choisir le cadre entier ou un seul bord,
+  puis de le déplacer avec quatre grandes flèches. Le pas fin vaut 1 pixel de la
+  photo source, le pas large 10 pixels, indépendamment du zoom. Un bord ne peut pas
+  traverser le bord opposé ou sortir de l’image.
+- **Autres options et coordonnées** contient **Retracer le cadre**, la saisie des
+  quatre bornes et **Reprendre le dernier cadre**. Ce dernier récupère sa taille et
+  sa position : le déplacer sur la question actuelle avant de confirmer. Ce n’est
+  pas un repérage automatique. Le zoom et la position de lecture sont conservés
+  pendant la séance ; les coordonnées saisies doivent être appliquées explicitement.
 - **Utiliser ce cadre** confirme explicitement la position de cette question et montre
   son extrait immédiatement. **Annuler** ou Échap abandonne les changements de la fenêtre.
 

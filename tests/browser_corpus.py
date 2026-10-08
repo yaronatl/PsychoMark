@@ -135,7 +135,7 @@ def exercise_corpus(page: Page, base: str, root: Path, output: Path) -> None:
     for index in range(4):
         page.locator(f'[data-mark="{index}"]').select_option("unreadable")
     page.get_by_role("button", name="Cadrer cette question", exact=True).click()
-    page.get_by_text("Coordonnées / alternative au glissement", exact=True).click()
+    page.get_by_text("Autres options et coordonnées", exact=True).click()
     for index, value in enumerate([10, 20, 80, 140]):
         page.locator(f'[data-crop-bound="{index}"]').fill(str(value))
     page.get_by_role("button", name="Utiliser ce cadre", exact=True).click()
@@ -214,7 +214,7 @@ def exercise_mobile_corpus(parent: Page, base: str, acquisition: str, output: Pa
     expect(page.get_by_role("dialog")).to_be_visible()
     page.get_by_label("Zoom de la photo", exact=True).select_option("3")
     page.locator(".crop-viewport").evaluate("el=>{el.scrollLeft=0;el.scrollTop=0}")
-    box = page.locator(".crop-viewport").bounding_box()
+    box = page.locator(".crop-stage canvas").bounding_box()
     x, y = box["x"] + 30, box["y"] + 25
     drag(x, y, x + 100, y + 120)
     first = bounds()
@@ -223,27 +223,67 @@ def exercise_mobile_corpus(parent: Page, base: str, acquisition: str, output: Pa
     drag(x + 50, y + 60, x + 70, y + 80)
     moved = bounds()
     assert moved[0] > first[0] and moved[2] - moved[0] == first[2] - first[0]
-    drag(x + 120, y + 140, x + 140, y + 160)
+    handle = page.locator('[data-handle="3"]').bounding_box()
+    assert handle["width"] >= 48 and handle["height"] >= 48
+    hx, hy = handle["x"] + handle["width"] / 2, handle["y"] + handle["height"] / 2
+    drag(hx, hy, hx + 20, hy + 20)
     resized = bounds()
     assert resized[2] > moved[2] and resized[3] > moved[3]
     drag(x + 70, y + 80, x + 80, y + 90, cancel=True)
     assert bounds() == resized, "Cancelled touch must restore the previous rectangle"
+    # Fine controls move one edge in source pixels, not screen pixels, at any zoom.
+    page.get_by_text("Ajuster avec les boutons", exact=True).tap()
+    page.get_by_label("Partie du cadre", exact=True).select_option("right")
+    page.get_by_role("button", name="Vers la droite", exact=True).tap()
+    assert bounds() == [resized[0], resized[1], resized[2] + 1, resized[3]]
+    page.get_by_role("button", name="Vers la gauche", exact=True).tap()
+    assert bounds() == resized
+    # Large steps stop at a one-pixel width rather than crossing the opposite edge.
+    page.get_by_label("Précision du déplacement", exact=True).select_option("10")
+    for _ in range((resized[2] - resized[0]) // 10 + 2):
+        page.get_by_role("button", name="Vers la gauche", exact=True).tap()
+    assert bounds()[2] == resized[0] + 1
+    page.get_by_label("Précision du déplacement", exact=True).select_option("1")
+    page.get_by_text("Ajuster avec les boutons", exact=True).tap()
+    page.get_by_text("Autres options et coordonnées", exact=True).tap()
+    page.locator('[data-crop-bound="2"]').fill(str(resized[2]))
+    page.get_by_role("button", name="Appliquer les coordonnées", exact=True).tap()
+    page.get_by_text("Autres options et coordonnées", exact=True).tap()
+    page.get_by_text("Ajuster avec les boutons", exact=True).tap()
+    page.screenshot(path=str(output / "corpus-crop-fine.png"))
+    expect(page.get_by_role("button", name="Vers le haut", exact=True)).to_be_disabled()
+    page.get_by_label("Partie du cadre", exact=True).select_option("frame")
+    page.get_by_text("Ajuster avec les boutons", exact=True).tap()
+    # Two fingers zoom the image, never the saved rectangle.
+    pane = page.locator(".crop-viewport").bounding_box()
+    cx, cy = pane["x"] + pane["width"] / 2, pane["y"] + pane["height"] / 2
+    cdp.send(
+        "Input.dispatchTouchEvent",
+        {
+            "type": "touchStart",
+            "touchPoints": [{"id": 1, "x": cx - 30, "y": cy}, {"id": 2, "x": cx + 30, "y": cy}],
+        },
+    )
+    cdp.send(
+        "Input.dispatchTouchEvent",
+        {
+            "type": "touchMove",
+            "touchPoints": [{"id": 1, "x": cx - 55, "y": cy}, {"id": 2, "x": cx + 55, "y": cy}],
+        },
+    )
+    cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+    assert float(page.get_by_label("Zoom de la photo", exact=True).input_value()) > 3
+    assert bounds() == resized
+    page.get_by_role("button", name="Agrandir le cadre", exact=True).tap()
+    assert bounds() == resized
     page.screenshot(path=str(output / "corpus-touch-crop.png"))
     # Pan mode must scroll the image without changing the crop.
     page.get_by_role("button", name="Déplacer la photo", exact=True).tap()
     before = page.locator(".crop-viewport").evaluate("el=>el.scrollTop")
-    drag(x + 50, y + 150, x + 50, y + 40)
+    drag(cx, cy + 30, cx, cy - 70)
     page.wait_for_function("document.querySelector('.crop-viewport').scrollTop > 0")
     assert page.locator(".crop-viewport").evaluate("el=>el.scrollTop") > before
     assert bounds() == resized
-    # Native scrolling may consume the next tap while momentum is still running.
-    page.locator(".crop-viewport").evaluate("""async el => {
-        let previous=el.scrollTop, stable=0;
-        for(let i=0;i<180 && stable<6;i++) {
-            await new Promise(requestAnimationFrame);
-            stable=el.scrollTop===previous?stable+1:0; previous=el.scrollTop;
-        }
-    }""")
     page.get_by_role("button", name="Utiliser ce cadre", exact=True).tap()
     expect(page.get_by_role("dialog")).not_to_be_visible()
     expect(page.locator("#corpus-position")).to_be_checked()
@@ -271,6 +311,7 @@ def exercise_mobile_corpus(parent: Page, base: str, acquisition: str, output: Pa
     expect(page.locator("#corpus-position")).not_to_be_checked()
     # The previous size is opt-in and cancellable; no mark or confirmation carries over.
     page.get_by_role("button", name="Ajuster le cadre", exact=True).tap()
+    page.get_by_text("Autres options et coordonnées", exact=True).tap()
     page.get_by_role("button", name="Reprendre le dernier cadre", exact=True).tap()
     assert bounds() == resized
     page.get_by_role("button", name="Annuler", exact=True).tap()
@@ -285,6 +326,10 @@ def exercise_mobile_corpus(parent: Page, base: str, acquisition: str, output: Pa
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (
             f"Overflow at {width}"
         )
+        page.get_by_role("button", name="Ajuster le cadre", exact=True).tap()
+        assert page.locator(".crop-editor").evaluate("el=>el.scrollWidth <= el.clientWidth")
+        page.get_by_role("button", name="Agrandir le cadre", exact=True).tap()
+        page.get_by_role("button", name="Annuler", exact=True).tap()
         if width == 390:
             page.evaluate("scrollTo(0,0)")
             page.screenshot(path=str(output / "corpus-fast-mobile.png"), full_page=True)

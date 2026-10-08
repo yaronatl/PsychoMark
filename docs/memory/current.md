@@ -37,6 +37,8 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 - Annotation mobile accélérée : numéros pour les réponses uniques, absence en un
   appui, cadre par glissement avec déplacement/redimensionnement, réemploi explicite
   du dernier cadre, alias retenu par onglet et bouton de sauvegarde fixe sur téléphone.
+  Poignées déportées de 48 px, zoom à deux doigts, centrage et réglage par bord avec
+  boutons de précision disponibles après le premier retour mobile.
   Les ambiguïtés restent détaillées ; aucune confirmation ou marque n’est propagée.
 
 ## Limites et choix ouverts
@@ -60,7 +62,7 @@ contrats, données, critères de passage et répartition des agents. L’orienta
 est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-08-11-fast-mobile-annotation.md) et vérifier Git.
+Consulter [la dernière session](sessions/2026-10-08-12-touch-crop-precision.md) et vérifier Git.
 Branche : `feat/annotation-corpus` (S02 initial : `48715cf`, puis adaptation mobile), issue de
 `docs/monochrome-findings` (`dfaa622`). Les changements précédents sont inclus par
 ascendance. Publier cette branche ne synchronise pas le Codespace distinct et ne

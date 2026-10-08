@@ -31,7 +31,10 @@ Le parcours couvre aussi l’import d’exemples, la saisie/révision des observ
 la reprise, le conflit entre fenêtres, le cadrage manuel après échec d’alignement et
 l’export privé. Un contexte Chromium avec `has_touch` exerce de vrais événements
 tactiles synthétisés : tracé, déplacement, redimensionnement, annulation du geste,
-défilement en mode photo, réemploi d’un cadre et double appui pendant une sauvegarde.
+défilement en mode photo, zoom à deux doigts, centrage, réglage fin d’un bord et butée
+à un pixel, réemploi d’un cadre et double appui pendant une sauvegarde. La validation
+après déplacement se fait dès le premier appui. Le cadrage est aussi ouvert à 320/390 px
+et en paysage ; ces essais Chromium ne remplacent pas un essai Safari sur iPhone.
 Les raccourcis clavier sont vérifiés hors des champs. Ce test n’est pas un essai sur
 un téléphone physique ni une validation Safari/iOS. Les tests Python contrôlent les doublons, groupes et archives invalides.
 Ses captures synthétiques vont dans `artifacts/browser/`. Il ne constitue

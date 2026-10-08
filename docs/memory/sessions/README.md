@@ -18,6 +18,8 @@
 | 2026-10-08 | [10](2026-10-08-10-annotation-corpus.md) | S02 : corpus privé, annotations révisables, cadrage manuel, groupes et exports |
 | 2026-10-08 | [11](2026-10-08-11-fast-mobile-annotation.md) | Annotation mobile rapide, cadre tactile, réemploi, raccourcis et protections de saisie |
 
+| 2026-10-08 | [12](2026-10-08-12-touch-crop-precision.md) | Cadrage mobile précis : poignées déportées, pincement, centrage et réglage des bords |
+
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 
 Les étapes antérieures sont présentes dans le commit initial `ad0b4bc` ; aucun journal
