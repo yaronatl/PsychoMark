@@ -26,6 +26,7 @@
 
 | 2026-10-09¹ | [01](2026-10-09-01-annotation-flow.md) | Mode enchaîné : cadre proposé, raccourcis clavier et validation en deux actions |
 | 2026-10-09¹ | [02](2026-10-09-02-s04-photometry.md) | S04 : sept variantes photographiques à géométrie fixe, comparaison et limites sur deux photos |
+| 2026-10-09¹ | [03](2026-10-09-03-s05-reader.md) | GitHub débloqué, PR #1 créée ; lecteur S05 avec abstention, gain réel non établi |
 
 ¹ Date utilisateur Asia/Jerusalem ; peut différer de la date UTC du début d’intervention.
 
