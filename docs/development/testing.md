@@ -66,3 +66,9 @@ sont disponibles. La collecte humaine et l’évaluation indépendante restent �
 Les seuils optiques ne sont pas des probabilités calibrées. Aucun seuil commercial
 d'acceptation ni taux réel n'est annoncé avant ces mesures. Un gain d'automatisation
 qui augmente les erreurs silencieuses doit être visible dans le bilan.
+
+Le parcours `browser_annotation_flow.py` vérifie aussi le mode enchaîné : proposition
+issue d’un cadre sauvegardé, chiffre + Entrée, AZERTY/pavé numérique, déplacement au
+clavier, retour du focus depuis le cadrage, réponse non propagée, erreur réseau avec
+reprise, touche Entrée maintenue, séparation des sections, préférences après rechargement
+et deux appuis tactiles avec commandes persistantes. Toutes les données sont synthétiques.

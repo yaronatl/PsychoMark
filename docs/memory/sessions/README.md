@@ -24,7 +24,9 @@
 
 | 2026-10-08 | [14](2026-10-08-14-s03-geometry.md) | 40 annotations vérifiées, comparaison S03 de géométrie et normalisation avant ORB |
 
-¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
+| 2026-10-09¹ | [01](2026-10-09-01-annotation-flow.md) | Mode enchaîné : cadre proposé, raccourcis clavier et validation en deux actions |
+
+¹ Date utilisateur Asia/Jerusalem ; peut différer de la date UTC du début d’intervention.
 
 Les étapes antérieures sont présentes dans le commit initial `ad0b4bc` ; aucun journal
 de session rétroactif n'est inventé pour les présenter comme documentées à l'époque.

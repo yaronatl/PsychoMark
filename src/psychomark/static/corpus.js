@@ -31,6 +31,8 @@ export function mountCorpus(container, identifier, templates) {
   let reviewer="",editor=null,previousBounds=null,editorViewport=null,lastSavedIndex=null;
   try {reviewer=sessionStorage.getItem("psychomark-reviewer")||"";}catch { /* Storage can be unavailable. */ }
   if(!/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(reviewer))reviewer="";
+  let flow=false,proposed=false,flowDirection="right";
+  try {flow=sessionStorage.getItem("psychomark-annotation-flow")==="true";const direction=sessionStorage.getItem("psychomark-flow-direction");if(["right","left","down"].includes(direction))flowDirection=direction;}catch {}
   const active=()=>!disposed&&root.isConnected;
   const $=selector=>root.querySelector(selector);
   const current=()=>item.questions[index];
@@ -90,12 +92,15 @@ export function mountCorpus(container, identifier, templates) {
     if(!active())return;
     document.body.classList.add("corpus-review");
     const q=current(),a=q.annotation;
-    manualBounds=a?.manual_bounds?[...a.manual_bounds]:null;
+    manualBounds=a?.manual_bounds?[...a.manual_bounds]:null;proposed=false;
+    root.classList.toggle("corpus-flow",flow);
     root.innerHTML=`<a class="back" href="#/annotations">Toutes les copies</a>`+frame(`Feuille ${item.physical_sheet_id}`,`${item.completed} / ${item.total} questions observées. ${splitLabels[item.split]}.`)+
       `<div class="corpus-toolbar"><label class="field">Question<select id="corpus-question">${item.questions.map((r,i)=>`<option value="${i}" ${i===index?"selected":""}>Section ${esc(r.section)} · Question ${r.question}${r.annotation?" — enregistrée":""}</option>`).join("")}</select></label><div class="actions"><button class="button" type="button" data-corpus="previous" ${index===0?"disabled":""} aria-label="Précédente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg><span class="corpus-prev-label">Précédente</span></button><button class="button" type="button" data-corpus="next" ${index===item.questions.length-1?"disabled":""}>Passer</button></div></div>
+      <div class="corpus-flow-toggle"><label><input type="checkbox" id="corpus-flow" ${flow?"checked":""}> Mode enchaîné</label><span>Cadre suivant proposé · Entrée confirme le cadre et enregistre</span><select aria-label="Sens d’enchaînement" id="corpus-flow-direction" ${flow?"":"hidden"}>${[["right","Vers la droite"],["left","Vers la gauche"],["down","Vers le bas"]].map(([v,l])=>`<option value="${v}" ${v===flowDirection?"selected":""}>${l}</option>`).join("")}</select></div>
       <div class="corpus-layout"><section class="corpus-images" aria-label="Images de la question"><h2 id="corpus-reading" tabindex="-1">Section ${esc(q.section)} · Question ${q.question}</h2>
-        <div class="corpus-crops"><figure id="corpus-copy-figure"><figcaption id="corpus-crop-caption">${manualBounds?"Extrait placé manuellement":"Extrait proposé · position à vérifier"}</figcaption><img id="corpus-copy-image" ${q.has_crop?`src="${cropURL('copy')}"`:"hidden"} alt="Marques sur la copie, sans annotation du moteur"><canvas id="corpus-manual-preview" hidden aria-label="Aperçu du cadre manuel sur la photo originale"></canvas><div id="corpus-no-crop" ${q.has_crop?"hidden":""}><p>Aucun extrait positionné</p><button class="button primary" type="button" data-corpus="crop">Cadrer cette question</button></div></figure></div>
+        <div class="corpus-crops"><canvas id="corpus-context" hidden aria-label="Contexte de la photo avec le cadre de la question"></canvas><figure id="corpus-copy-figure"><figcaption id="corpus-crop-caption">${manualBounds?"Extrait placé manuellement":"Extrait proposé · position à vérifier"}</figcaption><img id="corpus-copy-image" ${q.has_crop?`src="${cropURL('copy')}"`:"hidden"} alt="Marques sur la copie, sans annotation du moteur"><canvas id="corpus-manual-preview" hidden aria-label="Aperçu du cadre manuel sur la photo originale"></canvas><div id="corpus-no-crop" ${q.has_crop?"hidden":""}><p>Aucun extrait positionné</p><button class="button primary" type="button" data-corpus="crop">Cadrer cette question</button></div></figure></div>
         <div class="corpus-image-actions"><button class="button" type="button" data-corpus="crop">${q.has_crop?"Ajuster le cadre":"Ouvrir la photo"}</button><button class="button" type="button" data-corpus="clear-crop" ${manualBounds?"":"hidden"}>Retirer mon cadre</button></div>
+        <div class="corpus-inline-move" hidden><span>Ajuster le cadre</span>${[["left","gauche","M19 12H5m7-7-7 7 7 7"],["up","haut","M12 19V5m-7 7 7-7 7 7"],["down","bas","M12 5v14m-7-7 7 7 7-7"],["right","droite","M5 12h14m-7-7 7 7-7 7"]].map(([v,label,path])=>`<button type="button" class="button" data-move="${v}" aria-label="Déplacer le cadre : ${label}" title="Déplacer vers ${label}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="${path}"/></svg></button>`).join("")}</div>
         <details class="corpus-reference"><summary>Comparer avec le modèle vierge</summary><img src="${cropURL('reference')}" alt="Emplacement des choix sur le modèle vierge"></details>
       </section><section class="corpus-observation" aria-label="Observation humaine"><form id="corpus-observation" novalidate>
         <label class="corpus-confirm"><input type="checkbox" id="corpus-position" ${a?.geometry==="confirmed"?"checked":""} ${q.has_crop?"":"disabled"}><span>C’est bien la question ${q.question} de la section ${esc(q.section)}, avec tous ses choix.</span></label>
@@ -106,11 +111,28 @@ export function mountCorpus(container, identifier, templates) {
         <details id="corpus-more" ${!reviewer?"open":""}><summary>Relecture et options${reviewer?` · ${esc(reviewer)}`:""}</summary><label class="field">Votre identifiant de relecture<input name="reviewer" aria-label="Votre identifiant de relecture" maxlength="80" pattern="[A-Za-z0-9](?:[A-Za-z0-9_]|-){0,79}" value="${esc(reviewer)}" placeholder="Ex. correcteur-1"><small>Un alias, retenu dans cet onglet. Aucun nom d’élève.</small></label>
         <label class="field">Position de la question<select name="geometry" aria-label="Position de la question"><option value="">À vérifier</option><option value="confirmed" ${a?.geometry==="confirmed"?"selected":""}>L’extrait contient bien cette question</option><option value="source_only" ${a?.geometry==="source_only"?"selected":""}>J’ai lu directement sur la photo entière</option><option value="incorrect" ${a?.geometry==="incorrect"?"selected":""}>L’extrait est mal placé</option></select></label>
         <label class="field">Note de relecture (facultatif)<textarea name="notes" rows="2" maxlength="2000">${esc(a?.notes||"")}</textarea></label></details>
-        <div class="corpus-savebar"><button class="button" type="button" data-corpus="last" ${lastSavedIndex===null?"hidden":""}>Revoir la dernière</button><button class="button primary" type="submit">Enregistrer et continuer</button></div>
+        <div class="corpus-savebar"><button class="button" type="button" data-corpus="last" ${lastSavedIndex===null?"hidden":""}>Revoir la dernière</button><button class="button primary" type="submit" id="corpus-save">${flow?"Confirmer et continuer":"Enregistrer et continuer"}</button></div>
       </form></section></div>
-      <div class="corpus-secondary"><p class="muted corpus-shortcuts">Clavier : 1–9, 0 pour aucune marque, Entrée pour enregistrer. Les raccourcis sont inactifs pendant la saisie d’un champ.</p><a class="button" href="/api/corpus/${item.id}/export" download>Exporter cette copie</a>
+      <div class="corpus-secondary"><p class="muted corpus-shortcuts">Clavier : chiffres ou pavé numérique pour les choix, 0 pour aucune marque, Entrée pour enregistrer, C pour cadrer, flèches pour déplacer (Maj : 10 px). Les raccourcis sont inactifs pendant la saisie d’un champ.</p><a class="button" href="/api/corpus/${item.id}/export" download>Exporter cette copie</a>
       <details class="block-gap"><summary>Historique des observations (${item.history.length})</summary><ol class="history">${item.history.map(h=>`<li>${esc(h.after?.reviewer||"")} · section ${esc(h.section)} · question ${h.question} · ${esc(h.after?.recorded_at||"")}</li>`).join("")||'<li>Aucune observation enregistrée.</li>'}</ol></details></div>`;
     updateConclusion();loadPhoto();
+  }
+  function proposeNext() {
+    if(!flow||manualBounds||current().annotation||!photo?.naturalWidth)return;
+    const prior=item.questions[index-1],q=current(),a=prior?.annotation;
+    if(!a?.manual_bounds||a.geometry!=="confirmed"||prior.section!==q.section||prior.question+1!==q.question)return;
+    const [x0,y0,x1,y1]=a.manual_bounds,dx=flowDirection==="right"?x1-x0:flowDirection==="left"?x0-x1:0,dy=flowDirection==="down"?y1-y0:0;
+    if(x0+dx<0||x1+dx>photo.naturalWidth||y1+dy>photo.naturalHeight) {message("Le cadre suivant sort de la photo. Cadrez cette question avec C ou le bouton de cadrage.");return;}
+    manualBounds=[x0+dx,y0+dy,x1+dx,y1+dy];proposed=true;
+    $("#corpus-position").disabled=false;$("#corpus-position").checked=false;$("[name=geometry]").value="";
+  }
+  function moveFrame(direction,step=1) {
+    if(!manualBounds||!photo?.naturalWidth)return;
+    const [x0,y0,x1,y1]=manualBounds;
+    const dx=direction==="left"?-step:direction==="right"?step:0,dy=direction==="up"?-step:direction==="down"?step:0;
+    const x=Math.max(-x0,Math.min(photo.naturalWidth-x1,dx)),y=Math.max(-y0,Math.min(photo.naturalHeight-y1,dy));
+    manualBounds=[x0+x,y0+y,x1+x,y1+y];dirty=true;proposed=true;
+    $("#corpus-position").checked=false;$("[name=geometry]").value="";drawPreview();
   }
   function drawPreview() {
     if(!active()||!photo?.naturalWidth||!manualBounds)return;
@@ -119,14 +141,22 @@ export function mountCorpus(container, identifier, templates) {
     canvas.width=x1-x0;canvas.height=y1-y0;
     canvas.getContext("2d").drawImage(photo,x0,y0,x1-x0,y1-y0,0,0,x1-x0,y1-y0);
     canvas.hidden=false;$("#corpus-copy-image").hidden=true;$("#corpus-no-crop").hidden=true;
-    $("#corpus-crop-caption").textContent="Extrait placé manuellement";
+    $("#corpus-crop-caption").textContent=proposed?"Cadre proposé · à vérifier":"Extrait placé manuellement";
+    $(".corpus-inline-move").hidden=!flow;
+    const context=$("#corpus-context");context.hidden=!flow;
+    if(flow) {
+      const w=x1-x0,h=y1-y0,left=Math.max(0,x0-2*w),top=Math.max(0,y0-h/2),right=Math.min(photo.naturalWidth,x1+2*w),bottom=Math.min(photo.naturalHeight,y1+h/4);
+      context.width=Math.ceil(right-left);context.height=Math.ceil(bottom-top);
+      const ctx=context.getContext("2d");ctx.drawImage(photo,left,top,right-left,bottom-top,0,0,context.width,context.height);
+      ctx.strokeStyle="#944838";ctx.lineWidth=Math.max(1,context.height/100);ctx.strokeRect(x0-left,y0-top,w,h);
+    }
     $("[data-corpus=clear-crop]").hidden=false;
   }
   function loadPhoto() {
-    if(photo?.naturalWidth){drawPreview();return;}
+    if(photo?.naturalWidth){proposeNext();drawPreview();return;}
     if(photo)return;
     photo=new Image();
-    photo.onload=()=>{if(active())drawPreview();};
+    photo.onload=()=>{if(active()){proposeNext();drawPreview();}};
     photo.onerror=()=>{photo=null;error("La photo n’a pas pu être affichée. Rechargez la page avant d’annoter.");};
     photo.src=imageURL("source");
   }
@@ -135,8 +165,8 @@ export function mountCorpus(container, identifier, templates) {
     if(!photo?.naturalWidth){error("La photo est encore en chargement. Réessayez dans un instant.");loadPhoto();return;}
     const q=current();
     editor=openCropEditor({image:photo,bounds:manualBounds,previousBounds,viewport:editorViewport,title:`Section ${q.section} · Question ${q.question}`,
-      onApply:bounds=>{manualBounds=bounds;previousBounds=[...bounds];dirty=true;drawPreview();$("#corpus-position").disabled=false;$("#corpus-position").checked=true;$("[name=geometry]").value="confirmed";},
-      onClose:viewport=>{editorViewport=viewport;editor=null;if(active())$("[data-corpus=crop]").focus({preventScroll:true});}});
+      onApply:bounds=>{manualBounds=bounds;previousBounds=[...bounds];dirty=true;proposed=false;drawPreview();$("#corpus-position").disabled=false;$("#corpus-position").checked=true;$("[name=geometry]").value="confirmed";},
+      onClose:viewport=>{editorViewport=viewport;editor=null;if(active())$("#corpus-reading").focus({preventScroll:true});}});
   }
   function goTo(next) {
     if(!keepOrDiscard())return;
@@ -145,6 +175,7 @@ export function mountCorpus(container, identifier, templates) {
   }
   root.addEventListener("click",event=>{
     if(busy)return;
+    const move=event.target.closest("[data-move]");if(move){moveFrame(move.dataset.move);return;}
     const quick=event.target.closest("[data-quick]");if(quick){quickAnswer(Number(quick.dataset.quick));return;}
     const action=event.target.closest("[data-corpus]")?.dataset.corpus;
     if(action==="previous"&&index>0)goTo(index-1);
@@ -152,7 +183,7 @@ export function mountCorpus(container, identifier, templates) {
     if(action==="last"&&lastSavedIndex!==null)goTo(lastSavedIndex);
     if(action==="crop")editCrop();
     if(action==="clear-crop") {
-      manualBounds=null;dirty=true;$("[name=geometry]").value="";$("#corpus-position").checked=false;
+      manualBounds=null;proposed=false;dirty=true;$("#corpus-context").hidden=true;$(".corpus-inline-move").hidden=true;$("[name=geometry]").value="";$("#corpus-position").checked=false;
       // has_crop includes a saved manual crop; only the server can resolve its automatic fallback.
       $("#corpus-position").disabled=true;$("#corpus-manual-preview").hidden=true;$("#corpus-copy-image").hidden=true;$("#corpus-no-crop").hidden=false;
       $("[data-corpus=clear-crop]").hidden=true;message("Cadre retiré. Recadrez la question ou indiquez une lecture sur la photo entière.");
@@ -163,6 +194,14 @@ export function mountCorpus(container, identifier, templates) {
   });
   root.addEventListener("change",event=>{
     const el=event.target;
+    if(el.id==="corpus-flow") {
+      flow=el.checked;root.classList.toggle("corpus-flow",flow);
+      try {sessionStorage.setItem("psychomark-annotation-flow",String(flow));}catch {}
+      $("#corpus-flow-direction").hidden=!flow;$("#corpus-save").textContent=flow?"Confirmer et continuer":"Enregistrer et continuer";
+      $("#corpus-context").hidden=true;$(".corpus-inline-move").hidden=true;proposeNext();drawPreview();
+      $("#corpus-reading").focus({preventScroll:true});
+    }
+    if(el.id==="corpus-flow-direction") {flowDirection=el.value;try {sessionStorage.setItem("psychomark-flow-direction",flowDirection);}catch {}message("Sens modifié pour les prochaines propositions. Le cadre actuel est conservé.");}
     if(el.matches("[data-mark]")){dirty=true;updateConclusion();}
     if(el.id==="corpus-position"){$("[name=geometry]").value=el.checked?"confirmed":"";dirty=true;}
     if(el.name==="geometry"){$("#corpus-position").checked=el.value==="confirmed";dirty=true;}
@@ -175,10 +214,16 @@ export function mountCorpus(container, identifier, templates) {
     }
   });
   root.addEventListener("keydown",event=>{
-    if(!item||busy||editor||event.repeat||event.altKey||event.ctrlKey||event.metaKey||event.shiftKey||event.isComposing)return;
-    if(event.target.closest("input,select,textarea,summary,a,[contenteditable=true]"))return;
-    if(/^[0-9]$/.test(event.key)&&Number(event.key)<=current().choices){event.preventDefault();quickAnswer(Number(event.key));}
-    if(event.key==="Enter"&&!event.target.closest("button")){event.preventDefault();$("#corpus-observation").requestSubmit();}
+    if(!item||busy||editor||event.altKey||event.ctrlKey||event.metaKey||event.isComposing)return;
+    if(event.target.closest("input,select,textarea,summary,a,[contenteditable]"))return;
+    const direction={ArrowLeft:"left",ArrowRight:"right",ArrowUp:"up",ArrowDown:"down"}[event.key];
+    if(direction&&manualBounds){event.preventDefault();moveFrame(direction,event.shiftKey?10:1);return;}
+    if(event.repeat)return;
+    const digit=/^(Digit|Numpad)[0-9]$/.test(event.code)?Number(event.code.slice(-1)):/^[0-9]$/.test(event.key)?Number(event.key):null;
+    if(digit!==null&&digit<=current().choices){event.preventDefault();quickAnswer(digit);return;}
+    if(event.key.toLowerCase()==="c"){event.preventDefault();editCrop();return;}
+    if(event.key==="Enter"&&(!event.target.closest("button")||event.target.closest("[data-quick],[data-move]"))){event.preventDefault();$("#corpus-observation").requestSubmit();}
+
   });
   root.addEventListener("submit",event=>{
     event.preventDefault();if(busy||editor)return;
@@ -195,6 +240,11 @@ export function mountCorpus(container, identifier, templates) {
       if(!decision){$("#corpus-mark-details").open=true;error("Choisissez une réponse rapide ou décrivez chaque case avant d’enregistrer.");return;}
       const alias=form.get("reviewer").trim();
       if(!/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(alias)){$("#corpus-more").open=true;error("Renseignez votre alias de relecture, sans espace, avant d’enregistrer.");return;}
+      if(flow&&!form.get("geometry")) {
+        const visibleImage=$("#corpus-copy-image");
+        const visible=manualBounds&&photo?.naturalWidth||(!visibleImage.hidden&&visibleImage.complete&&visibleImage.naturalWidth);
+        if(visible)form.set("geometry","confirmed");
+      }
       if(!form.get("geometry")){error("Vérifiez la question affichée et confirmez sa position avant d’enregistrer.");return;}
       const body={expected_revision:item.revision,section:q.section,question:q.question,reviewer:alias,...decision,marks,geometry:form.get("geometry"),manual_bounds:manualBounds,notes:form.get("notes")};
       run(async()=>{message("Enregistrement de l’observation…");const updated=await request(`/${item.id}/annotations`,{method:"PATCH",body:JSON.stringify(body)});if(!active())return;

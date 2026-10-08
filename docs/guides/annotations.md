@@ -30,6 +30,50 @@ Une image aux pixels identiques est refusée même si son encodage PNG diffère.
 photos proches, recadrées ou recompressées avec pertes ne sont pas dédupliquées
 automatiquement : leurs identifiants communs restent indispensables.
 
+## Mode enchaîné : chiffre, puis Entrée
+
+Activer **Mode enchaîné** au-dessus de la question. Cette préférence et le sens de
+progression sont retenus dans l’onglet ; elle est désactivée au premier accès.
+L’alias de relecture reste requis une fois, dans **Relecture et options**.
+
+1. Cadrer la première question si nécessaire. Pour les suivantes, une proposition
+   apparaît directement à partir du cadre **enregistré et confirmé** de la question
+   immédiatement précédente dans la même section. Les 40 annotations déjà enregistrées
+   peuvent donc servir de point de départ après rechargement.
+2. Vérifier le contexte de la photo et l’extrait. Le cadre se décale d’une largeur à
+   droite ou à gauche, ou d’une hauteur vers le bas, selon le sens choisi. Ce calcul
+   n’est pas un repérage automatique des cases ; l’espacement réel peut demander un ajustement.
+3. Taper le numéro du seul choix marqué, ou **0** pour aucune marque. La rangée physique
+   des chiffres fonctionne aussi en AZERTY (sans imposer Maj), ainsi que le pavé numérique.
+4. Appuyer sur **Entrée**, ou sur **Confirmer et continuer** : cette action confirme
+   explicitement le cadre affiché et enregistre l’observation, puis ouvre la suite.
+   Une réponse unique indique que les autres cases sont sans marque.
+
+Sur téléphone, les choix et la confirmation restent accessibles au bas de l’écran en
+portrait. Deux appuis suffisent pour un cas simple dont le cadre proposé est correct :
+choix, puis confirmation. Plusieurs marques ou une trace douteuse restent disponibles
+avec leurs menus détaillés ; on ne force pas une réponse unique pour accélérer.
+
+**Flèches** : déplacer le cadre de 1 pixel source. **Maj + flèche** : 10 pixels.
+Les quatre boutons sous l’image permettent aussi le déplacement au doigt.
+**C** ouvre le cadrage précis, déjà rempli avec la proposition actuelle. Dans cette
+fenêtre, les flèches ajustent le cadre ou le bord sélectionné et Entrée applique le
+cadre lorsque le focus est hors des contrôles de saisie. Échap annule. Le focus revient
+à la question pour pouvoir taper la réponse immédiatement.
+
+Les raccourcis ne détournent ni les champs texte, ni les menus, ni les liens ; les
+modificateurs Ctrl/Alt/Cmd sont respectés. Maintenir Entrée ne soumet pas la question
+suivante. Les réponses restent vides entre questions, jusqu’à une nouvelle observation.
+
+Une nouvelle section, un précédent absent/non confirmé ou un dépassement de photo
+ne déclenche pas de proposition. Aucun cadre existant enregistré n’est remplacé.
+Changer le sens agit sur les prochaines propositions, sans écraser le cadre courant.
+Une proposition seule n’est ni une confirmation ni une sauvegarde. Une erreur réseau
+ou un conflit conserve la saisie. Les positions explicitement déclarées incorrectes
+ou lues sur la source entière ne deviennent pas confirmées automatiquement.
+
+Désactiver le mode retrouve la confirmation séparée du parcours classique ci-dessous.
+
 ## Annoter rapidement sur téléphone
 
 L’écran se concentre sur une question. **Toutes les copies** permet de revenir à la

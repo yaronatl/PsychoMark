@@ -23,7 +23,7 @@ installation du composant React officiel.
 | [landing.js](../../src/psychomark/static/landing.js) | Présentation éditoriale et scène illustrative, sans logique de notation |
 | [app.js](../../src/psychomark/static/app.js) | Routes, vues de travail, formulaires et appels API |
 | [sheets.js](../../src/psychomark/static/sheets.js) et [sheets.css](../../src/psychomark/static/sheets.css) | Bibliothèque de feuilles, placement manuel des grilles et essais |
-| [corpus.js](../../src/psychomark/static/corpus.js) et [corpus.css](../../src/psychomark/static/corpus.css) | Annotation sans corrigé, saisie rapide et commandes au pouce ; route `#/annotations` |
+| [corpus.js](../../src/psychomark/static/corpus.js) et [corpus.css](../../src/psychomark/static/corpus.css) | Annotation sans corrigé, mode enchaîné, contexte du cadre, raccourcis et commandes au pouce ; route `#/annotations` |
 | [crop-editor.js](../../src/psychomark/static/crop-editor.js) | Cadrage tactile/souris, poignées déportées, zoom à deux doigts, centrage et réglage des bords par boutons ou coordonnées |
 | [style.css](../../src/psychomark/static/style.css) | Tokens partagés, composants natifs, atelier, accueil et adaptation mobile |
 | [live.js](../../src/psychomark/static/live.js) | Rafraîchissement du navigateur en développement |

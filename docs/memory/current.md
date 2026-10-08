@@ -1,6 +1,6 @@
 # État actuel
 
-Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas un déploiement garanti.
+Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas un déploiement garanti.
 
 ## Disponible
 
@@ -42,6 +42,9 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   Réutilisation directement accessible : proposition décalée d’une largeur vers la
   droite/gauche, ou reprise au même endroit ; confirmation explicite conservée.
   Les ambiguïtés restent détaillées ; aucune confirmation ou marque n’est propagée.
+  Mode enchaîné activable : cadre suivant proposé depuis la question précédente
+  enregistrée, chiffre puis Entrée pour confirmer/enregistrer, flèches et C pour ajuster.
+  Choix et confirmation fixes sur téléphone ; contexte de la photo visible.
 
 - S03 expérimental hors ligne : [comparaison géométrique](../development/local-registration.md),
   recalage local borné sur cadres imprimés et variantes globales brut/normalisé.
@@ -64,14 +67,14 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : poursuivre le moteur après réception des 40 annotations.**
+**Demande actuelle : accélérer l’annotation au clavier et sur mobile.**
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
 est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-08-14-s03-geometry.md) et vérifier Git.
-Branche actuelle : `feat/local-registration`, issue de `feat/annotation-corpus` (`db9462a`).
+Consulter [la dernière session](sessions/2026-10-09-01-annotation-flow.md) et vérifier Git.
+Branche actuelle : `feat/annotation-flow`, issue de `feat/local-registration` (`ecb6e5d`).
 Cette nouvelle branche contient S02 et ses améliorations mobiles par ascendance.
 Le candidat S03 reste hors ligne ; aucune synchronisation Codespace ni fusion `main`
 n’est impliquée par la publication. L’accès distant au Codespace a renvoyé Forbidden.

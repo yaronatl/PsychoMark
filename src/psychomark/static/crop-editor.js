@@ -155,10 +155,10 @@ export function openCropEditor({image, bounds, previousBounds, title, viewport, 
   dialog.addEventListener("input",event=>{if(event.target.matches("[data-crop-bound]"))coordinatesDirty=true;});
   $("[aria-label='Zoom de la photo']").addEventListener("change",event=>{cancelGesture();setZoom(Number(event.target.value));});
   $("[aria-label='Partie du cadre']").addEventListener("change",()=>{updateControls();draw();});
-  function nudge(direction) {
+  function nudge(direction,overrideStep=null) {
     if(!draft)return;
     if(coordinatesDirty){error("Appliquez les coordonnées avant d’ajuster le cadre.");return;}
-    const target=$("[aria-label='Partie du cadre']").value,step=Number($("[aria-label='Précision du déplacement']").value);
+    const target=$("[aria-label='Partie du cadre']").value,step=overrideStep??Number($("[aria-label='Précision du déplacement']").value);
     const dx=direction==="left"?-step:direction==="right"?step:0,dy=direction==="up"?-step:direction==="down"?step:0;
     const [x0,y0,x1,y1]=draft;
     if(target==="frame") {const x=clamp(dx,-x0,width-x1),y=clamp(dy,-y0,height-y1);draft=[x0+x,y0+y,x1+x,y1+y];}
@@ -168,6 +168,13 @@ export function openCropEditor({image, bounds, previousBounds, title, viewport, 
     else if(target==="bottom")draft[3]=clamp(y1+dy,y0+1,height);
     sync();
   }
+  dialog.tabIndex=-1;
+  dialog.addEventListener("keydown",event=>{
+    if(event.altKey||event.ctrlKey||event.metaKey||event.isComposing||event.target.closest("input,select,textarea,summary,[contenteditable]"))return;
+    const direction={ArrowLeft:"left",ArrowRight:"right",ArrowUp:"up",ArrowDown:"down"}[event.key];
+    if(direction){event.preventDefault();nudge(direction,event.shiftKey?10:1);return;}
+    if(event.key==="Enter"&&!event.repeat&&!event.target.closest("button")){event.preventDefault();$("[data-crop=apply]").click();}
+  });
   dialog.addEventListener("click",event=>{
     const handle=event.target.closest("[data-handle]");
     if(handle) {$(".crop-fine").open=true;$("[aria-label='Partie du cadre']").focus();return;}
@@ -209,6 +216,6 @@ export function openCropEditor({image, bounds, previousBounds, title, viewport, 
   const observer=new ResizeObserver(()=>{if(!closed)draw();});
   dialog.showModal();stage.style.width=`${zoom*100}%`;zoomLabel();
   if(viewport){scroller.scrollLeft=viewport.left;scroller.scrollTop=viewport.top;}
-  sync();observer.observe(scroller);
+  sync();observer.observe(scroller);dialog.focus({preventScroll:true});
   return {close};
 }

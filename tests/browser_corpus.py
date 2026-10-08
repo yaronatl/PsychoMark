@@ -10,6 +10,7 @@ from pathlib import Path
 import cv2
 import httpx
 import numpy as np
+from browser_annotation_flow import exercise_annotation_flow
 from playwright.sync_api import Page, expect
 
 
@@ -158,6 +159,7 @@ def exercise_corpus(page: Page, base: str, root: Path, output: Path) -> None:
     page.screenshot(path=str(output / "corpus-manual.png"), full_page=True)
 
     exercise_mobile_corpus(page, base, acquisition, output)
+    exercise_annotation_flow(page, base, acquisition, output)
 
 
 def exercise_mobile_corpus(parent: Page, base: str, acquisition: str, output: Path) -> None:
