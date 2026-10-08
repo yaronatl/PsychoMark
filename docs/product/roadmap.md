@@ -25,7 +25,11 @@ Les étapes sont ordonnées par dépendance ; ce ne sont pas des promesses de da
 - Vérifier le workflow sur GitHub et envisager la protection de `main` dans les réglages du dépôt.
 - Préparer des sauvegardes restaurables et une politique de suppression pour le pilote réel.
 
-Prochain lot technique : **S06, prototype ML spécialisé**. Un premier
+Lot technique en cours : **S06, adaptation aux données réelles**. Le
+[prototype CPU et son circuit d’entraînement](../development/specialized-reader.md)
+sont implémentés et testés sur synthétique ; les poids synthétiques ne distinguent
+pas encore les cases réelles. Valider les régions de cases et constituer plusieurs
+groupes réels avant de calibrer des décisions en S07. Un premier
 [lecteur S05](../development/classic-reader.md) est disponible hors ligne, sans gain
 d’automatisation démontré sur la copie réelle. Les expériences hors ligne
 [S03](../development/local-registration.md) et [S04](../development/photometric-trial.md)

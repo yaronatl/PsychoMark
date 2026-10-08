@@ -22,6 +22,15 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8.3,<10", "httpx>=0.28,<1", "ruff>=0.14,<1"]
 browser = ["playwright>=1.56,<2"]
+ml = ["torch>=2.6,<3"]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux' or sys_platform == 'win32'" }]
 
 [project.scripts]
 psychomark = "psychomark.cli:main"

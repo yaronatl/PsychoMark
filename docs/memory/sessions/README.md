@@ -28,6 +28,7 @@
 | 2026-10-09¹ | [02](2026-10-09-02-s04-photometry.md) | S04 : sept variantes photographiques à géométrie fixe, comparaison et limites sur deux photos |
 | 2026-10-09¹ | [03](2026-10-09-03-s05-reader.md) | GitHub débloqué, PR #1 créée ; lecteur S05 avec abstention, gain réel non établi |
 | 2026-10-09¹ | [04](2026-10-09-04-corpus-90.md) | Export complet vérifié : 90 annotations, autorisation d’entraînement, S05 rejoué sans gain automatique |
+| 2026-10-09¹ | [05](2026-10-09-05-s06-prototype.md) | S06 : préparation des cases et CNN CPU reproductible ; essais synthétiques réussis, transfert réel non établi |
 
 ¹ Date utilisateur Asia/Jerusalem ; peut différer de la date UTC du début d’intervention.
 

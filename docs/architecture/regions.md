@@ -64,7 +64,7 @@ calibrée n’est produite. Les décisions sont indépendantes des labels humain
 | `readability.py` | Motifs, contrôles locaux et diagnostic global |
 | `sheets.py`, `static/sheets.js` | Essai enregistré, explications et ZIP de diagnostic |
 
-## Extension ML, proposée pour S05–S07
+## Extension ML, prototype S06 et décision S07 future
 
 Un lecteur recevra identifiants, extraits, contexte/référence éventuels, masques,
 mesures de qualité et version du prétraitement. Sa sortie distinguera observations
@@ -72,9 +72,11 @@ visuelles, scores bruts, probabilités calibrées éventuelles et provenance du 
 Une politique séparée produira les cinq états publics historiques. Géométrie invalide
 et ambiguïté restent des motifs d’abstention, même avec un score élevé.
 
-Cette interface ML n’est pas encore du code exécutable : les contrats concrets seront
-introduits avec leur premier consommateur, sans classes vides. Le contrat optique ne
-contiendra ni corrigé, ni note, ni identité d’élève.
+S06 fournit désormais [un jeu de cases versionné, un CNN CPU et ses observations](../development/specialized-reader.md).
+Les découpes utilisent `ChoiceRegion` ; leur revue est séparée des cadres de question
+S02 et liée à l’empreinte du jeu. Les logits et softmax restent non calibrés ; toutes
+les observations demandent une revue. La politique de décision S07 n’est pas implémentée.
+Le contrat optique ne contient ni corrigé, ni note, ni identité d’élève.
 
 ## Annotation préparée, non validée
 

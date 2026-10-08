@@ -156,7 +156,7 @@ ni précision de réponse revendiquée. S05 est le prochain lot de lecture.
 
 Premier candidat S05 livré : [mesures et protocole](../development/classic-reader.md).
 Les tests synthétiques passent et une voie locale préserve une trace faible perdue
-par la normalisation, mais les 40 annotations réelles restent toutes en revue.
+par la normalisation, mais les 90 annotations réelles restent toutes en revue.
 L’objectif de gain réel reste ouvert ; aucun lecteur candidat activé dans le web.
 
 Le classique combine couverture d’encre, contraste local, continuité et disposition
@@ -176,9 +176,14 @@ exemples le permettent. « Effacée » décrit au mieux une trace visible ; aucu
 ne doit inventer l’intention passée de l’élève. La décision unique/multiple se prend
 au niveau de la question en préservant les candidats.
 
-Choix technique de départ proposé : PyTorch pour les expériences d’entraînement,
-avec une dépendance optionnelle verrouillée au moment de S06. L’exécution CPU locale
-est la cible initiale. Un export ONNX/ONNX Runtime est une option à mesurer, pas une
+Premier circuit S06 livré : [préparation, entraînement et inférence](../development/specialized-reader.md),
+avec variante case seule/référence appariée. Les poids synthétiques restent inadaptés
+à la première photo réelle ; la préparation des 360 cases ne valide pas leurs régions.
+Le contexte complet de question est exporté pour contrôle, son utilisation par le
+réseau reste différée. Aucun entraînement réel ni activation web n’a eu lieu.
+
+PyTorch est installé comme dépendance optionnelle verrouillée pour S06. L’exécution CPU locale
+est vérifiée sur Linux. Un export ONNX/ONNX Runtime est une option à mesurer, pas une
 nouvelle stack déjà décidée ou installée. GPU ponctuel seulement si les durées CPU
 le justifient ; son absence n’empêche pas S01–S05. Pas de service ML distant obligatoire.
 

@@ -40,3 +40,4 @@ Pour reprendre le développement : [état actuel](memory/current.md) →
 - [S03 — Comparaison expérimentale de géométrie](development/local-registration.md)
 - [S04 — Comparaison photographique contrôlée](development/photometric-trial.md)
 - [S05 — Lecteur classique expérimental](development/classic-reader.md)
+- [S06 — Prototype ML spécialisé](development/specialized-reader.md)

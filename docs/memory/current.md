@@ -33,7 +33,7 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 - S02 livré : **Annotations** (`#/annotations`), import d’exemples, labels humains
   révisables, source/cadrage manuel après échec d’alignement, groupes et exports privés.
   [Guide](../guides/annotations.md), [ADR 0005](../architecture/decisions/0005-private-annotation-corpus.md).
-  Export réel actualisé de 90 annotations reçu et vérifié ; ML non commencé.
+  Export réel actualisé de 90 annotations reçu et vérifié ; utilisé pour préparer S06.
 - Annotation mobile accélérée : numéros pour les réponses uniques, absence en un
   appui, cadre par glissement avec déplacement/redimensionnement, réemploi explicite
   du dernier cadre, alias retenu par onglet et bouton de sauvegarde fixe sur téléphone.
@@ -63,6 +63,11 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   mais **aucun gain d’automatisation sur les 90 annotations réelles disponibles**.
   Les chiffres/contours imprimés restent problématiques ; aucune activation web.
 
+- S06 : [premier circuit ML CPU hors ligne](../development/specialized-reader.md), préparation
+  des 360 cases, revue de géométrie distincte, entraînement/export/inférence et
+  comparaison case seule/référence. Poids entraînés sur synthétique uniquement :
+  ils proposent tous les cas réels comme inexploitable, sans gain établi ni activation.
+
 ## Limites et choix ouverts
 
 - Proposition graphique encore à apprécier par l’utilisateur ; aucun retour de validation
@@ -78,19 +83,20 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : intégrer l’export actualisé des 90 annotations.**
+**Demande actuelle : continuer S06 après réception des 90 annotations.**
 GitHub est débloqué ; premier candidat S05 livré hors ligne, gain réel non établi.
 L’export des 90 annotations est reçu, vérifié et rejoué avec S05. Il remplace le
 précédent pour les prochaines évaluations, sans supprimer son historique.
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
-est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, aucune implémentation ML
-n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
+est soutenue par l’utilisateur ; le premier circuit ML S06 est désormais livré.
+Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md) et
+[ADR 0006](../architecture/decisions/0006-offline-cpu-ml.md).
 
-Consulter [la dernière session](sessions/2026-10-09-04-corpus-90.md) et vérifier Git.
-Branche actuelle : `feat/classic-reader`, issue de `feat/photometric-trial` (`7f53786`).
+Consulter [la dernière session](sessions/2026-10-09-05-s06-prototype.md) et vérifier Git.
+Branche actuelle : `feat/specialized-reader`, issue de `feat/classic-reader` (`01dc164`).
 Cette branche contient S02, ses améliorations mobiles et S03 par ascendance.
-Les candidats S03/S04/S05 restent hors ligne ; aucune synchronisation Codespace ni
+Les candidats S03/S04/S05/S06 restent hors ligne ; aucune synchronisation Codespace ni
 fusion `main` n’est impliquée par la publication. `api.github.com` est désormais
 autorisé dans le réseau et son accès testé. La création automatique de la
 [PR #1](https://github.com/yaronatl/PsychoMark/pull/1) a réussi. Le précédent refus
@@ -115,7 +121,8 @@ privé : `artifacts/private/baselines/s01-photo-v1/summary.md` et `review.html` 
 image réelle ajoutée à Git. Les labels préparés par S01 restent vides ; les 40 annotations
 humaines reçues ensuite sont conservées dans un export S02 distinct. La précision de lecture reste non mesurée.
 
-Prochain lot : **S06, prototype ML spécialisé**. Le premier candidat S05 est mesurable
+Lot en cours : **S06, adaptation aux données réelles**. Le premier prototype CPU est livré ;
+les deux modèles entraînés sur synthétique échouent sur les cases réelles. Le premier candidat S05 est mesurable
 mais ses seuils ne sont pas validés. S03 et S04 sont livrés comme expériences hors
 ligne ; le recalage local des grilles serrées reste une limite ouverte.
 Le premier export est conservé dans `artifacts/private/annotated-export-40/`, rapport S03 dans
@@ -126,7 +133,7 @@ et `s04-monochrome-diagnostic-v3/`. Le nouvel export est dans
 soit 299 cases vides, 59 marquées, 2 ambiguës. Les 40 premières annotations n’ont pas
 changé ; 50 ont été ajoutées. Le nouvel export autorise l’entraînement
 (`training_allowed=true`), mais reste en développement, sans validation des régions
-individuelles de cases ni jeu indépendant. Aucun entraînement effectué.
+individuelles de cases ni jeu indépendant. Aucun entraînement sur ces données réelles effectué.
 Sa photo est identique au diagnostic monochrome
 (empreinte vérifiée), donc il n’y a que deux photographies distinctes disponibles.
 La normalisation améliore la séparation des signaux sur l’exemple annoté ; les
@@ -156,8 +163,11 @@ S02 permet d’annoter la source lorsque le recalage historique échoue, sans
 inventer des régions validées. Les deux cas sont du développement connu, pas un test final.
 
 La normalisation locale d’éclairage existe déjà. Mesurer son apport avant de la modifier.
-Le futur modèle ne reçoit jamais le corrigé et démarre en observation, sans effet sur
-les notes. PyTorch est seulement proposé pour S06, aucune dépendance ML installée.
+Le CNN ne reçoit jamais le corrigé ; ses sorties hors ligne sont toutes à revoir, sans effet sur
+les notes. PyTorch CPU est installé via l’extra optionnel `ml`. Les jeux, revues, poids et
+rapports S06 restent dans `artifacts/private/ml/` ; voir la dernière session pour les chemins.
+La revue des coordonnées et l’entraînement sur des acquisitions réelles variées restent
+à faire avant de passer à la calibration S07. Aucun résultat synthétique ne valide la photo.
 L’écran S02 réutilise la direction papier/encre et les composants natifs. Les skills
 frontend-design, Emil, Impeccable et UI UX Pro Max ont guidé la finition ; Be UI Button
 a été consulté. Shadcn et Taste n’ont pas entraîné de migration React ou de refonte.
