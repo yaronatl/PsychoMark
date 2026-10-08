@@ -1,6 +1,6 @@
 # Plan de développement — OMR hybride robuste aux photographies
 
-Date utilisateur : 2026-10-08. État : **plan proposé, implémentation à venir**.
+Date utilisateur : 2026-10-08. État : **S01 implémenté ; lots suivants à réaliser**.
 
 [Priorités](roadmap.md) · [Architecture actuelle](../architecture/overview.md) ·
 [ADR proposé](../architecture/decisions/0004-hybrid-omr-experiment.md) ·
@@ -71,7 +71,9 @@ Ne pas exposer les bonnes réponses dans ces contrats, même dans les exemples d
 Une session est un lot cohérent et vérifiable, pas une durée de conversation garantie.
 Une session complexe peut nécessiter plusieurs tours ou plusieurs PR. Le tableau donne
 l’ordre et les dépendances ; les critères de passage priment sur un calendrier artificiel.
-Tous les lots ci-dessous restent **à implémenter**.
+S01 est implémenté : [outil et limites](../development/omr-baseline.md),
+[contrats](../architecture/regions.md). Les autres lots restent **à implémenter**.
+L’annotation humaine du cas réel n’est pas encore validée.
 
 | Lot | Travail et résultat concret | Dépendance | Critère de passage |
 |---|---|---|---|
@@ -86,7 +88,7 @@ Tous les lots ci-dessous restent **à implémenter**.
 | S09 — Évaluation indépendante et activation limitée | Tester le candidat figé sur des copies réservées ; activer seulement sur le périmètre validé | S07/S08 + test final indépendant suffisant | Critères de risque, couverture et exploitation satisfaits avec incertitude documentée ; retour arrière testé ; sinon rester en observation |
 | S10 — Pilote et amélioration suivie | Mesurer le temps réellement économisé, les erreurs et les nouveaux cas ; réentraîner en versions séparées | S09 ou pilote explicitement assisté humainement | Rapport d’usage, suivi par appareil/feuille, nouvelle version évaluée avant remplacement ; pas d’apprentissage automatique silencieux |
 
-### S01 : première session à lancer
+### S01 : référence de comparaison livrée
 
 Créer une commande de comparaison exécutée par Codex, avec configuration enregistrée,
 qui rejoue le moteur historique sur les données disponibles et produit un rapport privé.
@@ -98,6 +100,11 @@ sans introduire de corrigé dans le moteur. Vérifier les positions indépendamm
 lectures automatiques. Les suggestions de Codex peuvent préparer le travail ; elles
 ne remplacent pas une validation humaine, en particulier sur les traces ambiguës.
 Livrable de session : rapport initial, contrats, tests de correspondance et lot d’annotation.
+
+État livré : outil offline, rapport local de 90 questions du diagnostic, extraction
+inchangée, géométrie/masques/provenance et annotations laissées vides. Les correspondances
+sont testées sur synthétique ; un contrôle visuel exploratoire ne valide pas l’ensemble
+des positions ni les réponses de la photo. Prochaine session : S02.
 
 ### S03/S04 : améliorer les images sans fabriquer de marques
 

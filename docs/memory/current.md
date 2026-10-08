@@ -27,6 +27,10 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   Les brouillons sont sauvegardés après vérification ; les modèles enregistrés sont figés.
   La bibliothèque persiste sous le dossier privé de données, sans migration SQLite.
 
+- S01 livré : [outil offline de comparaison](../development/omr-baseline.md), rapport HTML
+  local, extraits, masques, provenance et [contrats](../architecture/regions.md). Aucun
+  changement de décision optique ; annotation humaine et modèle ML à venir.
+
 ## Limites et choix ouverts
 
 - Proposition graphique encore à apprécier par l’utilisateur ; aucun retour de validation
@@ -42,14 +46,14 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : planifier le renforcement du moteur et l’expérimentation ML.**
+**Demande actuelle : démarrer le plan, session S01 réalisée.**
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
-est soutenue par l’utilisateur ; le plan reste proposé et aucune implémentation ML
+est soutenue par l’utilisateur ; S01 est implémenté, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-08-07-hybrid-omr-plan.md) et vérifier Git.
-La branche documentaire est `docs/hybrid-omr-plan`. L’assistant et ses diagnostics sont
+Consulter [la dernière session](sessions/2026-10-08-08-omr-baseline.md) et vérifier Git.
+La branche de livraison est `feat/omr-baseline`, issue de `docs/hybrid-omr-plan`. L’assistant et ses diagnostics sont
 sur `feat/sheet-builder` ; publier une branche ne synchronise pas le Codespace distinct
 ni ne prouve une fusion dans `main`.
 
@@ -62,10 +66,15 @@ La différence de rendu ne prouve pas une autre version imprimée ; l’hypothè
 est non établie. Une meilleure photo aiderait les comparaisons, mais n’est pas un
 prérequis pour commencer à améliorer le moteur avec le diagnostic déjà disponible.
 
-Prochain lot : **S01, référence de comparaison et contrats**. Rejouer le moteur actuel,
-préparer les régions des questions pour annotation humaine, définir les mesures et les
-interfaces avant de répartir S02 (données) et S03 (recalage local). Les labels humains
-restent à établir. Ce cas connu sert au développement, pas au test final indépendant.
+S01 fournit désormais une commande de rejeu, les régions de 90 questions du diagnostic,
+leurs masques et leur provenance. Les 90 refus historiques sont conservés. Rapport
+privé : `artifacts/private/baselines/s01-photo-v1/summary.md` et `review.html` ; aucune
+image réelle ajoutée à Git. Les labels humains sont vides, la précision reste non mesurée.
+
+Prochain lot : **S02, données et annotation humaine**. Préparer une saisie accessible,
+les identifiants de feuilles physiques et les groupes d’apprentissage/évaluation.
+S03 (recalage local) peut avancer sur des fichiers distincts, avec les contrats S01.
+Ce cas connu sert au développement, pas au test final indépendant.
 
 La normalisation locale d’éclairage existe déjà. Mesurer son apport avant de la modifier.
 Le futur modèle ne reçoit jamais le corrigé et démarre en observation, sans effet sur

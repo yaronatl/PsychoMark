@@ -16,6 +16,7 @@ Pour reprendre le développement : [état actuel](memory/current.md) →
 | `architecture/` | [Modules et données](architecture/overview.md), [OMR](architecture/omr.md), [API](architecture/api.md) |
 | `architecture/decisions/` | [Décisions durables et leur justification](architecture/decisions/README.md) |
 | `development/` | [Stack](development/stack.md), [workflow](development/workflow.md), [validation](development/testing.md), [données](development/data.md) |
+| Référence moteur | [Rejouer et examiner une copie](development/omr-baseline.md), [contrats de régions et de lecture](architecture/regions.md) |
 | Outils visuels | [Skills installés et connexion Be UI](development/design-tools.md) |
 | `product/` | [Priorités](product/roadmap.md), [plan OMR hybride par sessions](product/hybrid-omr-plan.md) et [choix visuels](product/ui.md) |
 | Inspirations | [Direction Renance](product/visual-direction.md) et [originaux](product/references/README.md) |
