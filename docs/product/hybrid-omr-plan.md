@@ -146,6 +146,12 @@ du détail ; l’agrandissement technique ne change pas le nombre de pixels disp
 à l’origine. Les paramètres seront choisis par comparaison, pas parce qu’ils améliorent
 visuellement une seule image.
 
+S04 livré en expérimentation hors ligne : [sept variantes à géométrie fixe](../development/photometric-trial.md),
+comparaison sur les observations humaines disponibles, contrôles d’impression et
+replis explicites. La normalisation existante est utile ; les traitements supplémentaires
+ne montrent pas de gain universel sur les deux photos connues. Aucune activation web
+ni précision de réponse revendiquée. S05 est le prochain lot de lecture.
+
 ### S05/S06 : deux lecteurs mesurables
 
 Le classique combine couverture d’encre, contraste local, continuité et disposition

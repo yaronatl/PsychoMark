@@ -52,6 +52,11 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   40/40 cadres ; recalage local refusé sur les trois grilles serrées. Aucune précision
   de lecture mesurée ni activation dans l’application.
 
+- S04 expérimental hors ligne : [comparaison photographique](../development/photometric-trial.md),
+  sept variantes à géométrie fixe, différences appariées avec les observations humaines,
+  masques et résidus consultables. Normalisation existante utile ; aucune variante
+  supplémentaire ne montre un gain universel. Aucune activation web ni entraînement.
+
 ## Limites et choix ouverts
 
 - Proposition graphique encore à apprécier par l’utilisateur ; aucun retour de validation
@@ -67,16 +72,16 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : accélérer l’annotation au clavier et sur mobile.**
+**Demande actuelle : commencer S04. Comparaison implémentée ; prochain lot S05.**
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
 est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-09-01-annotation-flow.md) et vérifier Git.
-Branche actuelle : `feat/annotation-flow`, issue de `feat/local-registration` (`ecb6e5d`).
-Cette nouvelle branche contient S02 et ses améliorations mobiles par ascendance.
-Le candidat S03 reste hors ligne ; aucune synchronisation Codespace ni fusion `main`
+Consulter [la dernière session](sessions/2026-10-09-02-s04-photometry.md) et vérifier Git.
+Branche actuelle : `feat/photometric-trial`, issue de `feat/annotation-flow` (`a35dfb5`).
+Cette branche contient S02, ses améliorations mobiles et S03 par ascendance.
+Les candidats S03/S04 restent hors ligne ; aucune synchronisation Codespace ni fusion `main`
 n’est impliquée par la publication. L’accès distant au Codespace a renvoyé Forbidden.
 
 Le diagnostic fourni reste dans `artifacts/private/photo-diagnostic/`, hors Git.
@@ -94,11 +99,17 @@ privé : `artifacts/private/baselines/s01-photo-v1/summary.md` et `review.html` 
 image réelle ajoutée à Git. Les labels préparés par S01 restent vides ; les 40 annotations
 humaines reçues ensuite sont conservées dans un export S02 distinct. La précision de lecture reste non mesurée.
 
-Prochain lot : **S04, comparaison des traitements photographiques**. Une première
-version expérimentale S03 est livrée ; le recalage local des grilles serrées reste une
-limite ouverte. Les données reçues sont dans `artifacts/private/annotated-export-40/`,
-rapport final dans `artifacts/private/baselines/s03-annotated-v2/`. Les 40 observations
-restent en développement, non autorisées pour l’entraînement.
+Prochain lot : **S05, lecteur classique renforcé**. S03 et S04 sont livrés comme
+expériences hors ligne ; le recalage local des grilles serrées reste une limite ouverte.
+Les données reçues sont dans `artifacts/private/annotated-export-40/`, rapport S03 dans
+`artifacts/private/baselines/s03-annotated-v2/`, rapports S04 dans
+`artifacts/private/baselines/s04-annotated-export-40-v3/`, `s04-photo-diagnostic-v3/`
+et `s04-monochrome-diagnostic-v3/`. Les 40 observations restent en développement,
+non autorisées pour l’entraînement. Leur photo est identique au diagnostic monochrome
+(empreinte vérifiée), donc il n’y a que deux photographies distinctes disponibles.
+La normalisation améliore la séparation des signaux sur l’exemple annoté ; les
+traitements supplémentaires ont des effets variables, pas de gain de lecture établi.
+Les 50 nouvelles copies évoquées par l’utilisateur ne sont pas encore fournies.
 La collecte peut commencer dans **Annotations → Ajouter une copie**, sans scripts.
 Les deux diagnostics connus ont été importés dans un dossier de vérification privé
 isolé, 90 questions chacun, aucune annotation humaine ni autorisation d’entraînement.

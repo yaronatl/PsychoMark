@@ -72,3 +72,11 @@ issue d’un cadre sauvegardé, chiffre + Entrée, AZERTY/pavé numérique, dép
 clavier, retour du focus depuis le cadrage, réponse non propagée, erreur réseau avec
 reprise, touche Entrée maintenue, séparation des sections, préférences après rechargement
 et deux appuis tactiles avec commandes persistantes. Toutes les données sont synthétiques.
+
+Les tests [S04](photometric-trial.md) vérifient les effets sur les traits faibles et
+colorés avec ombres/compression JPEG, une référence adaptée à une image réduite,
+les contrôles de contraste avec repli, les pixels coupés et les grilles à cinq choix
+verticaux. Ils contrôlent aussi que changer un label humain ne change ni les images
+traitées ni les scores, que le résultat historique reste intact et que les rejets
+gardent leurs dénominateurs. Les essais réels restent privés et exploratoires ;
+le classement d’une marque ne constitue pas une mesure de précision des réponses.

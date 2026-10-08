@@ -104,6 +104,7 @@ Une grande boîte humaine peut contenir plusieurs colonnes : l’inspection rest
 
 Les résultats privés et leur portée sont consignés dans la
 [session S03](../memory/sessions/2026-10-08-14-s03-geometry.md). La prochaine étape est
-S04 : confirmer et comparer le gain de préparation des photos sur davantage de cas,
-puis S05 pour la lecture des marques. La normalisation seule ne suffit pas à annoncer
-une lecture correcte. L’activation dans l’application reste un lot distinct.
+[S04](photometric-trial.md) implémente désormais la comparaison de sept préparations
+photographiques à géométrie fixe, puis S05 abordera la lecture des marques.
+La normalisation seule ne suffit pas à annoncer une lecture correcte.
+L’activation dans l’application reste un lot distinct.

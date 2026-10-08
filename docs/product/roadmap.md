@@ -25,8 +25,8 @@ Les étapes sont ordonnées par dépendance ; ce ne sont pas des promesses de da
 - Vérifier le workflow sur GitHub et envisager la protection de `main` dans les réglages du dépôt.
 - Préparer des sauvegardes restaurables et une politique de suppression pour le pilote réel.
 
-Prochain lot technique : **S03, recalage local**, avec les contrats S01 et les
-observations recueillies via S02. La collecte d’exemples réels continue en parallèle.
-S04 comparera les traitements photographiques, notamment pour les photocopies
-monochromes. Des annotations humaines restent nécessaires pour mesurer les gains ;
+Prochain lot technique : **S05, lecteur classique renforcé**. Les expériences hors ligne
+[S03](../development/local-registration.md) et [S04](../development/photometric-trial.md)
+sont livrées ; aucune variante n’est activée dans le moteur web. La collecte d’exemples
+réels variés continue en parallèle. Les annotations servent à mesurer les gains ;
 l’interface d’annotation n’entraîne pas de modèle et ne démontre pas une précision.

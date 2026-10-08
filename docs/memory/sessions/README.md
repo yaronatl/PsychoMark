@@ -25,6 +25,7 @@
 | 2026-10-08 | [14](2026-10-08-14-s03-geometry.md) | 40 annotations vérifiées, comparaison S03 de géométrie et normalisation avant ORB |
 
 | 2026-10-09¹ | [01](2026-10-09-01-annotation-flow.md) | Mode enchaîné : cadre proposé, raccourcis clavier et validation en deux actions |
+| 2026-10-09¹ | [02](2026-10-09-02-s04-photometry.md) | S04 : sept variantes photographiques à géométrie fixe, comparaison et limites sur deux photos |
 
 ¹ Date utilisateur Asia/Jerusalem ; peut différer de la date UTC du début d’intervention.
 

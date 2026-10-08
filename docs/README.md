@@ -38,3 +38,4 @@ Pour reprendre le développement : [état actuel](memory/current.md) →
   significatif ; ne pas recopier la conversation ou exposer de données personnelles.
 
 - [S03 — Comparaison expérimentale de géométrie](development/local-registration.md)
+- [S04 — Comparaison photographique contrôlée](development/photometric-trial.md)
