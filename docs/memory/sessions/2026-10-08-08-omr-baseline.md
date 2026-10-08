@@ -53,6 +53,10 @@ de l’application principale exécuté : ses routes et assets restent inchangé
 Les captures et scans privés ne sont pas ajoutés à la CI. Pas d’entraînement ni de
 mesure de précision terrain réalisés.
 
+Publication : branche `feat/omr-baseline` poussée sur GitHub. Création de PR tentée
+vers `docs/hybrid-omr-plan`, mais l’API GitHub renvoie `Forbidden`. Aucune PR créée,
+aucune fusion dans `main` et aucune synchronisation du Codespace revendiquée.
+
 ## Reprise
 
 S02 : construire la saisie/reprise des annotations, définir les feuilles physiques
