@@ -31,3 +31,5 @@
 @media(max-width:800px) {.sidebar nav {flex-wrap:wrap}.sidebar nav a {flex-shrink:0}}
 .sheet-controls, .sheet-controls fieldset, .sheet-controls .field {min-width:0}
 .sheet-controls .button {white-space:normal}
+
+.sheet-diagnostic {white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;max-height:300px;overflow:auto}

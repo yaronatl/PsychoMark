@@ -61,3 +61,24 @@ Les imports de modèles et les essais refusent les fichiers multipages. Leurs li
 de taille sont celles du moteur. Les fichiers privés ne sont accessibles que via les
 identifiants et types d’images prévus ; aucun chemin du client n’est utilisé comme
 chemin de stockage. La sérialisation des écritures suppose un serveur à un worker.
+
+### Diagnostic d’un essai de feuille
+
+Les extractions servies par `POST /api/sheets/{id}/test` et
+`GET /api/sheets/{id}/test` incluent désormais `readability` : état d’alignement,
+résumé et liste des contrôles refusés avec leur code, explication, pistes de
+vérification et zones concernées. Cette présentation est calculée à la lecture
+par `readability.py` ; les résultats optiques enregistrés restent inchangés et
+les anciens essais bénéficient de la même présentation. Les ambiguïtés de marques
+ne sont pas assimilées à un défaut de lisibilité.
+
+`GET /api/sheets/{id}/diagnostic` télécharge un ZIP de reproduction de l’essai
+courant : modèle, référence, aperçu des zones, copie décodée, annotation et
+résultat brut. Le pointeur de calibration/essai est lu sous le verrou partagé,
+puis seuls les fichiers immuables correspondants sont archivés. Le ZIP passe par
+un fichier temporaire fermé après transmission ; aucun cache supplémentaire durable.
+L’absence d’essai, notamment après recalibration, renvoie 404. Le paramètre
+optionnel `expected_test` refuse par 409 un essai différent de celui affiché
+par le navigateur. Cet export contient
+les images privées de cet essai et reste soumis aux mêmes limites d’accès que
+l’application locale, sans authentification applicative ajoutée.

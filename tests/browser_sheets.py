@@ -1,8 +1,11 @@
 """Browser exercise of the manual sheet workflow using synthetic pixels only."""
 
 import json
+import zipfile
 from pathlib import Path
 
+import cv2
+import numpy as np
 from playwright.sync_api import Page, expect
 
 
@@ -76,12 +79,48 @@ def exercise_sheets(page: Page, base: str, root: Path, output: Path) -> None:
     page.wait_for_function("window.psychomarkCanReload()")
     page.reload()
     expect(page.get_by_role("heading", name="Vérifier les cases repérées")).to_be_visible()
+    # Real refusals from the engine: first failed alignment, then an aligned page
+    # whose printed frame was damaged. Neither should be presented as blank answers.
+    empty = root / "empty.png"
+    cv2.imwrite(str(empty), np.full((1320, 1800, 3), 255, dtype=np.uint8))
+    page.get_by_label("Copie à essayer", exact=True).set_input_files(empty)
+    page.get_by_role("button", name="Analyser cette copie").click()
+    expect(page.get_by_role("heading", name="Alignement non confirmé")).to_be_visible(timeout=30000)
+    expect(
+        page.get_by_text("Trop peu de repères reconnaissables dans la photo", exact=True)
+    ).to_be_visible()
+    page.wait_for_function("window.psychomarkCanReload()")
+    page.reload()
+    expect(page.get_by_role("heading", name="Alignement non confirmé")).to_be_visible()
+    with page.expect_download() as download:
+        page.get_by_role("link", name="Télécharger le diagnostic (images incluses)").click()
+    download.value.save_as(output / "sheet-diagnostic.zip")
+    with zipfile.ZipFile(output / "sheet-diagnostic.zip") as bundle:
+        assert "copy.png" in bundle.namelist()
+        assert "template.reference.png" in bundle.namelist()
+    damaged = cv2.imread(str(root / "data" / "demo" / "copy.png"))
+    cv2.rectangle(damaged, (int(x), int(y)), (int(x + w), int(y + h)), (255, 255, 255), 10)
+    damaged_path = root / "frame-damaged.png"
+    cv2.imwrite(str(damaged_path), damaged)
+    page.get_by_label("Copie à essayer", exact=True).set_input_files(damaged_path)
+    page.get_by_role("button", name="Analyser cette copie").click()
+    expect(page.get_by_role("heading", name="Alignement réussi")).to_be_visible(timeout=30000)
+    expect(
+        page.get_by_text(
+            "Le contour des grilles ne correspond pas assez à la référence", exact=True
+        )
+    ).to_be_visible()
+    page.get_by_text("Détail technique du diagnostic", exact=True).click()
+    expect(page.locator(".sheet-diagnostic")).to_contain_text("frame_support")
+    page.screenshot(path=str(output / "sheet-unreadable.png"), full_page=True)
     page.get_by_label("Copie à essayer", exact=True).set_input_files(
         root / "data" / "demo" / "copy.png"
     )
     page.get_by_role("button", name="Analyser cette copie").click()
     expect(page.locator("#sheet-test-results tbody tr")).to_have_count(30, timeout=30000)
-    expect(page.locator("#sheet-test-results tbody tr").first).to_contain_text("Réponse unique")
+    expect(page.locator("#sheet-test-results tbody tr").first).to_contain_text(
+        "Réponse unique", timeout=30000
+    )
     expect(page.locator("#sheet-test-results tbody tr").nth(2)).to_contain_text("Plusieurs marques")
     page.screenshot(path=str(output / "sheet-test.png"), full_page=True)
     page.get_by_label("J’ai vérifié l’emplacement de toutes les cases sur l’aperçu.").check()

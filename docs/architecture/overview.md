@@ -29,6 +29,7 @@ flowchart LR
 | [config.py](../../src/psychomark/config.py) | Géométrie, seuils, sélection et validation | Pas de HTTP, SQL ou corrigé |
 | [images.py](../../src/psychomark/images.py) | Lecture image/PDF, bornes et normalisation | Pas de décision de notation |
 | [calibration.py](../../src/psychomark/calibration.py) | Référence vierge, empreinte et aperçu | Ne prouve pas la validité réelle du modèle |
+| [readability.py](../../src/psychomark/readability.py) | Explications des contrôles de lisibilité refusés | Présentation seulement, aucun changement de décision optique |
 | [registration.py](../../src/psychomark/registration.py) | Alignement ORB/RANSAC et diagnostics | Rejeter une géométrie non exploitable |
 | [engine.py](../../src/psychomark/engine.py) | Lire les marques et annoter | Ne reçoit jamais les bonnes réponses |
 | [grading.py](../../src/psychomark/grading.py) | Corrigé, révision et calcul de note | Pas d'analyse des pixels |

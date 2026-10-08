@@ -174,3 +174,56 @@ def test_filled_reference_is_rejected_without_publishing(client, sheet):
     )
     assert response.status_code == 422
     assert client.get(f"/api/sheets/{item['id']}").json()["calibration"] is None
+
+
+def test_failed_reading_diagnostic_is_reproducible_and_old_results_get_explanations(
+    client, sheet, tmp_path
+):
+    import json
+    import zipfile
+
+    import numpy as np
+
+    from psychomark.engine import Engine
+    from psychomark.images import read_image
+
+    url, item, body = checked(client, sheet)
+    assert client.get(url + "/diagnostic").status_code == 404
+    empty = np.full_like(sheet["filled"], 255)
+    response = client.post(url + f"/test?revision={item['revision']}", files=file_body(empty))
+    result = response.json()["extraction"]
+    assert result["status"] == "unreadable"
+    assert result["readability"]["alignment"] == "failed"
+    assert result["readability"]["issues"][0]["detail"] == "Too few recognizable landmarks"
+    item = response.json()["sheet"]
+    path = tmp_path / "web" / "sheets" / item["id"] / item["test"] / "result.json"
+    stored = json.loads(path.read_text())
+    assert "readability" not in stored  # Existing, undecorated results work too.
+    assert client.get(url + "/test").json() == result
+    assert client.get(url + "/diagnostic?expected_test=stale").status_code == 409
+    archive = client.get(url + f"/diagnostic?expected_test={item['test']}")
+    assert archive.status_code == 200
+    assert archive.headers["content-type"] == "application/zip"
+    assert "attachment" in archive.headers["content-disposition"]
+    destination = tmp_path / "reproduction"
+    destination.mkdir()
+    with zipfile.ZipFile(io.BytesIO(archive.content)) as bundle:
+        assert set(bundle.namelist()) == {
+            "template.json",
+            "template.reference.png",
+            "zones.png",
+            "copy.png",
+            "annotated.png",
+            "result.json",
+            "README.txt",
+        }
+        assert json.loads(bundle.read("result.json")) == stored
+        for name in ("template.json", "template.reference.png", "copy.png"):
+            (destination / name).write_bytes(bundle.read(name))
+    replay, _ = Engine.from_file(destination / "template.json").analyze(
+        read_image(destination / "copy.png")
+    )
+    assert replay == stored
+    body["expected_revision"] = item["revision"]
+    assert client.put(url + "/calibration", json=body).status_code == 200
+    assert client.get(url + "/diagnostic").status_code == 404

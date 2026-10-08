@@ -18,6 +18,9 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   Boutons Be UI **adaptés en CSS natif**, pas composants React officiels installés.
   Polices et module servis localement ; build/verrou npm et CSP à empreinte exacte.
 - Accueil sur `/` ou `#/home` ; examens directement sur `#/exams`.
+- Diagnostic des essais de feuille : motifs de refus en français, distinction entre
+  alignement et contrôles locaux, export ZIP reproductible avec les images du seul essai.
+  Présentation également disponible pour les anciens essais ; seuils du moteur inchangés.
 - **Ajouter une feuille** sur `#/sheets` : import d’une référence vierge, cinq repères
   par grille, aperçu Python, essai d’une copie et modèle disponible pour les examens.
   [Guide](../guides/sheets.md), [ADR 0003](../architecture/decisions/0003-visual-sheet-library.md).
@@ -43,7 +46,11 @@ L’assistant est implémenté sur la branche `feat/sheet-builder`, issue de `do
 et contenant la proposition graphique précédente. Sa publication ne synchronise pas
 le Codespace distinct de l’utilisateur. Ne pas prétendre qu’il est déjà sur `main`.
 
-Consulter [la session](sessions/2026-10-08-04-sheet-builder.md) et vérifier Git.
+Consulter [la dernière session](sessions/2026-10-08-05-readability-diagnostics.md) et vérifier Git.
+L’utilisateur a rencontré un refus « illisible » sur une photo de feuille imprimée,
+avec une référence PDF propre. Les fichiers de cet essai sont dans son Codespace,
+pas dans ce checkout. Le nouveau diagnostic permet d’examiner ce cas ; la cause réelle
+n’est pas encore établie. Ne pas annoncer que la lecture de sa copie est corrigée.
 L’utilisateur peut désormais importer son fichier NITE directement dans l’application,
 sans dépendre de l’accès du chat aux pièces jointes. L’assistant attend une référence
 à plat et des grilles régulières avec cadres imprimés ; il ne reconnaît pas automatiquement

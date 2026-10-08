@@ -10,19 +10,23 @@ from __future__ import annotations
 import json
 import re
 import shutil
+import tempfile
 import threading
 import uuid
+import zipfile
+from collections.abc import Iterator
 from pathlib import Path
 
 import numpy as np
 from fastapi import APIRouter, File, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import Field
 
 from .calibration import calibrate
 from .config import ConfigModel, Layout, Section, write_json
 from .engine import Engine
 from .images import MAX_FILE_BYTES, SUPPORTED, iter_pages, read_image, save_image
+from .readability import with_readability
 from .store import Conflict
 
 
@@ -221,7 +225,7 @@ def sheet_router(
                 except Exception:
                     shutil.rmtree(destination, ignore_errors=True)
                     raise
-                return {"sheet": item, "extraction": extraction}
+                return {"sheet": item, "extraction": with_readability(extraction)}
             finally:
                 file.file.close()
 
@@ -231,7 +235,61 @@ def sheet_router(
         if not item["test"]:
             raise KeyError("test")
         path = library.directory(identifier) / item["test"] / "result.json"
-        return json.loads(path.read_text(encoding="utf-8"))
+        return with_readability(json.loads(path.read_text(encoding="utf-8")))
+
+    @router.get("/{identifier}/diagnostic")
+    def diagnostic(identifier: str, expected_test: str | None = None) -> StreamingResponse:
+        # Snapshot pointers under the same lock as calibration/test commits. Their
+        # files are immutable; a later test cannot mix versions in this archive.
+        with lock:
+            item = library.get(identifier)
+            if not item["test"]:
+                raise KeyError("test")
+            if expected_test is not None and item["test"] != expected_test:
+                raise Conflict(
+                    "Un autre essai a été effectué. Rechargez la page avant de télécharger."
+                )
+            template = library.template_path(item)
+            test = library.directory(identifier) / item["test"]
+        archive = tempfile.TemporaryFile(dir=library.root)
+        try:
+            with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as bundle:
+                for source, name in [
+                    (template, "template.json"),
+                    (template.with_suffix(".reference.png"), "template.reference.png"),
+                    (template.with_suffix(".preview.png"), "zones.png"),
+                    (test / "original.png", "copy.png"),
+                    (test / "annotated.png", "annotated.png"),
+                    (test / "result.json", "result.json"),
+                ]:
+                    bundle.write(source, name)
+                bundle.writestr(
+                    "README.txt",
+                    (
+                        "Diagnostic PsychoMark : référence, géométrie, copie décodée et résultat.\n"
+                        "Les images peuvent contenir des informations personnelles.\n"
+                        "Aucun corrigé, aucune base d’examens ni autre copie n’est inclus.\n"
+                        "Ce dossier permet de reproduire l’analyse avec le moteur et sa version\n"
+                        "indiquée dans result.json. Les seuils sont dans template.json.\n"
+                    ),
+                )
+            archive.seek(0)
+        except Exception:
+            archive.close()
+            raise
+
+        def chunks() -> Iterator[bytes]:
+            try:
+                while data := archive.read(1024 * 1024):
+                    yield data
+            finally:
+                archive.close()
+
+        return StreamingResponse(
+            chunks(),
+            media_type="application/zip",
+            headers={"Content-Disposition": f'attachment; filename="diagnostic-{identifier}.zip"'},
+        )
 
     @router.get("/{identifier}/image/{kind}")
     def image(identifier: str, kind: str) -> FileResponse:

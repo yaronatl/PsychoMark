@@ -75,3 +75,27 @@ ni commande supplémentaire. Le workflow CLI existant reste disponible.
 **NITE et Adar ne sont pas déclarés compatibles par cette livraison.** L’assistant
 permet de les configurer si leurs fichiers et leurs caractéristiques conviennent ;
 il faudra ensuite comparer les résultats à des copies réellement corrigées à la main.
+
+## Comprendre un essai « illisible »
+
+Le résultat distingue désormais deux étapes :
+
+- **Alignement non confirmé** : la photo n’a pas été rapprochée de la référence
+  avec assez de précision. Aucune réponse n’est interprétée.
+- **Alignement réussi**, puis un contrôle refusé : les grilles peuvent être repérées
+  alors que leurs cases sont trop petites dans la photo, qu’un cadre correspond mal,
+  que des zones sont hors champ ou que la netteté relative est insuffisante.
+
+Les motifs sont affichés en français avec les sections et questions concernées.
+Le **Détail technique du diagnostic** conserve les mesures du moteur. Ce sont des
+conditions de refus, pas la preuve que l’utilisateur a mal photographié sa copie.
+En particulier, un PDF idéal et une impression photographiée peuvent présenter un
+écart de netteté important : il faut examiner les fichiers avant d’ajuster le contrôle.
+
+Pour faire examiner un blocage, cliquer **Télécharger le diagnostic (images incluses)**.
+Le ZIP contient la référence vierge, la configuration exacte, l’aperçu des zones,
+la copie décodée, son annotation et le résultat brut. Aucun examen, corrigé ou autre
+copie n’y est ajouté. Les images ne sont pas anonymisées ; le bouton télécharge
+le fichier, sans l’envoyer à un tiers. Ce diagnostic suffit à reproduire l’essai avec
+la version du moteur indiquée dans le résultat. Il fonctionne aussi pour les essais
+conservés avant l’ajout de ce bouton, sans refaire la calibration.
