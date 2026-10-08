@@ -25,7 +25,9 @@ Les étapes sont ordonnées par dépendance ; ce ne sont pas des promesses de da
 - Vérifier le workflow sur GitHub et envisager la protection de `main` dans les réglages du dépôt.
 - Préparer des sauvegardes restaurables et une politique de suppression pour le pilote réel.
 
-Prochain lot technique : **S05, lecteur classique renforcé**. Les expériences hors ligne
+Prochain lot technique : **S06, prototype ML spécialisé**. Un premier
+[lecteur S05](../development/classic-reader.md) est disponible hors ligne, sans gain
+d’automatisation démontré sur la copie réelle. Les expériences hors ligne
 [S03](../development/local-registration.md) et [S04](../development/photometric-trial.md)
 sont livrées ; aucune variante n’est activée dans le moteur web. La collecte d’exemples
 réels variés continue en parallèle. Les annotations servent à mesurer les gains ;

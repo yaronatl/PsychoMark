@@ -154,6 +154,11 @@ ni précision de réponse revendiquée. S05 est le prochain lot de lecture.
 
 ### S05/S06 : deux lecteurs mesurables
 
+Premier candidat S05 livré : [mesures et protocole](../development/classic-reader.md).
+Les tests synthétiques passent et une voie locale préserve une trace faible perdue
+par la normalisation, mais les 40 annotations réelles restent toutes en revue.
+L’objectif de gain réel reste ouvert ; aucun lecteur candidat activé dans le web.
+
 Le classique combine couverture d’encre, contraste local, continuité et disposition
 des traits, puis compare les choix. Il constitue un point de comparaison utile même
 si le modèle ML devient finalement le lecteur principal.

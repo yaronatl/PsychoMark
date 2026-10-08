@@ -33,7 +33,7 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 - S02 livré : **Annotations** (`#/annotations`), import d’exemples, labels humains
   révisables, source/cadrage manuel après échec d’alignement, groupes et exports privés.
   [Guide](../guides/annotations.md), [ADR 0005](../architecture/decisions/0005-private-annotation-corpus.md).
-  Premier export réel de 40 annotations reçu et vérifié ; ML non commencé.
+  Export réel actualisé de 90 annotations reçu et vérifié ; ML non commencé.
 - Annotation mobile accélérée : numéros pour les réponses uniques, absence en un
   appui, cadre par glissement avec déplacement/redimensionnement, réemploi explicite
   du dernier cadre, alias retenu par onglet et bouton de sauvegarde fixe sur téléphone.
@@ -57,6 +57,12 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   masques et résidus consultables. Normalisation existante utile ; aucune variante
   supplémentaire ne montre un gain universel. Aucune activation web ni entraînement.
 
+- S05 : [premier lecteur classique expérimental](../development/classic-reader.md),
+  mesures d’encre et de continuité, contraste local sur original, décisions avec
+  abstention et comparaison à géométrie identique. Tests synthétiques concluants,
+  mais **aucun gain d’automatisation sur les 90 annotations réelles disponibles**.
+  Les chiffres/contours imprimés restent problématiques ; aucune activation web.
+
 ## Limites et choix ouverts
 
 - Proposition graphique encore à apprécier par l’utilisateur ; aucun retour de validation
@@ -72,17 +78,27 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : commencer S04. Comparaison implémentée ; prochain lot S05.**
+**Demande actuelle : intégrer l’export actualisé des 90 annotations.**
+GitHub est débloqué ; premier candidat S05 livré hors ligne, gain réel non établi.
+L’export des 90 annotations est reçu, vérifié et rejoué avec S05. Il remplace le
+précédent pour les prochaines évaluations, sans supprimer son historique.
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
 est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-09-02-s04-photometry.md) et vérifier Git.
-Branche actuelle : `feat/photometric-trial`, issue de `feat/annotation-flow` (`a35dfb5`).
+Consulter [la dernière session](sessions/2026-10-09-04-corpus-90.md) et vérifier Git.
+Branche actuelle : `feat/classic-reader`, issue de `feat/photometric-trial` (`7f53786`).
 Cette branche contient S02, ses améliorations mobiles et S03 par ascendance.
-Les candidats S03/S04 restent hors ligne ; aucune synchronisation Codespace ni fusion `main`
-n’est impliquée par la publication. L’accès distant au Codespace a renvoyé Forbidden.
+Les candidats S03/S04/S05 restent hors ligne ; aucune synchronisation Codespace ni
+fusion `main` n’est impliquée par la publication. `api.github.com` est désormais
+autorisé dans le réseau et son accès testé. La création automatique de la
+[PR #1](https://github.com/yaronatl/PsychoMark/pull/1) a réussi. Le précédent refus
+était un blocage réseau avant GitHub. La liste API des Codespaces n’a retourné aucun
+Codespace de ce dépôt accessible à cette session ; les nouvelles annotations ne
+sont pas récupérées automatiquement.
+La [PR S05 #2](https://github.com/yaronatl/PsychoMark/pull/2) est ouverte en brouillon
+sur la branche de #1 pour isoler les changements S05. Les deux PR restent non fusionnées.
 
 Le diagnostic fourni reste dans `artifacts/private/photo-diagnostic/`, hors Git.
 L’alignement réussit et la netteté passe. La résolution des cases et la correspondance
@@ -99,17 +115,30 @@ privé : `artifacts/private/baselines/s01-photo-v1/summary.md` et `review.html` 
 image réelle ajoutée à Git. Les labels préparés par S01 restent vides ; les 40 annotations
 humaines reçues ensuite sont conservées dans un export S02 distinct. La précision de lecture reste non mesurée.
 
-Prochain lot : **S05, lecteur classique renforcé**. S03 et S04 sont livrés comme
-expériences hors ligne ; le recalage local des grilles serrées reste une limite ouverte.
-Les données reçues sont dans `artifacts/private/annotated-export-40/`, rapport S03 dans
+Prochain lot : **S06, prototype ML spécialisé**. Le premier candidat S05 est mesurable
+mais ses seuils ne sont pas validés. S03 et S04 sont livrés comme expériences hors
+ligne ; le recalage local des grilles serrées reste une limite ouverte.
+Le premier export est conservé dans `artifacts/private/annotated-export-40/`, rapport S03 dans
 `artifacts/private/baselines/s03-annotated-v2/`, rapports S04 dans
 `artifacts/private/baselines/s04-annotated-export-40-v3/`, `s04-photo-diagnostic-v3/`
-et `s04-monochrome-diagnostic-v3/`. Les 40 observations restent en développement,
-non autorisées pour l’entraînement. Leur photo est identique au diagnostic monochrome
+et `s04-monochrome-diagnostic-v3/`. Le nouvel export est dans
+`artifacts/private/annotated-export-90/` : 59 questions simples, 29 blanches, 2 incertaines,
+soit 299 cases vides, 59 marquées, 2 ambiguës. Les 40 premières annotations n’ont pas
+changé ; 50 ont été ajoutées. Le nouvel export autorise l’entraînement
+(`training_allowed=true`), mais reste en développement, sans validation des régions
+individuelles de cases ni jeu indépendant. Aucun entraînement effectué.
+Sa photo est identique au diagnostic monochrome
 (empreinte vérifiée), donc il n’y a que deux photographies distinctes disponibles.
 La normalisation améliore la séparation des signaux sur l’exemple annoté ; les
 traitements supplémentaires ont des effets variables, pas de gain de lecture établi.
 Les 50 nouvelles copies évoquées par l’utilisateur ne sont pas encore fournies.
+Les rapports S05 sont dans `artifacts/private/baselines/s05-annotated-export-40-v3/`
+et `s05-photo-diagnostic-v3/`. Le rapport actualisé est dans
+`artifacts/private/baselines/s05-annotated-90-v1/` : 90/90 cadres contiennent les centres
+des choix, mais les 90/90 questions restent en revue. Les prédictions n’ont pas changé ;
+cela ne valide pas une précision. La préparation S06 peut utiliser la nouvelle
+autorisation, en conservant l’acquisition entière dans un seul groupe et en vérifiant
+les régions de cases avant entraînement.
 La collecte peut commencer dans **Annotations → Ajouter une copie**, sans scripts.
 Les deux diagnostics connus ont été importés dans un dossier de vérification privé
 isolé, 90 questions chacun, aucune annotation humaine ni autorisation d’entraînement.

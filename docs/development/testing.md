@@ -80,3 +80,10 @@ verticaux. Ils contrôlent aussi que changer un label humain ne change ni les im
 traitées ni les scores, que le résultat historique reste intact et que les rejets
 gardent leurs dénominateurs. Les essais réels restent privés et exploratoires ;
 le classement d’une marque ne constitue pas une mesure de précision des réponses.
+
+Les tests [S05](classic-reader.md) exigent des décisions exactes sur les cas propres,
+des abstentions sur les traces concurrentes et les pixels indisponibles, ainsi que
+des lectures automatiques correctes sur une perspective avec ombres/JPEG. Ils
+contrôlent 2/5/10 choix, l’absence de lien entre labels et décisions, et le comptage
+des erreurs/abstentions sans exclure les rejets. La variante reste hors ligne ;
+ses échecs sur les vraies copies sont conservés dans les rapports privés.
