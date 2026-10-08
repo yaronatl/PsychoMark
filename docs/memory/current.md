@@ -46,11 +46,15 @@ L’assistant est implémenté sur la branche `feat/sheet-builder`, issue de `do
 et contenant la proposition graphique précédente. Sa publication ne synchronise pas
 le Codespace distinct de l’utilisateur. Ne pas prétendre qu’il est déjà sur `main`.
 
-Consulter [la dernière session](sessions/2026-10-08-05-readability-diagnostics.md) et vérifier Git.
-L’utilisateur a rencontré un refus « illisible » sur une photo de feuille imprimée,
-avec une référence PDF propre. Les fichiers de cet essai sont dans son Codespace,
-pas dans ce checkout. Le nouveau diagnostic permet d’examiner ce cas ; la cause réelle
-n’est pas encore établie. Ne pas annoncer que la lecture de sa copie est corrigée.
+Consulter [la dernière session](sessions/2026-10-08-06-printed-photo-findings.md) et vérifier Git.
+Le ZIP transmis par l’utilisateur a été ouvert et le refus reproduit. Les fichiers et
+le compte rendu détaillé restent dans `artifacts/private/photo-diagnostic/`, hors Git.
+L’alignement réussit et la netteté passe. La résolution des cases et la correspondance
+de deux cadres bloquent la lecture. Le rendu imprimé diffère aussi de la référence.
+Assouplir ces contrôles dans une expérience privée donne uniquement des réponses
+incertaines : aucun contournement ni correctif optique validé n’a été livré.
+Une photo originale de meilleure définition et une référence vierge de la même version
+imprimée permettront d’isoler ces effets avant une évolution du comparateur.
 L’utilisateur peut désormais importer son fichier NITE directement dans l’application,
 sans dépendre de l’accès du chat aux pièces jointes. L’assistant attend une référence
 à plat et des grilles régulières avec cadres imprimés ; il ne reconnaît pas automatiquement
