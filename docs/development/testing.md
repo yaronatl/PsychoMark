@@ -29,7 +29,11 @@ la sauvegarde/reprise, l’essai optique et un examen utilisant le nouveau modè
 Les repères non sauvegardés protègent la navigation et le rechargement automatique.
 Le parcours couvre aussi l’import d’exemples, la saisie/révision des observations,
 la reprise, le conflit entre fenêtres, le cadrage manuel après échec d’alignement et
-l’export privé. Les tests Python contrôlent les doublons, groupes et archives invalides.
+l’export privé. Un contexte Chromium avec `has_touch` exerce de vrais événements
+tactiles synthétisés : tracé, déplacement, redimensionnement, annulation du geste,
+défilement en mode photo, réemploi d’un cadre et double appui pendant une sauvegarde.
+Les raccourcis clavier sont vérifiés hors des champs. Ce test n’est pas un essai sur
+un téléphone physique ni une validation Safari/iOS. Les tests Python contrôlent les doublons, groupes et archives invalides.
 Ses captures synthétiques vont dans `artifacts/browser/`. Il ne constitue
 pas un audit complet d'accessibilité ou de compatibilité de tous les navigateurs.
 

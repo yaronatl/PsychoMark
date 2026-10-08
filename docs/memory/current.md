@@ -34,6 +34,10 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   révisables, source/cadrage manuel après échec d’alignement, groupes et exports privés.
   [Guide](../guides/annotations.md), [ADR 0005](../architecture/decisions/0005-private-annotation-corpus.md).
   Collecte réelle et ML restent à faire.
+- Annotation mobile accélérée : numéros pour les réponses uniques, absence en un
+  appui, cadre par glissement avec déplacement/redimensionnement, réemploi explicite
+  du dernier cadre, alias retenu par onglet et bouton de sauvegarde fixe sur téléphone.
+  Les ambiguïtés restent détaillées ; aucune confirmation ou marque n’est propagée.
 
 ## Limites et choix ouverts
 
@@ -50,14 +54,14 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : poursuivre S02 et appliquer les skills visuels installés.**
+**Demande actuelle : accélérer l’annotation, en priorité sur mobile.**
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
 est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-08-10-annotation-corpus.md) et vérifier Git.
-Branche publiée : `feat/annotation-corpus` (implémentation `48715cf`), issue de
+Consulter [la dernière session](sessions/2026-10-08-11-fast-mobile-annotation.md) et vérifier Git.
+Branche : `feat/annotation-corpus` (S02 initial : `48715cf`, puis adaptation mobile), issue de
 `docs/monochrome-findings` (`dfaa622`). Les changements précédents sont inclus par
 ascendance. Publier cette branche ne synchronise pas le Codespace distinct et ne
 prouve pas une fusion dans `main`. La création de PR par l’API GitHub reste refusée

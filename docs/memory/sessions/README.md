@@ -16,6 +16,7 @@
 | 2026-10-08 | [08](2026-10-08-08-omr-baseline.md) | S01 : rejeu du moteur, 90 questions exportées, régions et protocole de comparaison |
 | 2026-10-08 | [09](2026-10-08-09-monochrome-diagnostic.md) | Photo monochrome : répartition des repères en cause, normalisation exploratoire prometteuse, lecture non résolue |
 | 2026-10-08 | [10](2026-10-08-10-annotation-corpus.md) | S02 : corpus privé, annotations révisables, cadrage manuel, groupes et exports |
+| 2026-10-08 | [11](2026-10-08-11-fast-mobile-annotation.md) | Annotation mobile rapide, cadre tactile, réemploi, raccourcis et protections de saisie |
 
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 

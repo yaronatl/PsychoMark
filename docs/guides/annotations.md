@@ -30,41 +30,73 @@ Une image aux pixels identiques est refusée même si son encodage PNG diffère.
 photos proches, recadrées ou recompressées avec pertes ne sont pas dédupliquées
 automatiquement : leurs identifiants communs restent indispensables.
 
-## Décrire les marques
+## Annoter rapidement sur téléphone
 
-Pour chaque question, comparer le modèle vierge et l’extrait proposé. Vérifier
-le numéro et tous les choix, puis renseigner un alias de relecture et chaque case :
+L’écran se concentre sur une question. **Toutes les copies** permet de revenir à la
+liste ; les options et l’historique restent disponibles plus bas. Le bouton
+**Enregistrer et continuer** reste au bas de l’écran sur téléphone.
+
+1. Renseigner son alias dans **Relecture et options** une fois. Il est retenu dans
+   cet onglet, y compris après rechargement ; seuls les labels enregistrés vivent
+   sur le serveur. Sur un appareil partagé, vérifier l’alias avant une nouvelle séance.
+2. Vérifier l’extrait et cocher la confirmation du numéro de question et de ses choix.
+   **Comparer avec le modèle vierge** ouvre la référence si nécessaire.
+3. Si un seul choix est nettement marqué, toucher son numéro : cette action indique
+   explicitement que **les autres cases sont sans marque**. Pour une question vide,
+   toucher **Aucune case marquée**. Aucun de ces boutons n’enregistre à lui seul.
+4. **Enregistrer et continuer** sauvegarde puis ouvre la prochaine question non
+   observée. Arrivé au bout, il revient aux éventuelles questions passées plus tôt.
+
+La position et les marques ne sont jamais copiées automatiquement à la question
+suivante. **Passer** laisse la question sans nouvelle observation ; une saisie en
+cours demande confirmation avant d’être quittée. **Revoir la dernière** retourne à
+la dernière question enregistrée pour la rectifier ; ce n’est pas une suppression
+d’historique. Le sélecteur donne accès à toute question.
+
+Pour plusieurs marques ou un doute, ouvrir **Plusieurs marques ou une trace douteuse**.
+Les choix détaillés restent disponibles, sans forcer de réponse unique :
 
 | Observation | Signification |
 |---|---|
-| Aucune marque | Aucune marque ajoutée visible ; le contour et le chiffre imprimés ne comptent pas |
-| Marque nette | Une marque ajoutée est clairement visible, remplissage ou coche |
-| Trace ambiguë | La trace ne permet pas une décision certaine, notamment après effacement |
-| Case illisible | La qualité ou le cadrage empêche de lire cette case |
+| Aucune marque | Aucune marque ajoutée visible ; contour et chiffre imprimés exclus |
+| Marque nette | Une marque ajoutée clairement visible, remplissage ou coche |
+| Trace ambiguë | Une trace ne permettant pas une décision certaine, notamment après effacement |
+| Case illisible | Qualité ou cadrage empêchant de lire cette case |
 
-La conclusion unique, multiple, vide, ambiguë ou illisible découle de ces observations.
-Ne pas deviner l’intention de l’élève. Confirmer séparément la position de la question,
-puis **Enregistrer et continuer**. Le bouton passe à la prochaine question non observée
-après la question courante ; le sélecteur permet de revenir à toute question.
+Sur ordinateur, les chiffres **1 à 9** et **0** permettent la même saisie rapide.
+Depuis le titre de question, **Entrée** demande l’enregistrement. Les raccourcis
+n’interceptent pas la saisie des champs, les liens ou les contrôles natifs. Les modèles
+à dix choix conservent leur dixième bouton, sans raccourci à un seul chiffre.
 
-Les changements sont enregistrés avec une révision, un alias et un historique. Une
-fenêtre périmée reçoit un conflit au lieu d’écraser une autre modification. La saisie
-reste affichée pour permettre sa comparaison après rechargement. Les observations
-non enregistrées protègent la navigation et l’actualisation automatique.
+Les changements gardent une révision, un alias et un historique. Une fenêtre périmée
+reçoit un conflit ; une erreur conserve la saisie. Le bouton est bloqué durant la
+requête : un double appui ne doit pas enregistrer deux observations. Rien n’est sauvé
+hors ligne et rien n’est entraîné automatiquement.
 
-## Si le moteur n’a pas positionné les questions
+## Cadrer au doigt, à la souris ou au clavier
 
-L’original reste accessible, y compris après un échec d’alignement. Ouvrir **Voir
-l’original et placer un extrait**, agrandir si nécessaire et choisir **Délimiter
-cette question**. Cliquer sur deux coins opposés autour de tous ses choix. Une saisie
-des quatre coordonnées, suivie de **Appliquer les coordonnées**, offre une alternative
-au clavier. Les coordonnées sont en pixels de l’image source décodée.
+**Cadrer cette question**, **Ouvrir la photo** ou **Ajuster le cadre** ouvre la photo
+originale dans une fenêtre dédiée, en plein écran sur téléphone :
 
-Confirmer ensuite la position et enregistrer. Le cadre manuel appartient à cette
-observation ; il ne modifie pas le modèle de feuille ni l’alignement du moteur.
-On peut aussi déclarer une lecture sur la photo entière ou un extrait mal placé :
-ces observations sont conservées, sans être déclarées géométriquement prêtes.
-**Un cadre de question confirmé ne valide pas la position de chacune de ses cases.**
+- En mode **Cadrer**, glisser d’un coin au coin opposé pour tracer le rectangle.
+- Glisser **à l’intérieur** pour le déplacer ; utiliser un **coin** pour changer sa taille.
+- Choisir le zoom, puis **Déplacer la photo** pour faire défiler l’image sans déplacer
+  le rectangle. Revenir à **Cadrer** pour modifier la sélection.
+- **Reprendre le dernier cadre** récupère sa taille et sa position sur cette photo.
+  Le déplacer sur la question actuelle avant de confirmer. Ce n’est pas un repérage
+  automatique ; le zoom et la position de lecture sont également conservés pendant la séance.
+- **Coordonnées / alternative au glissement** permet de renseigner les quatre bornes
+  puis de les appliquer, au clavier ou par appuis simples sur les champs.
+- **Utiliser ce cadre** confirme explicitement la position de cette question et montre
+  son extrait immédiatement. **Annuler** ou Échap abandonne les changements de la fenêtre.
+
+Un geste tactile interrompu restaure le rectangle précédent. Les bornes sont en pixels
+de l’image décodée et restent dans cette image. Le cadre n’est sauvegardé sur le serveur
+qu’avec **Enregistrer et continuer** ; il ne change ni le modèle ni le moteur.
+
+Dans **Relecture et options**, on peut encore déclarer une lecture sur la photo entière
+ou un extrait mal placé. Ces observations sont conservées sans être géométriquement
+prêtes. **Un cadre de question confirmé ne valide pas la position de chaque case.**
 
 ## Exporter et reprendre
 
