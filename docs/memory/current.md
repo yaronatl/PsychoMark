@@ -46,14 +46,15 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : démarrer le plan, session S01 réalisée.**
+**Demande actuelle : analyser le deuxième diagnostic, photographie de photocopie monochrome.**
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
 est soutenue par l’utilisateur ; S01 est implémenté, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-08-08-omr-baseline.md) et vérifier Git.
-La branche de livraison est `feat/omr-baseline`, issue de `docs/hybrid-omr-plan`. L’assistant et ses diagnostics sont
+Consulter [la dernière session](sessions/2026-10-08-09-monochrome-diagnostic.md) et vérifier Git.
+La branche documentaire est `docs/monochrome-findings`, issue de `feat/omr-baseline`.
+S01 reste livré sur `feat/omr-baseline`. L’assistant et ses diagnostics sont
 sur `feat/sheet-builder` ; publier une branche ne synchronise pas le Codespace distinct
 ni ne prouve une fusion dans `main`.
 
@@ -75,6 +76,15 @@ Prochain lot : **S02, données et annotation humaine**. Préparer une saisie acc
 les identifiants de feuilles physiques et les groupes d’apprentissage/évaluation.
 S03 (recalage local) peut avancer sur des fichiers distincts, avec les contrats S01.
 Ce cas connu sert au développement, pas au test final indépendant.
+
+Second diagnostic disponible sous `artifacts/private/monochrome-diagnostic/`, rapport
+historique sous `artifacts/private/baselines/s01-monochrome-v1/`. Référence inchangée,
+photo différente. Refus global reproduit : repères cohérents concentrés sur 7,64 %
+de la référence, seuil 12 %. Une normalisation avant ORB passe en expérience privée
+les contrôles globaux et locaux, mais donne 76 `multiple` et 14 `uncertain` : aucune
+lecture automatique validée. Ne pas présenter cette expérience comme un correctif actif.
+S02 doit permettre d’annoter la source lorsque le recalage historique échoue, sans
+inventer des régions validées. Les deux cas sont du développement connu, pas un test final.
 
 La normalisation locale d’éclairage existe déjà. Mesurer son apport avant de la modifier.
 Le futur modèle ne reçoit jamais le corrigé et démarre en observation, sans effet sur

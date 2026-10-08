@@ -14,6 +14,7 @@
 | 2026-10-08 | [06](2026-10-08-06-printed-photo-findings.md) | Refus réel reproduit : résolution et cadres ; hypothèse de variante clarifiée ensuite |
 | 2026-10-08 | [07](2026-10-08-07-hybrid-omr-plan.md) | Plan OMR hybride en dix lots, contrats, données, évaluation et organisation Codex |
 | 2026-10-08 | [08](2026-10-08-08-omr-baseline.md) | S01 : rejeu du moteur, 90 questions exportées, régions et protocole de comparaison |
+| 2026-10-08 | [09](2026-10-08-09-monochrome-diagnostic.md) | Photo monochrome : répartition des repères en cause, normalisation exploratoire prometteuse, lecture non résolue |
 
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 
