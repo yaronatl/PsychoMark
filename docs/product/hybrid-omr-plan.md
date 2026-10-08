@@ -1,6 +1,6 @@
 # Plan de développement — OMR hybride robuste aux photographies
 
-Date utilisateur : 2026-10-08. État : **S01 et outillage S02 implémentés ; collecte et lots suivants à réaliser**.
+Date utilisateur : 2026-10-08. État : **S01/S02 implémentés ; 40 annotations reçues ; première expérience S03 hors ligne livrée**.
 
 [Priorités](roadmap.md) · [Architecture actuelle](../architecture/overview.md) ·
 [ADR proposé](../architecture/decisions/0004-hybrid-omr-experiment.md) ·
@@ -72,8 +72,9 @@ Une session est un lot cohérent et vérifiable, pas une durée de conversation 
 Une session complexe peut nécessiter plusieurs tours ou plusieurs PR. Le tableau donne
 l’ordre et les dépendances ; les critères de passage priment sur un calendrier artificiel.
 S01 est implémenté : [outil et limites](../development/omr-baseline.md),
-[contrats](../architecture/regions.md). Les autres lots restent **à implémenter**.
-L’annotation humaine du cas réel n’est pas encore validée.
+[contrats](../architecture/regions.md). S02 est livré et un premier export de 40 annotations a été vérifié. Une première
+version S03 expérimentale est disponible : [protocole et limites](../development/local-registration.md).
+Les lots suivants et l’activation dans l’application restent à réaliser.
 
 | Lot | Travail et résultat concret | Dépendance | Critère de passage |
 |---|---|---|---|
@@ -121,6 +122,12 @@ indépendante et le jeu réservé restent à constituer. Les photos proches doiv
 regroupées par l’opérateur ; aucun détecteur de quasi-doublons n’est installé.
 
 ### S03/S04 : améliorer les images sans fabriquer de marques
+
+Première livraison : comparaison hors ligne brut/normalisé × global/local, recalage
+affine borné sur les cadres imprimés, refus explicites et comparaison aux rectangles
+humains. La normalisation avant ORB débloque le diagnostic monochrome ; le recalage
+local demeure refusé sur ses grilles trop serrées après exclusion des cases. Aucun
+gain de lecture ni taux de fiabilité générale établi. Voir [le protocole S03](../development/local-registration.md).
 
 L’alignement global demeure le premier repère. Tester ensuite des corrections locales
 bornées par les cadres et l’impression stable, puis éventuellement par question si

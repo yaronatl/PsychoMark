@@ -36,3 +36,5 @@ Pour reprendre le développement : [état actuel](memory/current.md) →
 - Mettre à jour la page concernée avec le code dans le même changement.
 - Ne pas créer un journal pour chaque message. Une session décrit un lot de travail
   significatif ; ne pas recopier la conversation ou exposer de données personnelles.
+
+- [S03 — Comparaison expérimentale de géométrie](development/local-registration.md)

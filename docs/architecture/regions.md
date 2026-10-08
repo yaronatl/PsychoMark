@@ -42,9 +42,11 @@ un petit extrait isolé produirait un autre prétraitement. `overlay` est unique
 un repère visuel, jamais une entrée de lecture. Un extrait source totalement hors
 image est absent ; un masque nul n’est pas une réponse blanche.
 
-Le recalage local n’est pas implémenté (`local_alignment=null`). Une évolution devra
-décrire sa composition avec la transformation globale et mettre à jour ce contrat
-avant d’intégrer des lecteurs qui consomment ces nouvelles régions.
+Le contrat historique conserve `local_alignment=null`. S03 ajoute un
+[rapport expérimental séparé](../development/local-registration.md) avec les matrices
+composées par grille et des `QuestionRegion` v1 calculées avec leur inverse. Il ne
+réécrit pas les régions S01 ni les extractions web ; aucun lecteur actif ne consomme
+encore ces corrections.
 
 ## Observations historiques, implémentées
 

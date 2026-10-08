@@ -33,7 +33,7 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 - S02 livré : **Annotations** (`#/annotations`), import d’exemples, labels humains
   révisables, source/cadrage manuel après échec d’alignement, groupes et exports privés.
   [Guide](../guides/annotations.md), [ADR 0005](../architecture/decisions/0005-private-annotation-corpus.md).
-  Collecte réelle et ML restent à faire.
+  Premier export réel de 40 annotations reçu et vérifié ; ML non commencé.
 - Annotation mobile accélérée : numéros pour les réponses uniques, absence en un
   appui, cadre par glissement avec déplacement/redimensionnement, réemploi explicite
   du dernier cadre, alias retenu par onglet et bouton de sauvegarde fixe sur téléphone.
@@ -42,6 +42,12 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   Réutilisation directement accessible : proposition décalée d’une largeur vers la
   droite/gauche, ou reprise au même endroit ; confirmation explicite conservée.
   Les ambiguïtés restent détaillées ; aucune confirmation ou marque n’est propagée.
+
+- S03 expérimental hors ligne : [comparaison géométrique](../development/local-registration.md),
+  recalage local borné sur cadres imprimés et variantes globales brut/normalisé.
+  Sur l’export humain, normalisation avant ORB : centres des choix contenus dans
+  40/40 cadres ; recalage local refusé sur les trois grilles serrées. Aucune précision
+  de lecture mesurée ni activation dans l’application.
 
 ## Limites et choix ouverts
 
@@ -58,18 +64,17 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : accélérer l’annotation, en priorité sur mobile.**
+**Demande actuelle : poursuivre le moteur après réception des 40 annotations.**
 Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
 contrats, données, critères de passage et répartition des agents. L’orientation hybride
 est soutenue par l’utilisateur ; S01 et l’outillage S02 sont implémentés, aucune implémentation ML
 n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-08-13-reuse-next-crop.md) et vérifier Git.
-Branche : `feat/annotation-corpus` (S02 initial : `48715cf`, puis adaptation mobile), issue de
-`docs/monochrome-findings` (`dfaa622`). Les changements précédents sont inclus par
-ascendance. Publier cette branche ne synchronise pas le Codespace distinct et ne
-prouve pas une fusion dans `main`. La création de PR par l’API GitHub reste refusée
-(`Forbidden`) ; aucune PR créée pour S02.
+Consulter [la dernière session](sessions/2026-10-08-14-s03-geometry.md) et vérifier Git.
+Branche actuelle : `feat/local-registration`, issue de `feat/annotation-corpus` (`db9462a`).
+Cette nouvelle branche contient S02 et ses améliorations mobiles par ascendance.
+Le candidat S03 reste hors ligne ; aucune synchronisation Codespace ni fusion `main`
+n’est impliquée par la publication. L’accès distant au Codespace a renvoyé Forbidden.
 
 Le diagnostic fourni reste dans `artifacts/private/photo-diagnostic/`, hors Git.
 L’alignement réussit et la netteté passe. La résolution des cases et la correspondance
@@ -83,9 +88,14 @@ prérequis pour commencer à améliorer le moteur avec le diagnostic déjà disp
 S01 fournit désormais une commande de rejeu, les régions de 90 questions du diagnostic,
 leurs masques et leur provenance. Les 90 refus historiques sont conservés. Rapport
 privé : `artifacts/private/baselines/s01-photo-v1/summary.md` et `review.html` ; aucune
-image réelle ajoutée à Git. Les labels humains sont vides, la précision reste non mesurée.
+image réelle ajoutée à Git. Les labels préparés par S01 restent vides ; les 40 annotations
+humaines reçues ensuite sont conservées dans un export S02 distinct. La précision de lecture reste non mesurée.
 
-Prochain lot : **S03, recalage local**, puis comparaison des traitements S04.
+Prochain lot : **S04, comparaison des traitements photographiques**. Une première
+version expérimentale S03 est livrée ; le recalage local des grilles serrées reste une
+limite ouverte. Les données reçues sont dans `artifacts/private/annotated-export-40/`,
+rapport final dans `artifacts/private/baselines/s03-annotated-v2/`. Les 40 observations
+restent en développement, non autorisées pour l’entraînement.
 La collecte peut commencer dans **Annotations → Ajouter une copie**, sans scripts.
 Les deux diagnostics connus ont été importés dans un dossier de vérification privé
 isolé, 90 questions chacun, aucune annotation humaine ni autorisation d’entraînement.

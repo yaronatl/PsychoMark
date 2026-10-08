@@ -22,6 +22,8 @@
 
 | 2026-10-08 | [13](2026-10-08-13-reuse-next-crop.md) | Réemploi visible du cadre et décalage d’une largeur pour la question suivante |
 
+| 2026-10-08 | [14](2026-10-08-14-s03-geometry.md) | 40 annotations vérifiées, comparaison S03 de géométrie et normalisation avant ORB |
+
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 
 Les étapes antérieures sont présentes dans le commit initial `ad0b4bc` ; aucun journal
