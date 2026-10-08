@@ -51,13 +51,22 @@ des copies réelles restent nécessaires pour mesurer la fiabilité.
 
 ## État au cadrage
 
-Le fichier `SCR-20261007-lowy.png` est visible dans la conversation, mais aucun fichier
+Lors du cadrage initial, le fichier `SCR-20261007-lowy.png` était visible dans la conversation, mais aucun fichier
 source accessible au programme n’a été retrouvé dans le checkout ou les pièces
-disponibles de cet environnement. Le chemin `/Users/yaronattal/Desktop/…` désigne le
-poste de l’utilisateur. Aucune calibration NITE n’a été exécutée ; aucun faux modèle
-de remplacement ni activation NITE dans l’interface n’a été créé.
+alors disponibles. Le chemin `/Users/yaronattal/Desktop/…` désigne le poste de
+l’utilisateur. Aucun faux modèle de remplacement ni activation NITE n’a été créé.
 
 Le PNG ou le PDF original peut maintenant être importé directement dans
 **Mes feuilles → Ajouter une feuille**, sans passer par les pièces jointes du chat.
 Les copies remplies serviront ensuite aux essais réels. Conserver les données d’élèves
 dans un emplacement privé, hors Git.
+
+## Mise à jour du 8 octobre 2026
+
+Un ZIP de diagnostic transmis depuis l’assistant contient désormais une référence,
+une configuration de trois grilles et une copie photographiée, accessibles localement
+hors Git. Le refus a été reproduit ; ce n’est pas une validation des huit grilles ni
+une prise en charge NITE préinstallée. L’utilisateur confirme la même feuille entre
+référence et photo. La priorité suivante est le [plan de robustesse hybride](hybrid-omr-plan.md),
+qui distingue calibration géométrique et futur entraînement d’un lecteur de marques.
+Le manque initial de fichier ne doit plus être présenté comme un blocage de ces travaux.

@@ -44,3 +44,13 @@ un refus en note. Les cas avec traces/effacements doivent rester vérifiables.
 Aucun corrigé n’a été utilisé dans les expériences, aucun taux de précision établi.
 Vérification de cette livraison documentaire : liens locaux et diff. Les tests du
 code ne sont pas répétés : aucun code de l’application n’est modifié.
+
+## Clarification ultérieure — 2026-10-08
+
+L’utilisateur confirme que la référence et la copie photographiée représentent exactement
+la même feuille. Les différences de rendu observées ne démontrent pas une variante
+imprimée ; cette déduction antérieure n’est pas établie. Les causes photométriques
+restent à isoler. Une nouvelle référence vierge n’est pas un préalable au travail.
+Le diagnostic déjà reçu permet de commencer les expériences du
+[plan hybride](../../product/hybrid-omr-plan.md). Les constats de refus restent valides ;
+aucune précision ni intention de réponse n’a été déduite de l’image seule.

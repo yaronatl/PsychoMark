@@ -57,6 +57,11 @@ Codespaces fournit ses propres variables d'origine ; ne pas y substituer un doma
 
 ## Choix futurs, non installés
 
+Le [plan OMR hybride](../product/hybrid-omr-plan.md) propose PyTorch comme dépendance
+optionnelle d’entraînement au lot S06. Aucun modèle ML n’est installé ou entraîné.
+L’inférence locale CPU est la cible initiale ; ONNX Runtime reste une option à mesurer.
+Les premiers lots utilisent la stack actuelle, sans GPU ni nouveau service obligatoire.
+
 PostgreSQL, stockage objet, files de tâches, authentification, paiement et hébergement
 de production nécessiteront une décision lorsque leurs besoins seront cadrés.
 SQLite couvre le MVP actuel ; cela ne décide pas du stockage du futur SaaS.

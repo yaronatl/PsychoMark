@@ -31,7 +31,8 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 - Proposition graphique encore à apprécier par l’utilisateur ; aucun retour de validation
   du rendu final reçu. Ne pas confondre réalisation et identité approuvée.
-- Aucun taux de précision réel annoncé ; NITE/Adar non calibrés, essais synthétiques seulement.
+- Aucun taux de précision réel annoncé ; validation synthétique et premier diagnostic
+  photographique réel reproduit, sans correctif validé ni compatibilité NITE/Adar établie.
 - Pas de SaaS public : ni comptes, ni isolation par entreprise, ni abonnement.
 - Framework frontend général et bibliothèque UI restent à choisir. Torph n’impose
   aucune migration React/Tailwind. Voir [ADR 0002](../architecture/decisions/0002-local-browser-dependencies.md).
@@ -41,26 +42,32 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : rendre l’ajout de feuilles accessible sans scripts manuels.**
-L’assistant est implémenté sur la branche `feat/sheet-builder`, issue de `docs/nite-pilot`
-et contenant la proposition graphique précédente. Sa publication ne synchronise pas
-le Codespace distinct de l’utilisateur. Ne pas prétendre qu’il est déjà sur `main`.
+**Demande actuelle : planifier le renforcement du moteur et l’expérimentation ML.**
+Le [plan détaillé](../product/hybrid-omr-plan.md) découpe le travail en dix lots, avec
+contrats, données, critères de passage et répartition des agents. L’orientation hybride
+est soutenue par l’utilisateur ; le plan reste proposé et aucune implémentation ML
+n’a commencé. Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md).
 
-Consulter [la dernière session](sessions/2026-10-08-06-printed-photo-findings.md) et vérifier Git.
-Le ZIP transmis par l’utilisateur a été ouvert et le refus reproduit. Les fichiers et
-le compte rendu détaillé restent dans `artifacts/private/photo-diagnostic/`, hors Git.
+Consulter [la dernière session](sessions/2026-10-08-07-hybrid-omr-plan.md) et vérifier Git.
+La branche documentaire est `docs/hybrid-omr-plan`. L’assistant et ses diagnostics sont
+sur `feat/sheet-builder` ; publier une branche ne synchronise pas le Codespace distinct
+ni ne prouve une fusion dans `main`.
+
+Le diagnostic fourni reste dans `artifacts/private/photo-diagnostic/`, hors Git.
 L’alignement réussit et la netteté passe. La résolution des cases et la correspondance
-de deux cadres bloquent la lecture. Le rendu imprimé diffère aussi de la référence.
-Assouplir ces contrôles dans une expérience privée donne uniquement des réponses
-incertaines : aucun contournement ni correctif optique validé n’a été livré.
-Une photo originale de meilleure définition et une référence vierge de la même version
-imprimée permettront d’isoler ces effets avant une évolution du comparateur.
-L’utilisateur peut désormais importer son fichier NITE directement dans l’application,
-sans dépendre de l’accès du chat aux pièces jointes. L’assistant attend une référence
-à plat et des grilles régulières avec cadres imprimés ; il ne reconnaît pas automatiquement
-une mise en page inconnue. Pas de taux de précision annoncé ni de modèle NITE préinstallé.
+de deux cadres bloquent la lecture. Assouplir ces contrôles dans une expérience privée
+ne donne que des réponses incertaines. Aucun correctif optique validé n’a été livré.
+**L’utilisateur confirme que référence et photo proviennent de la même feuille.**
+La différence de rendu ne prouve pas une autre version imprimée ; l’hypothèse antérieure
+est non établie. Une meilleure photo aiderait les comparaisons, mais n’est pas un
+prérequis pour commencer à améliorer le moteur avec le diagnostic déjà disponible.
 
-Prochaine étape : accompagner la calibration de la vraie feuille NITE, puis comparer
-les lectures à des copies annotées manuellement. Lire [le pilote](../product/nite-pilot.md).
-La confirmation de l’aperçu et les essais synthétiques ne valent pas validation terrain.
-Continuer à recueillir les retours visuels dans la direction papier/encre.
+Prochain lot : **S01, référence de comparaison et contrats**. Rejouer le moteur actuel,
+préparer les régions des questions pour annotation humaine, définir les mesures et les
+interfaces avant de répartir S02 (données) et S03 (recalage local). Les labels humains
+restent à établir. Ce cas connu sert au développement, pas au test final indépendant.
+
+La normalisation locale d’éclairage existe déjà. Mesurer son apport avant de la modifier.
+Le futur modèle ne reçoit jamais le corrigé et démarre en observation, sans effet sur
+les notes. PyTorch est seulement proposé pour S06, aucune dépendance ML installée.
+L’interface et sa direction papier/encre restent hors du périmètre de ce plan.

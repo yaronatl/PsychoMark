@@ -11,7 +11,8 @@
 | 2026-10-08¹ | [03](2026-10-08-03-paper-ink-proposal.md) | Première proposition papier/encre, Torph, adaptation Be UI et parcours vérifiés |
 | 2026-10-08 | [04](2026-10-08-04-sheet-builder.md) | Création visuelle de modèles, calibration Python, essais et intégration aux examens |
 | 2026-10-08 | [05](2026-10-08-05-readability-diagnostics.md) | Explications des refus de lecture et ZIP de reproduction d’un essai |
-| 2026-10-08 | [06](2026-10-08-06-printed-photo-findings.md) | Refus réel reproduit : résolution, cadres et différences d’impression ; aucun seuil relâché |
+| 2026-10-08 | [06](2026-10-08-06-printed-photo-findings.md) | Refus réel reproduit : résolution et cadres ; hypothèse de variante clarifiée ensuite |
+| 2026-10-08 | [07](2026-10-08-07-hybrid-omr-plan.md) | Plan OMR hybride en dix lots, contrats, données, évaluation et organisation Codex |
 
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 
