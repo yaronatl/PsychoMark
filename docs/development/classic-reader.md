@@ -118,4 +118,7 @@ indices de marque. Le candidat n’est pas prêt à être activé. S06 peut cons
 prototype ML comparatif, puis S07 calibrera l’abstention sur des données séparées.
 Les nouveaux exports humains et des copies variées sont utiles ; une seule photo
 avec davantage de questions ne démontre pas la généralisation. L’export actuellement
-reçu n’autorise pas l’entraînement (`training_allowed=false`) et n’a pas été entraîné.
+reçu doit préciser l’autorisation d’entraînement ; ce droit ne valide pas à lui seul
+les coordonnées des cases ni la séparation des groupes. Aucun entraînement n’est
+effectué par S05. La [réception des 90 annotations](../memory/sessions/2026-10-09-04-corpus-90.md)
+documente le dernier état des données et leur rejeu.
