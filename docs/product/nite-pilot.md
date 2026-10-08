@@ -6,7 +6,9 @@
 
 Le 8 octobre 2026, l’utilisateur précise que la feuille NITE montrée est celle des
 examens officiels et la plus courante dans son usage. Elle devient le premier modèle
-réel à prendre en charge, avant un assistant générique de création de modèles.
+réel à prendre en charge. La demande suivante de l’utilisateur donne toutefois
+priorité à l’[assistant de création](../guides/sheets.md), désormais implémenté,
+pour qu’il puisse importer et configurer lui-même ses feuilles dans l’application.
 Cette indication d’usage vient de l’utilisateur ; aucune mesure indépendante de
 fréquence ni vérification de toutes les éditions officielles n’est revendiquée.
 
@@ -55,6 +57,7 @@ disponibles de cet environnement. Le chemin `/Users/yaronattal/Desktop/…` dés
 poste de l’utilisateur. Aucune calibration NITE n’a été exécutée ; aucun faux modèle
 de remplacement ni activation NITE dans l’interface n’a été créé.
 
-Prochaine entrée nécessaire : ce PNG en pièce jointe téléchargeable, ou le PDF original.
+Le PNG ou le PDF original peut maintenant être importé directement dans
+**Mes feuilles → Ajouter une feuille**, sans passer par les pièces jointes du chat.
 Les copies remplies serviront ensuite aux essais réels. Conserver les données d’élèves
 dans un emplacement privé, hors Git.

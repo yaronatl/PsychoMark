@@ -22,6 +22,7 @@ installation du composant React officiel.
 | [index.html](../../src/psychomark/static/index.html) | Structure, navigation de l’atelier, chargement des assets locaux |
 | [landing.js](../../src/psychomark/static/landing.js) | Présentation éditoriale et scène illustrative, sans logique de notation |
 | [app.js](../../src/psychomark/static/app.js) | Routes, vues de travail, formulaires et appels API |
+| [sheets.js](../../src/psychomark/static/sheets.js) et [sheets.css](../../src/psychomark/static/sheets.css) | Bibliothèque de feuilles, placement manuel des grilles et essais |
 | [style.css](../../src/psychomark/static/style.css) | Tokens partagés, composants natifs, atelier, accueil et adaptation mobile |
 | [live.js](../../src/psychomark/static/live.js) | Rafraîchissement du navigateur en développement |
 | [motion.js](../../src/psychomark/static/motion.js) | Libellé d’analyse animé avec Torph, réduction du mouvement et nettoyage |

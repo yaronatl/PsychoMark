@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 
 import httpx
+from browser_sheets import exercise_sheets
 from playwright.sync_api import expect, sync_playwright
 
 
@@ -176,11 +177,13 @@ def main():
                     )
                     expect(page.get_by_role("button", name="Valider et recalculer")).to_be_visible()
                     assert page.locator("style[data-torph]").count() == 0, "Torph must clean up"
+                    exercise_sheets(page, base, root, args.output)
                     assert not errors, errors
                     browser.close()
                 print(
                     "Browser workflow passed: landing, keyboard, responsive, reduced motion, "
-                    "create exam, upload, review, final 12/20, persistence, CSV, real demo."
+                    "create exam, upload, review, final 12/20, persistence, CSV, real demo, "
+                    "manual sheet calibration, test and exam using the new template."
                 )
             finally:
                 process.terminate()

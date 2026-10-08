@@ -8,6 +8,7 @@ Les étapes sont ordonnées par dépendance ; ce ne sont pas des promesses de da
 |---|---|---|
 | Moteur et interface de démonstration | Implémenté sur synthétique | Parcours de correction et ambiguïtés vérifiés |
 | Cadre de reprise et qualité | Implémenté dans cette livraison | Docs, mémoire, dépendances et commandes vérifiées ; CI configurée |
+| Assistant de création de modèles | Implémenté, essais synthétiques | Import, placement manuel, calibration, essai, utilisation dans un examen ; [guide](../guides/sheets.md) |
 | Modèle réel pilote | [NITE prioritaire](nite-pilot.md), fichier source nécessaire | Modèle NITE préconfiguré, feuille vierge calibrée et copies annotées manuellement |
 | Mesure de fiabilité | À faire | Rapport reproductible sur un jeu réservé, erreurs et charge humaine mesurées |
 | Renforcement du moteur | À définir selon les erreurs | Comparaison avant/après sur le même protocole ; IA spécialisée seulement si utile |

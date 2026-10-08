@@ -1,18 +1,22 @@
 "use strict";
 
+import { mountSheetBuilder, sheetList } from "./sheets.js";
+
 import { renderLanding } from "./landing.js";
 import { showBusyLabel } from "./motion.js";
 
 const main = document.querySelector("#main");
 const state = {templates: [], draft: null, exam: null, copy: null, filter: "all", selected: null, busy: false, dirty: false};
-window.psychomarkCanReload = () => !state.busy && !state.dirty;
+let sheetController=null, previousHash=location.hash;
+window.psychomarkCanReload = () => !state.busy && !state.dirty && (!sheetController || sheetController.canReload());
+window.addEventListener("beforeunload",event=>{if(sheetController&&!sheetController.canReload()){event.preventDefault();event.returnValue="";}});
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const number = value => value == null ? "—" : new Intl.NumberFormat("fr-FR", {maximumFractionDigits: 2}).format(value);
 const date = value => new Date(value).toLocaleDateString("fr-FR", {day:"numeric", month:"short", year:"numeric"});
 const badge = (text, color="gray") => `<span class="badge ${color}">${esc(text)}</span>`;
 const questionKey = row => `${row.section}:${row.question}`;
 const template = id => state.templates.find(t => t.id === id);
-const templateLabel = t => t.synthetic ? `Démonstration · ${t.sections.length} sections` : t.id;
+const templateLabel = t => t.synthetic ? `Démonstration · ${t.sections.length} sections` : (t.name || t.id);
 const verdictLabel = {correct:"Correcte", incorrect:"Incorrecte", blank:"Sans réponse", pending:"À vérifier"};
 const verdictColor = {correct:"green", incorrect:"red", blank:"gray", pending:"amber"};
 const detectionLabel = {single:"Réponse unique", blank:"Aucune marque détectée", multiple:"Plusieurs marques", uncertain:"Lecture incertaine", unreadable:"Zone illisible"};
@@ -141,6 +145,10 @@ function focusReviewOnSmallScreen() {
   panel?.scrollIntoView({block:"start",behavior:"instant"});
 }
 async function route() {
+  if(sheetController && location.hash!==previousHash && !sheetController.canReload() && !confirm("Des repères ne sont pas sauvegardés ou une opération est en cours. Quitter cette feuille ?")) {
+    history.replaceState(null,"",previousHash||"#/home");return;
+  }
+  sheetController?.dispose();sheetController=null;previousHash=location.hash;
   state.dirty=false;
   const version=++routeVersion, path=(location.hash.slice(1)||"/home").split("/").filter(Boolean);
   const landing=path[0]==="home";
@@ -152,12 +160,18 @@ async function route() {
     return;
   }
   document.querySelector("#nav-new").classList.toggle("active",["new","edit"].includes(path[0]));
-  document.querySelector("#nav-exams").classList.toggle("active",!["new","edit"].includes(path[0]));
+  document.querySelector("#nav-exams").classList.toggle("active",!["new","edit","sheets"].includes(path[0]));
+  document.querySelector("#nav-sheets").classList.toggle("active",path[0]==="sheets");
   main.innerHTML='<div class="loading" role="status">Chargement…</div>';
   try {
-    if(!state.templates.length)state.templates=await api("/api/templates");
+    state.templates=await api("/api/templates");
     if(version!==routeVersion)return;
-    if(path[0]==="new") {state.exam=null;state.draft=newDraft(state.templates[0]);renderEditor();}
+    if(path[0]==="sheets") {
+      document.title="Mes feuilles — PsychoMark";
+      if(path[1])sheetController=mountSheetBuilder(main,path[1]);
+      else {const html=await sheetList();if(version===routeVersion)main.innerHTML=html;}
+    }
+    else if(path[0]==="new") {state.exam=null;state.draft=newDraft(template(path[1])||state.templates[0]);renderEditor();}
     else if(path[0]==="edit") {const e=await api(`/api/exams/${path[1]}`);if(version!==routeVersion)return;state.exam=e;state.draft=structuredClone(e.exam);renderEditor();}
     else if(path[0]==="exam") {const e=await api(`/api/exams/${path[1]}`);if(version!==routeVersion)return;renderExam(e);}
     else if(path[0]==="copy") {const c=await api(`/api/copies/${path[1]}`);if(version!==routeVersion)return;state.filter="all";state.selected=null;renderCopy(c);}

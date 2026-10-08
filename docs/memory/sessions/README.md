@@ -8,8 +8,8 @@
 | 2026-10-07 | [02](2026-10-07-02-design-skills.md) | Six skills de design installés, configuration Be UI préparée |
 | 2026-10-08¹ | [01](2026-10-08-01-beui-access.md) | Accès Be UI vérifié sans écriture dans la configuration globale |
 | 2026-10-08¹ | [02](2026-10-08-02-visual-references.md) | Références originales archivées et direction Renance proposée |
-
 | 2026-10-08¹ | [03](2026-10-08-03-paper-ink-proposal.md) | Première proposition papier/encre, Torph, adaptation Be UI et parcours vérifiés |
+| 2026-10-08 | [04](2026-10-08-04-sheet-builder.md) | Création visuelle de modèles, calibration Python, essais et intégration aux examens |
 
 ¹ Date utilisateur Asia/Jerusalem ; cette intervention commence le 7 octobre en UTC.
 

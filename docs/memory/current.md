@@ -18,6 +18,11 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   Boutons Be UI **adaptés en CSS natif**, pas composants React officiels installés.
   Polices et module servis localement ; build/verrou npm et CSP à empreinte exacte.
 - Accueil sur `/` ou `#/home` ; examens directement sur `#/exams`.
+- **Ajouter une feuille** sur `#/sheets` : import d’une référence vierge, cinq repères
+  par grille, aperçu Python, essai d’une copie et modèle disponible pour les examens.
+  [Guide](../guides/sheets.md), [ADR 0003](../architecture/decisions/0003-visual-sheet-library.md).
+  Les brouillons sont sauvegardés après vérification ; les modèles enregistrés sont figés.
+  La bibliothèque persiste sous le dossier privé de données, sans migration SQLite.
 
 ## Limites et choix ouverts
 
@@ -33,17 +38,18 @@ Mis à jour le 2026-10-08 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Priorité actuelle : prendre en charge la feuille NITE montrée par l’utilisateur**
-comme modèle fourni avec le produit, avant un assistant générique de création de modèles.
-Lire [le cadrage du pilote](../product/nite-pilot.md). Le PNG est visible dans le chat,
-mais son fichier n’est pas accessible au programme ici ; demander le fichier téléchargeable
-ou le PDF source pour calibrer. Ne pas annoncer de compatibilité NITE à ce stade.
+**Demande actuelle : rendre l’ajout de feuilles accessible sans scripts manuels.**
+L’assistant est implémenté sur la branche `feat/sheet-builder`, issue de `docs/nite-pilot`
+et contenant la proposition graphique précédente. Sa publication ne synchronise pas
+le Codespace distinct de l’utilisateur. Ne pas prétendre qu’il est déjà sur `main`.
 
-Consulter [la dernière session](sessions/2026-10-08-03-paper-ink-proposal.md) et Git.
-Recueillir le retour visuel sur l’accueil et la correction, puis affiner dans la direction
-exprimée. Les captures de revue sont locales sous `.impeccable/review/` (ignorées par Git).
-La branche de travail est `feat/paper-ink-design` ; sa présence sur GitHub ne synchronise
-pas le Codespace séparé de l’utilisateur. Vérifier le statut réel avant toute intégration.
+Consulter [la session](sessions/2026-10-08-04-sheet-builder.md) et vérifier Git.
+L’utilisateur peut désormais importer son fichier NITE directement dans l’application,
+sans dépendre de l’accès du chat aux pièces jointes. L’assistant attend une référence
+à plat et des grilles régulières avec cadres imprimés ; il ne reconnaît pas automatiquement
+une mise en page inconnue. Pas de taux de précision annoncé ni de modèle NITE préinstallé.
 
-Ensuite : feuille vierge et scans autorisés pour calibrer un premier modèle réel et
-constituer une vérité de référence. Suivre les [priorités](../product/roadmap.md).
+Prochaine étape : accompagner la calibration de la vraie feuille NITE, puis comparer
+les lectures à des copies annotées manuellement. Lire [le pilote](../product/nite-pilot.md).
+La confirmation de l’aperçu et les essais synthétiques ne valent pas validation terrain.
+Continuer à recueillir les retours visuels dans la direction papier/encre.

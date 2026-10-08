@@ -14,6 +14,7 @@ ne doivent pas réécrire l'histoire comme s'ils avaient toujours été retenus.
 |---|---|---|
 | [0001](0001-mvp-foundation.md) | Adopté pour le MVP actuel | Monolithe Python, moteur indépendant, SQLite, UI provisoire |
 | [0002](0002-local-browser-dependencies.md) | Adopté pour la première proposition | Torph vanilla local, verrou npm, CSP précise, pas de migration React |
+| [0003](0003-visual-sheet-library.md) | Adopté pour le MVP | Assistant visuel, bibliothèque de fichiers, révisions et modèles immuables |
 
 Cet ADR décrit les choix effectivement présents. Il ne constitue pas une validation
 anticipée des technologies du SaaS ou du futur design system.

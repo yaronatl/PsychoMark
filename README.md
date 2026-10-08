@@ -17,6 +17,7 @@ l'onglet **Ports**, garder sa visibilité **Private**, puis cliquer sur
 
 [Guide Codespaces et synchronisation des changements](docs/guides/codespaces.md)
 · [Utiliser l'interface et corriger un examen](docs/guides/web.md)
+· [Ajouter une feuille sans scripts](docs/guides/sheets.md)
 
 ## Développer
 

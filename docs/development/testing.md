@@ -24,7 +24,10 @@ pas le masquer globalement et traiter une future migration de dépendance sépar
 
 Le parcours navigateur crée un serveur et une base temporaires : examen, corrigé,
 import, cas en attente, validation humaine, note 12/20, rechargement, CSV et largeur
-mobile. Ses captures synthétiques vont dans `artifacts/browser/`. Il ne constitue
+mobile. Il exerce aussi l’import d’une feuille vierge, le placement des repères,
+la sauvegarde/reprise, l’essai optique et un examen utilisant le nouveau modèle.
+Les repères non sauvegardés protègent la navigation et le rechargement automatique.
+Ses captures synthétiques vont dans `artifacts/browser/`. Il ne constitue
 pas un audit complet d'accessibilité ou de compatibilité de tous les navigateurs.
 
 Le parcours `live` vérifie le démarrage idempotent, la conservation des données, les

@@ -26,6 +26,7 @@ from .development import codespaces_origin, source_revision
 from .engine import Engine
 from .grading import Assessment, Review, grade
 from .images import MAX_FILE_BYTES, SUPPORTED, iter_pages, read_image, save_image
+from .sheets import SheetLibrary, sheet_router
 from .store import Conflict, Store
 
 OMR_LOCK = threading.Lock()  # PDFium and OpenCV's RNG are shared process resources.
@@ -52,6 +53,10 @@ def create_app(
         if not demo_dir.exists():
             create_demo(demo_dir)
         template_paths = [demo_dir / "template.json"]
+    library = SheetLibrary(data_dir)
+    template_paths = list(template_paths) + [
+        library.template_path(item) for item in library.list() if item["published"]
+    ]
     engines = {}
     for path in template_paths:
         engine = Engine.from_file(path)
@@ -62,6 +67,7 @@ def create_app(
     app = FastAPI(title="PsychoMark", docs_url=None, redoc_url=None)
     app.state.store = store
     app.state.engines = engines
+    app.include_router(sheet_router(library, engines, OMR_LOCK))
 
     @app.get("/api/health")
     def health():
@@ -195,16 +201,18 @@ def create_app(
 
     @app.get("/api/templates")
     def templates():
+        names = {item["id"]: item["name"] for item in library.list() if item["published"]}
         return [
             {
                 "id": identifier,
+                "name": names.get(identifier, identifier),
                 "synthetic": identifier.startswith("demo_"),
                 "sections": [
                     {"id": s.id, "questions": s.questions, "choices": s.choices}
                     for s in e.template.sections
                 ],
             }
-            for identifier, e in engines.items()
+            for identifier, e in list(engines.items())
         ]
 
     @app.get("/api/exams")

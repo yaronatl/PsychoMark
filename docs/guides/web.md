@@ -28,6 +28,10 @@ dans les examens) crée un examen de 20 questions et analyse
 une copie synthétique. Il présente 12 bonnes réponses, 2 absences de réponse et
 6 cas à vérifier. Aucune note finale n'est affichée avant résolution de ces cas.
 
+Pour vos propres feuilles, commencer par **Mes feuilles → Ajouter une feuille**.
+[Le guide de création](sheets.md) explique les repères, la vérification et l’essai
+sans terminal. Les modèles enregistrés sont immédiatement proposés dans les examens.
+
 Parcours normal :
 
 1. **Créer un examen** : nom, modèle, sections actives et questions (par exemple
