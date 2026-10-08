@@ -2,7 +2,8 @@
 
 ## Parcours de lecture
 
-Pour tester : [Codespaces](guides/codespaces.md) → [interface web](guides/web.md).
+Pour tester : [Codespaces](guides/codespaces.md) → [interface web](guides/web.md) →
+[ajouter une feuille](guides/sheets.md) → [annoter des exemples](guides/annotations.md).
 Pour reprendre le développement : [état actuel](memory/current.md) →
 [architecture](architecture/overview.md) → [stack](development/stack.md) →
 [workflow](development/workflow.md).
@@ -15,7 +16,11 @@ Pour reprendre le développement : [état actuel](memory/current.md) →
 | `architecture/` | [Modules et données](architecture/overview.md), [OMR](architecture/omr.md), [API](architecture/api.md) |
 | `architecture/decisions/` | [Décisions durables et leur justification](architecture/decisions/README.md) |
 | `development/` | [Stack](development/stack.md), [workflow](development/workflow.md), [validation](development/testing.md), [données](development/data.md) |
-| `product/` | [Priorités](product/roadmap.md) et [choix visuels](product/ui.md) |
+| Référence moteur | [Rejouer et examiner une copie](development/omr-baseline.md), [contrats de régions et de lecture](architecture/regions.md) |
+| Outils visuels | [Skills installés et connexion Be UI](development/design-tools.md) |
+| `product/` | [Priorités](product/roadmap.md), [plan OMR hybride par sessions](product/hybrid-omr-plan.md) et [choix visuels](product/ui.md) |
+| Inspirations | [Direction Renance](product/visual-direction.md) et [originaux](product/references/README.md) |
+| Système visuel | [DESIGN.md](../DESIGN.md), description et tokens de la proposition construite ; [PRODUCT.md](../PRODUCT.md), contexte produit destiné aux outils de design |
 | `memory/` | [Protocole de reprise](memory/README.md), [état courant](memory/current.md), [sessions](memory/sessions/README.md) |
 | `templates/` | Modèles de [session](templates/session.md) et de [décision](templates/decision.md) |
 
@@ -31,3 +36,6 @@ Pour reprendre le développement : [état actuel](memory/current.md) →
 - Mettre à jour la page concernée avec le code dans le même changement.
 - Ne pas créer un journal pour chaque message. Une session décrit un lot de travail
   significatif ; ne pas recopier la conversation ou exposer de données personnelles.
+
+- [S03 — Comparaison expérimentale de géométrie](development/local-registration.md)
+- [S04 — Comparaison photographique contrôlée](development/photometric-trial.md)

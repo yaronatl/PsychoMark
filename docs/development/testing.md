@@ -24,7 +24,20 @@ pas le masquer globalement et traiter une future migration de dépendance sépar
 
 Le parcours navigateur crée un serveur et une base temporaires : examen, corrigé,
 import, cas en attente, validation humaine, note 12/20, rechargement, CSV et largeur
-mobile. Ses captures synthétiques vont dans `artifacts/browser/`. Il ne constitue
+mobile. Il exerce aussi l’import d’une feuille vierge, le placement des repères,
+la sauvegarde/reprise, l’essai optique et un examen utilisant le nouveau modèle.
+Les repères non sauvegardés protègent la navigation et le rechargement automatique.
+Le parcours couvre aussi l’import d’exemples, la saisie/révision des observations,
+la reprise, le conflit entre fenêtres, le cadrage manuel après échec d’alignement et
+l’export privé. Un contexte Chromium avec `has_touch` exerce de vrais événements
+tactiles synthétisés : tracé, déplacement, redimensionnement, annulation du geste,
+défilement en mode photo, zoom à deux doigts, centrage, réglage fin d’un bord et butée
+à un pixel, réemploi d’un cadre et double appui pendant une sauvegarde. La validation
+après déplacement se fait dès le premier appui. Le cadrage est aussi ouvert à 320/390 px
+et en paysage ; ces essais Chromium ne remplacent pas un essai Safari sur iPhone.
+Les raccourcis clavier sont vérifiés hors des champs. Ce test n’est pas un essai sur
+un téléphone physique ni une validation Safari/iOS. Les tests Python contrôlent les doublons, groupes et archives invalides.
+Ses captures synthétiques vont dans `artifacts/browser/`. Il ne constitue
 pas un audit complet d'accessibilité ou de compatibilité de tous les navigateurs.
 
 Le parcours `live` vérifie le démarrage idempotent, la conservation des données, les
@@ -35,7 +48,8 @@ en rechargement. Il ne remplace pas une construction Docker et une ouverture de 
 
 ## Évaluer le moteur sur de vraies copies
 
-Le protocole suivant est prévu ; le corpus et l'outil de mesure ne sont pas encore livrés.
+Le [rejeu S01](omr-baseline.md) et l’[outil d’annotation S02](../guides/annotations.md)
+sont disponibles. La collecte humaine et l’évaluation indépendante restent à réaliser.
 
 1. Constituer un corpus autorisé et identifier chaque modèle de feuille/version.
 2. Établir une vérité de référence par vérification humaine. Conserver « indéterminable »
@@ -52,3 +66,17 @@ Le protocole suivant est prévu ; le corpus et l'outil de mesure ne sont pas enc
 Les seuils optiques ne sont pas des probabilités calibrées. Aucun seuil commercial
 d'acceptation ni taux réel n'est annoncé avant ces mesures. Un gain d'automatisation
 qui augmente les erreurs silencieuses doit être visible dans le bilan.
+
+Le parcours `browser_annotation_flow.py` vérifie aussi le mode enchaîné : proposition
+issue d’un cadre sauvegardé, chiffre + Entrée, AZERTY/pavé numérique, déplacement au
+clavier, retour du focus depuis le cadrage, réponse non propagée, erreur réseau avec
+reprise, touche Entrée maintenue, séparation des sections, préférences après rechargement
+et deux appuis tactiles avec commandes persistantes. Toutes les données sont synthétiques.
+
+Les tests [S04](photometric-trial.md) vérifient les effets sur les traits faibles et
+colorés avec ombres/compression JPEG, une référence adaptée à une image réduite,
+les contrôles de contraste avec repli, les pixels coupés et les grilles à cinq choix
+verticaux. Ils contrôlent aussi que changer un label humain ne change ni les images
+traitées ni les scores, que le résultat historique reste intact et que les rejets
+gardent leurs dénominateurs. Les essais réels restent privés et exploratoires ;
+le classement d’une marque ne constitue pas une mesure de précision des réponses.

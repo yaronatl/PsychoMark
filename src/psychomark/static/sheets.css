@@ -1,0 +1,35 @@
+/* Sheet calibration reuses the paper/ink controls and keeps scans untinted. */
+.sheet-steps {display:flex;flex-wrap:wrap;gap:12px 32px;list-style:none;padding:0 0 20px;border-bottom:1px solid var(--line);color:var(--muted);margin-bottom:28px}
+.sheet-steps [aria-current] {color:var(--ink);font-weight:600}
+.sheet-import {max-width:760px}
+.sheet-import p {max-width:70ch}
+.sheet-import .field, #sheet-test .field {margin:24px 0}
+.sheet-name {max-width:540px;margin-bottom:24px}
+.sheet-layout {display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
+.sheet-workbench {min-width:0;position:sticky;top:20px}
+.sheet-toolbar {display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sheet-toolbar select {width:auto;margin-left:8px}
+#sheet-guide {min-height:48px;padding:12px 0;color:var(--ink);font-weight:500}
+.sheet-canvas-scroll {overflow:auto;max-height:75vh;border:1px solid var(--line);background:white;border-radius:6px}
+#sheet-canvas {display:block;width:100%;max-width:none;height:auto;cursor:crosshair}
+.sheet-controls .field {margin-bottom:16px}
+.sheet-pair {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.sheet-controls details {margin:16px 0}
+.sheet-controls fieldset {border:0;padding:8px 0;margin:0}
+.sheet-controls legend {font-size:12px;color:var(--muted)}
+.sheet-controls hr {border:0;border-top:1px solid var(--line);margin:28px 0}
+.sheet-section-list {list-style:none;padding:0;margin:0 0 24px}
+.sheet-section-list li {padding:12px 0;border-bottom:1px solid var(--line)}
+.sheet-section-list small {display:block;color:var(--muted);margin-bottom:6px}
+.sheet-preview {display:block;max-width:100%;max-height:75vh;width:auto;margin:20px auto;background:white}
+.sheet-results {max-height:420px;margin-top:20px}
+.sheet-builder .error:not(:empty) {white-space:pre-wrap;padding:16px;background:var(--red-bg);margin-bottom:20px;overflow-wrap:anywhere}
+.sheet-builder input[type=file] {max-width:100%;min-width:0}
+.sheet-builder .page-head h1 {overflow-wrap:anywhere}
+@media(max-width:1150px) {.sheet-layout {grid-template-columns:minmax(0,1fr)}.sheet-workbench {position:static}.sheet-canvas-scroll {max-height:60vh}.sheet-controls {max-width:760px}.sheet-toolbar {align-items:flex-start}}
+@media(max-width:580px) {.sheet-steps {gap:8px;flex-direction:column}.sheet-toolbar .button {width:100%}}
+@media(max-width:800px) {.sidebar nav {flex-wrap:wrap}.sidebar nav a {flex-shrink:0}}
+.sheet-controls, .sheet-controls fieldset, .sheet-controls .field {min-width:0}
+.sheet-controls .button {white-space:normal}
+
+.sheet-diagnostic {white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;max-height:300px;overflow:auto}

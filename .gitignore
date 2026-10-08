@@ -10,3 +10,7 @@ artifacts/
 .env
 .env.*
 !.env.example
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/
+node_modules/

@@ -1,0 +1,15 @@
+{
+  "name": "psychomark-ui",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local browser dependencies for the PsychoMark prototype",
+  "scripts": {
+    "build": "node scripts/build-web.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "torph": "0.1.3"
+  }
+}

@@ -21,6 +21,15 @@ jobs:
         python: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Verify locked browser dependency assets
+        run: |
+          npm ci --ignore-scripts
+          npm run build
+          git diff --exit-code -- src/psychomark/static/vendor
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}

@@ -13,13 +13,17 @@
 | Validation | Pydantic 2 | Schémas et invariants côté serveur |
 | HTTP | FastAPI, Uvicorn, python-multipart | API et interface servies ensemble |
 | Persistance | SQLite de Python + fichiers locaux | Base créée au démarrage sous `artifacts/web/` |
-| Interface provisoire | HTML, CSS, JavaScript natifs | Pas de compilation, CDN ou paquet Node requis |
+| Interface provisoire | HTML, CSS, modules JavaScript natifs + Torph | Assets locaux ; aucune requête CDN |
+| Dépendances navigateur | npm, Node 22 pour le développement | `package-lock.json`, `npm ci --ignore-scripts`, `npm run build` |
 | Qualité Python | Ruff, pytest, httpx | Extra `dev` |
 | Parcours navigateur | Playwright + Chromium | Extra `browser`, installation du navigateur séparée |
 | Développement cloud | GitHub Codespaces | `.devcontainer/`, port 8000 privé |
 | Intégration continue | GitHub Actions | Workflow `Checks`, Python 3.11 et 3.12 |
 
 Les versions exactes des paquets sont dans le verrou, pas dupliquées dans ce tableau.
+Les assets Torph générés sont conservés dans Git : le serveur Python peut les servir
+sans Node au runtime. Node est nécessaire pour installer/mettre à jour les dépendances
+frontend et vérifier leur reproductibilité. Voir [les outils visuels](design-tools.md).
 Le conteneur utilise une image Microsoft Python étiquetée, pas une image figée par digest.
 La CI est configurée dans le dépôt ; sa présence ne prouve pas une exécution réussie sur GitHub.
 
@@ -52,6 +56,11 @@ Les commandes documentées ciblent Linux/Codespaces. Aucun fichier `.env` n'est 
 Codespaces fournit ses propres variables d'origine ; ne pas y substituer un domaine arbitraire.
 
 ## Choix futurs, non installés
+
+Le [plan OMR hybride](../product/hybrid-omr-plan.md) propose PyTorch comme dépendance
+optionnelle d’entraînement au lot S06. Aucun modèle ML n’est installé ou entraîné.
+L’inférence locale CPU est la cible initiale ; ONNX Runtime reste une option à mesurer.
+Les premiers lots utilisent la stack actuelle, sans GPU ni nouveau service obligatoire.
 
 PostgreSQL, stockage objet, files de tâches, authentification, paiement et hébergement
 de production nécessiteront une décision lorsque leurs besoins seront cadrés.

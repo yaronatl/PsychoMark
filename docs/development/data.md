@@ -9,6 +9,7 @@
 | Exemples de configuration synthétiques | `examples/` | Oui |
 | Générateur et fixtures synthétiques | `src/psychomark/demo.py`, `tests/` | Oui |
 | Base et images du serveur par défaut | `artifacts/web/` | Non |
+| Corpus d’annotation S02 | `corpus/` sous le dossier de données du serveur | Non |
 | Copies et références réelles d'essai | `artifacts/private/` ou stockage privé explicite | Non |
 | Rapports et captures de vérification | `artifacts/` | Non |
 | Décisions et sessions sans données personnelles | `docs/` | Oui |

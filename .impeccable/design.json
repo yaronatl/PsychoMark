@@ -1,0 +1,426 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T23:28:54.570518+00:00",
+  "title": "Design System: PsychoMark",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papier ivoire",
+        "tonalRamp": [
+          "oklch(15.00% 0.00823 91.48)",
+          "oklch(26.43% 0.00823 91.48)",
+          "oklch(37.86% 0.00823 91.48)",
+          "oklch(49.29% 0.00823 91.48)",
+          "oklch(60.71% 0.00823 91.48)",
+          "oklch(72.14% 0.00823 91.48)",
+          "oklch(83.57% 0.00823 91.48)",
+          "oklch(95.00% 0.00823 91.48)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Feuille claire",
+        "tonalRamp": [
+          "oklch(15.00% 0.00537 95.10)",
+          "oklch(26.43% 0.00537 95.10)",
+          "oklch(37.86% 0.00537 95.10)",
+          "oklch(49.29% 0.00537 95.10)",
+          "oklch(60.71% 0.00537 95.10)",
+          "oklch(72.14% 0.00537 95.10)",
+          "oklch(83.57% 0.00537 95.10)",
+          "oklch(95.00% 0.00537 95.10)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Encre de lecture",
+        "tonalRamp": [
+          "oklch(15.00% 0.01135 145.28)",
+          "oklch(26.43% 0.01135 145.28)",
+          "oklch(37.86% 0.01135 145.28)",
+          "oklch(49.29% 0.01135 145.28)",
+          "oklch(60.71% 0.01135 145.28)",
+          "oklch(72.14% 0.01135 145.28)",
+          "oklch(83.57% 0.01135 145.28)",
+          "oklch(95.00% 0.01135 145.28)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Crayon secondaire",
+        "tonalRamp": [
+          "oklch(15.00% 0.01620 124.80)",
+          "oklch(26.43% 0.01620 124.80)",
+          "oklch(37.86% 0.01620 124.80)",
+          "oklch(49.29% 0.01620 124.80)",
+          "oklch(60.71% 0.01620 124.80)",
+          "oklch(72.14% 0.01620 124.80)",
+          "oklch(83.57% 0.01620 124.80)",
+          "oklch(95.00% 0.01620 124.80)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Trait de séparation",
+        "tonalRamp": [
+          "oklch(15.00% 0.01513 119.13)",
+          "oklch(26.43% 0.01513 119.13)",
+          "oklch(37.86% 0.01513 119.13)",
+          "oklch(49.29% 0.01513 119.13)",
+          "oklch(60.71% 0.01513 119.13)",
+          "oklch(72.14% 0.01513 119.13)",
+          "oklch(83.57% 0.01513 119.13)",
+          "oklch(95.00% 0.01513 119.13)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Encre végétale",
+        "tonalRamp": [
+          "oklch(15.00% 0.02139 150.41)",
+          "oklch(26.43% 0.02139 150.41)",
+          "oklch(37.86% 0.02139 150.41)",
+          "oklch(49.29% 0.02139 150.41)",
+          "oklch(60.71% 0.02139 150.41)",
+          "oklch(72.14% 0.02139 150.41)",
+          "oklch(83.57% 0.02139 150.41)",
+          "oklch(95.00% 0.02139 150.41)"
+        ]
+      },
+      "sage": {
+        "role": "secondary",
+        "displayName": "Sauge claire",
+        "tonalRamp": [
+          "oklch(15.00% 0.01399 124.56)",
+          "oklch(26.43% 0.01399 124.56)",
+          "oklch(37.86% 0.01399 124.56)",
+          "oklch(49.29% 0.01399 124.56)",
+          "oklch(60.71% 0.01399 124.56)",
+          "oklch(72.14% 0.01399 124.56)",
+          "oklch(83.57% 0.01399 124.56)",
+          "oklch(95.00% 0.01399 124.56)"
+        ]
+      },
+      "green": {
+        "role": "secondary",
+        "displayName": "Vert de correction",
+        "tonalRamp": [
+          "oklch(15.00% 0.06199 153.93)",
+          "oklch(26.43% 0.06199 153.93)",
+          "oklch(37.86% 0.06199 153.93)",
+          "oklch(49.29% 0.06199 153.93)",
+          "oklch(60.71% 0.06199 153.93)",
+          "oklch(72.14% 0.06199 153.93)",
+          "oklch(83.57% 0.06199 153.93)",
+          "oklch(95.00% 0.06199 153.93)"
+        ]
+      },
+      "green-bg": {
+        "role": "secondary",
+        "displayName": "Papier vert",
+        "tonalRamp": [
+          "oklch(15.00% 0.01353 134.90)",
+          "oklch(26.43% 0.01353 134.90)",
+          "oklch(37.86% 0.01353 134.90)",
+          "oklch(49.29% 0.01353 134.90)",
+          "oklch(60.71% 0.01353 134.90)",
+          "oklch(72.14% 0.01353 134.90)",
+          "oklch(83.57% 0.01353 134.90)",
+          "oklch(95.00% 0.01353 134.90)"
+        ]
+      },
+      "amber": {
+        "role": "secondary",
+        "displayName": "Ambre de vérification",
+        "tonalRamp": [
+          "oklch(15.00% 0.08538 70.92)",
+          "oklch(26.43% 0.08538 70.92)",
+          "oklch(37.86% 0.08538 70.92)",
+          "oklch(49.29% 0.08538 70.92)",
+          "oklch(60.71% 0.08538 70.92)",
+          "oklch(72.14% 0.08538 70.92)",
+          "oklch(83.57% 0.08538 70.92)",
+          "oklch(95.00% 0.08538 70.92)"
+        ]
+      },
+      "amber-bg": {
+        "role": "secondary",
+        "displayName": "Papier ambre",
+        "tonalRamp": [
+          "oklch(15.00% 0.02856 84.59)",
+          "oklch(26.43% 0.02856 84.59)",
+          "oklch(37.86% 0.02856 84.59)",
+          "oklch(49.29% 0.02856 84.59)",
+          "oklch(60.71% 0.02856 84.59)",
+          "oklch(72.14% 0.02856 84.59)",
+          "oklch(83.57% 0.02856 84.59)",
+          "oklch(95.00% 0.02856 84.59)"
+        ]
+      },
+      "red": {
+        "role": "secondary",
+        "displayName": "Terre d’erreur",
+        "tonalRamp": [
+          "oklch(15.00% 0.10617 33.21)",
+          "oklch(26.43% 0.10617 33.21)",
+          "oklch(37.86% 0.10617 33.21)",
+          "oklch(49.29% 0.10617 33.21)",
+          "oklch(60.71% 0.10617 33.21)",
+          "oklch(72.14% 0.10617 33.21)",
+          "oklch(83.57% 0.10617 33.21)",
+          "oklch(95.00% 0.10617 33.21)"
+        ]
+      },
+      "red-bg": {
+        "role": "secondary",
+        "displayName": "Papier terre",
+        "tonalRamp": [
+          "oklch(15.00% 0.01632 46.57)",
+          "oklch(26.43% 0.01632 46.57)",
+          "oklch(37.86% 0.01632 46.57)",
+          "oklch(49.29% 0.01632 46.57)",
+          "oklch(60.71% 0.01632 46.57)",
+          "oklch(72.14% 0.01632 46.57)",
+          "oklch(83.57% 0.01632 46.57)",
+          "oklch(95.00% 0.01632 46.57)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Encre au survol",
+        "tonalRamp": [
+          "oklch(15.00% 0.03609 134.72)",
+          "oklch(26.43% 0.03609 134.72)",
+          "oklch(37.86% 0.03609 134.72)",
+          "oklch(49.29% 0.03609 134.72)",
+          "oklch(60.71% 0.03609 134.72)",
+          "oklch(72.14% 0.03609 134.72)",
+          "oklch(83.57% 0.03609 134.72)",
+          "oklch(95.00% 0.03609 134.72)"
+        ]
+      },
+      "control-line": {
+        "role": "neutral",
+        "displayName": "Trait de contrôle",
+        "tonalRamp": [
+          "oklch(15.00% 0.02687 128.85)",
+          "oklch(26.43% 0.02687 128.85)",
+          "oklch(37.86% 0.02687 128.85)",
+          "oklch(49.29% 0.02687 128.85)",
+          "oklch(60.71% 0.02687 128.85)",
+          "oklch(72.14% 0.02687 128.85)",
+          "oklch(83.57% 0.02687 128.85)",
+          "oklch(95.00% 0.02687 128.85)"
+        ]
+      },
+      "disabled-bg": {
+        "role": "neutral",
+        "displayName": "Papier désactivé",
+        "tonalRamp": [
+          "oklch(15.00% 0.00930 106.58)",
+          "oklch(26.43% 0.00930 106.58)",
+          "oklch(37.86% 0.00930 106.58)",
+          "oklch(49.29% 0.00930 106.58)",
+          "oklch(60.71% 0.00930 106.58)",
+          "oklch(72.14% 0.00930 106.58)",
+          "oklch(83.57% 0.00930 106.58)",
+          "oklch(95.00% 0.00930 106.58)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "display",
+        "purpose": "Grand titre éditorial de l’accueil."
+      },
+      "headline": {
+        "displayName": "headline",
+        "purpose": "Titre principal des vues de travail."
+      },
+      "title": {
+        "displayName": "title",
+        "purpose": "Titres utilitaires de section."
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "Lecture et contenu courant."
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "Libellés des commandes."
+      }
+    },
+    "shadows": [
+      {
+        "name": "paper",
+        "value": "0 12px 35px #424b3924",
+        "purpose": "Feuille illustrative."
+      },
+      {
+        "name": "preview",
+        "value": "0 16px 50px #3c4a3029",
+        "purpose": "Panneau de la scène."
+      },
+      {
+        "name": "toast",
+        "value": "0 8px 30px #202a201c",
+        "purpose": "Message temporaire."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Entrée de scène et pression des boutons."
+      },
+      {
+        "name": "button",
+        "value": "150ms",
+        "purpose": "Transitions de couleur ; pression scale(.98) seulement hors réduction du mouvement."
+      },
+      {
+        "name": "scene",
+        "value": "800ms",
+        "purpose": "Entrée unique translateY(12px) vers 0, seulement hors réduction du mouvement."
+      },
+      {
+        "name": "busy-label",
+        "value": "220ms",
+        "purpose": "Torph vanilla 0.1.3 ; locale fr, scale false, respectReducedMotion true ; destroy et restauration dans finally."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-review-min",
+        "value": "1700px"
+      },
+      {
+        "name": "stacked-review-max",
+        "value": "1100px"
+      },
+      {
+        "name": "horizontal-nav-max",
+        "value": "800px"
+      },
+      {
+        "name": "phone-max",
+        "value": "580px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bouton primaire",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Commande native ; pression douce avec réduction du mouvement respectée.",
+      "html": "<button class=\"ds-button-primary\" type=\"button\">Valider et recalculer</button>",
+      "css": ".ds-button-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:10px 18px;border:1px solid #c5cbbd;border-radius:7px;background:transparent;color:var(--ink, #292e29);font:500 13px/1.5 var(--sans, \"Geist\", sans-serif);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color 150ms ease,border-color 150ms ease;background:var(--accent, #303b32);color:var(--surface, #fffefa);border-color:var(--accent, #303b32);}.ds-button-primary:hover{background:#eeeee5;border-color:#a8b09e;}.ds-button-primary:hover{background:#475440;border-color:#475440;}.ds-button-primary:focus-visible{outline:2px solid var(--accent, #303b32);outline-offset:4px;}.ds-button-primary:disabled{opacity:.55;cursor:wait;}@media(prefers-reduced-motion:no-preference){.ds-button-primary{transition:background-color 150ms ease,border-color 150ms ease,transform 150ms var(--ease,cubic-bezier(.16,1,.3,1));}.ds-button-primary:active:not(:focus-visible):not(:disabled){transform:scale(.98);}}"
+    },
+    {
+      "name": "Bouton secondaire",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Commande native ; pression douce avec réduction du mouvement respectée.",
+      "html": "<button class=\"ds-button-secondary\" type=\"button\">Ouvrir mon espace</button>",
+      "css": ".ds-button-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:10px 18px;border:1px solid #c5cbbd;border-radius:7px;background:transparent;color:var(--ink, #292e29);font:500 13px/1.5 var(--sans, \"Geist\", sans-serif);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color 150ms ease,border-color 150ms ease;}.ds-button-secondary:hover{background:#eeeee5;border-color:#a8b09e;}.ds-button-secondary:focus-visible{outline:2px solid var(--accent, #303b32);outline-offset:4px;}.ds-button-secondary:disabled{opacity:.55;cursor:wait;}@media(prefers-reduced-motion:no-preference){.ds-button-secondary{transition:background-color 150ms ease,border-color 150ms ease,transform 150ms var(--ease,cubic-bezier(.16,1,.3,1));}.ds-button-secondary:active:not(:focus-visible):not(:disabled){transform:scale(.98);}}"
+    },
+    {
+      "name": "Bouton discret",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Commande native ; pression douce avec réduction du mouvement respectée.",
+      "html": "<button class=\"ds-button-ghost\" type=\"button\">Rétablir la lecture automatique</button>",
+      "css": ".ds-button-ghost{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:10px 18px;border:1px solid #c5cbbd;border-radius:7px;background:transparent;color:var(--ink, #292e29);font:500 13px/1.5 var(--sans, \"Geist\", sans-serif);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color 150ms ease,border-color 150ms ease;border-color:transparent;}.ds-button-ghost:hover{background:#eeeee5;border-color:#a8b09e;}.ds-button-ghost:focus-visible{outline:2px solid var(--accent, #303b32);outline-offset:4px;}.ds-button-ghost:disabled{opacity:.55;cursor:wait;}@media(prefers-reduced-motion:no-preference){.ds-button-ghost{transition:background-color 150ms ease,border-color 150ms ease,transform 150ms var(--ease,cubic-bezier(.16,1,.3,1));}.ds-button-ghost:active:not(:focus-visible):not(:disabled){transform:scale(.98);}}"
+    },
+    {
+      "name": "Bouton texte",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Commande légère de navigation ou de démonstration.",
+      "html": "<button type=\"button\" class=\"ds-text-button\">Ouvrir une vraie correction</button>",
+      "css": ".ds-text-button{border:0;background:none;padding:10px 0;color:var(--ink,#292e29);font:12px/1.6 var(--sans,\"Geist\",sans-serif);text-underline-offset:5px;cursor:pointer}.ds-text-button:hover{text-decoration:underline}.ds-text-button:focus-visible{outline:2px solid var(--accent, #303b32);outline-offset:4px;}"
+    },
+    {
+      "name": "Champ avec label",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Champ textuel clair, avec label visible et focus distinct.",
+      "html": "<label class=\"ds-field\">Nom de l’examen<input class=\"ds-input\" type=\"text\" placeholder=\"Examen blanc\"></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:8px;color:var(--ink,#292e29);font:500 12px/1.6 var(--sans,\"Geist\",sans-serif)}.ds-input{min-height:44px;padding:10px 12px;border:1px solid #b4bdab;border-radius:6px;color:var(--ink,#292e29);background:var(--surface,#fffefa);font:13px/1.6 var(--sans,\"Geist\",sans-serif);caret-color:var(--accent,#303b32)}.ds-input::placeholder{color:var(--muted,#64685e);opacity:1}.ds-input:focus-visible{outline:2px solid var(--accent, #303b32);outline-offset:4px;}.ds-input:disabled{background:#eeeee7;cursor:not-allowed}"
+    },
+    {
+      "name": "Navigation de travail",
+      "kind": "nav",
+      "refersTo": "navigation-item",
+      "description": "Libellés et SVG au trait, avec état actif tonal.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Navigation de l’atelier\"><a class=\"ds-nav-link ds-active\" href=\"#/exams\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"2\"/><path d=\"M8 8h8M8 12h8M8 16h4\"/></svg>Mes examens</a><a class=\"ds-nav-link\" href=\"#/new\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg>Nouvel examen</a></nav>",
+      "css": ".ds-nav{display:grid;gap:6px;background:#f1f1e8;padding:20px}.ds-nav-link{display:flex;align-items:center;gap:12px;min-height:44px;padding:10px 12px;border-radius:7px;text-decoration:none;color:var(--muted,#64685e);font:13px/1.6 var(--sans,\"Geist\",sans-serif)}.ds-nav-link svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5}.ds-nav-link:hover{background:#e7eade;color:var(--ink,#292e29)}.ds-nav-link.ds-active{color:var(--accent,#303b32);background:#e0e5d8;font-weight:550}.ds-nav-link:focus-visible{outline:2px solid var(--accent, #303b32);outline-offset:4px;}"
+    },
+    {
+      "name": "Statut à vérifier",
+      "kind": "chip",
+      "refersTo": "badge-amber",
+      "description": "Statut textuel non interactif ; l’ambre accompagne le sens.",
+      "html": "<span class=\"ds-badge\">À vérifier</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;padding:4px 9px;border-radius:4px;font:500 11px/1.5 var(--sans,\"Geist\",sans-serif);white-space:nowrap;color:var(--amber,#79521d);background:var(--amber-bg,#f6ecd8)}"
+    },
+    {
+      "name": "Surface de travail",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Surface plane de contenu ou de formulaire.",
+      "html": "<section class=\"ds-card\"><h2 class=\"ds-card-title\">Corrigé de référence</h2><p class=\"ds-card-text\">Renseignez les bonnes réponses de votre examen.</p></section>",
+      "css": ".ds-card{background:var(--surface,#fffefa);color:var(--ink,#292e29);border:1px solid var(--line,#dbded3);border-radius:var(--radius,12px);padding:24px;font:14px/1.6 var(--sans,\"Geist\",sans-serif)}.ds-card-title{font-size:18px;font-weight:550;line-height:1.4;margin:0 0 16px}.ds-card-text{color:var(--muted,#64685e);margin:0 0 14px}@media(max-width:580px){.ds-card{padding:20px}}"
+    },
+    {
+      "name": "Choix de correction",
+      "kind": "custom",
+      "refersTo": "choice",
+      "description": "Radio native, sélection sombre et focus autour de la cible.",
+      "html": "<fieldset class=\"ds-choices\"><legend class=\"ds-legend\">Réponse retenue</legend><label class=\"ds-choice\"><input class=\"ds-radio\" type=\"radio\" name=\"ds-answer\" value=\"1\"><span class=\"ds-choice-face\">1</span></label><label class=\"ds-choice\"><input class=\"ds-radio\" type=\"radio\" name=\"ds-answer\" value=\"2\" checked><span class=\"ds-choice-face\">2</span></label></fieldset>",
+      "css": ".ds-choices{display:flex;gap:10px;border:0;margin:0;padding:0;color:var(--ink,#292e29);font:14px/1.6 var(--sans,\"Geist\",sans-serif)}.ds-legend{font-size:12px;font-weight:500;margin-bottom:12px}.ds-choice{position:relative;cursor:pointer}.ds-radio{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}.ds-choice-face{display:grid;place-items:center;width:44px;height:44px;border:1px solid #b4bdab;border-radius:6px;background:var(--surface,#fffefa)}.ds-radio:checked+.ds-choice-face{color:var(--surface,#fffefa);background:var(--accent,#303b32);border-color:var(--accent,#303b32)}.ds-radio:focus-visible+.ds-choice-face{outline:2px solid var(--accent, #303b32);outline-offset:4px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "L’atelier papier et encre",
+    "overview": "L’atelier papier et encre traduit la direction exprimée : calme, chaleureuse, douce et claire, avec une serif travaillée et le caractère d’une papeterie au service d’un outil moderne. Renance est la référence principale ; reMarkable est une référence d’ambiance citée par l’utilisateur. Les couleurs et fontes ci-dessus décrivent la première proposition implémentée ; elles sont normatives pour sa continuité, mais leur rendu n’a pas encore été approuvé par l’utilisateur.\n\nL’accueil a une respiration éditoriale, un titre centré et une scène tangible de feuille et de correction. Les vues de travail sont plus compactes : lignes, formulaires et tableaux font place à la lecture et à la décision humaine. Cette composition appartient à l’accueil ; elle n’impose pas un grand hero aux autres écrans. Le système est extrait du HTML, du CSS et des modules JavaScript existants, sans composition graphique préalablement approuvée.",
+    "keyCharacteristics": [
+      "Papier ivoire, encre végétale et surfaces claires.",
+      "Titres serif expressifs ; commandes, tableaux et chiffres en sans-serif.",
+      "États explicitement libellés et images originales préservées.",
+      "Relief réservé aux objets illustrés et aux messages temporaires."
+    ],
+    "rules": [
+      {
+        "name": "The Encre utile Rule",
+        "body": "Réserver l’accent sombre aux actions, aux choix et à la navigation ; les états de correction gardent leur sens et leur libellé.",
+        "section": "colors"
+      },
+      {
+        "name": "The Deux écritures Rule",
+        "body": "La serif porte les titres éditoriaux ; Geist porte les instructions, les réponses et les chiffres.",
+        "section": "typography"
+      },
+      {
+        "name": "The Papier posé Rule",
+        "body": "Les surfaces de travail restent plates et bordées ; les ombres donnent du relief aux objets de la scène, sans devenir le traitement de chaque carte.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do conserver les labels français, les états de chargement et d’erreur, et le focus clavier visible.",
+      "Do laisser les scans sur fond blanc, sans filtre, teinte ni transparence.",
+      "Do montrer les ambiguïtés et la note provisoire jusqu’à leur vérification.",
+      "Do garder la mention « Exemple illustratif » lisible sur téléphone et distinguer cette scène de la démonstration synthétique réelle.",
+      "Do respecter la réduction du mouvement et libérer les animations après une analyse."
+    ],
+    "donts": [
+      "Don’t présenter les fontes, la palette ou ce rendu proposé comme une identité déjà approuvée.",
+      "Don’t employer une illustration de QCM comme feuille compatible avec le moteur ou comme preuve de résultat réel.",
+      "Don’t inventer de taux de précision, de gain chiffré, de client ou de prix.",
+      "Don’t transformer la géométrie des réponses QCM en simple décoration des données de correction."
+    ]
+  }
+}

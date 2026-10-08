@@ -9,6 +9,8 @@ DOCUMENTS = [
     ROOT / "README.md",
     ROOT / "CONTRIBUTING.md",
     ROOT / "AGENTS.md",
+    ROOT / "PRODUCT.md",
+    ROOT / "DESIGN.md",
     *sorted((ROOT / "docs").rglob("*.md")),
     *sorted((ROOT / ".github").rglob("*.md")),
 ]

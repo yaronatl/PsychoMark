@@ -29,11 +29,14 @@ flowchart LR
 | [config.py](../../src/psychomark/config.py) | Géométrie, seuils, sélection et validation | Pas de HTTP, SQL ou corrigé |
 | [images.py](../../src/psychomark/images.py) | Lecture image/PDF, bornes et normalisation | Pas de décision de notation |
 | [calibration.py](../../src/psychomark/calibration.py) | Référence vierge, empreinte et aperçu | Ne prouve pas la validité réelle du modèle |
+| [readability.py](../../src/psychomark/readability.py) | Explications des contrôles de lisibilité refusés | Présentation seulement, aucun changement de décision optique |
 | [registration.py](../../src/psychomark/registration.py) | Alignement ORB/RANSAC et diagnostics | Rejeter une géométrie non exploitable |
 | [engine.py](../../src/psychomark/engine.py) | Lire les marques et annoter | Ne reçoit jamais les bonnes réponses |
 | [grading.py](../../src/psychomark/grading.py) | Corrigé, révision et calcul de note | Pas d'analyse des pixels |
 | [store.py](../../src/psychomark/store.py) | Transactions, instantanés, révisions et historique | Pas d'interprétation optique |
 | [cli.py](../../src/psychomark/cli.py) | Arguments, traitement des lots et exports | Orchestrer les modules existants |
+| [sheets.py](../../src/psychomark/sheets.py) | Brouillons, calibration visuelle, essais et registre des modèles | Modèles enregistrés immuables, essais sans corrigé |
+| [corpus.py](../../src/psychomark/corpus.py) | Acquisitions privées, observations humaines et exports | Aucun corrigé ou préremplissage automatique des labels ; groupes et révisions contrôlés |
 | [web.py](../../src/psychomark/web.py) | Routes, import, erreurs et orchestration | Ne pas dupliquer les règles de notation |
 | [static/](../../src/psychomark/static/) | Interface provisoire en français | Afficher la note calculée côté serveur |
 | [demo.py](../../src/psychomark/demo.py) | Données synthétiques reproductibles | Ne pas mélanger vérité synthétique et validation terrain |
