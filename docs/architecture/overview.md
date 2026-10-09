@@ -37,6 +37,8 @@ flowchart LR
 | [cli.py](../../src/psychomark/cli.py) | Arguments, traitement des lots et exports | Orchestrer les modules existants |
 | [sheets.py](../../src/psychomark/sheets.py) | Brouillons, calibration visuelle, essais et registre des modèles | Modèles enregistrés immuables, essais sans corrigé |
 | [corpus.py](../../src/psychomark/corpus.py) | Acquisitions privées, observations humaines et exports | Aucun corrigé ou préremplissage automatique des labels ; groupes et révisions contrôlés |
+| [ml_data.py](../../src/psychomark/ml_data.py) | Préparer et vérifier les jeux de cases S06 | Régions proposées, revue distincte, empreintes et groupes contrôlés |
+| [ml_reader.py](../../src/psychomark/ml_reader.py), [ml_trial.py](../../src/psychomark/ml_trial.py) | CNN CPU optionnel et commandes hors ligne | Aucun appel depuis le web, aucun corrigé, aucune décision automatique |
 | [web.py](../../src/psychomark/web.py) | Routes, import, erreurs et orchestration | Ne pas dupliquer les règles de notation |
 | [static/](../../src/psychomark/static/) | Interface provisoire en français | Afficher la note calculée côté serveur |
 | [demo.py](../../src/psychomark/demo.py) | Données synthétiques reproductibles | Ne pas mélanger vérité synthétique et validation terrain |

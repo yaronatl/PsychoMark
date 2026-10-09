@@ -17,6 +17,7 @@ ne doivent pas réécrire l'histoire comme s'ils avaient toujours été retenus.
 | [0003](0003-visual-sheet-library.md) | Adopté pour le MVP | Assistant visuel, bibliothèque de fichiers, révisions et modèles immuables |
 | [0004](0004-hybrid-omr-experiment.md) | Proposé | Expérimentation OMR hybride, évaluation indépendante et activation progressive |
 | [0005](0005-private-annotation-corpus.md) | Adopté pour S02 | Corpus privé, labels humains historisés, groupes et cadrage manuel sans alignement |
+| [0006](0006-offline-cpu-ml.md) | Adopté pour le prototype S06 | CNN CPU optionnel, revue des découpes, partitions contrôlées et observations sans décision automatique |
 
 L’état de chaque ADR distingue les choix présents des propositions. Le registre ne
 constitue pas une validation anticipée des technologies du SaaS ou du futur design system.

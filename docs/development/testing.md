@@ -87,3 +87,9 @@ des lectures automatiques correctes sur une perspective avec ombres/JPEG. Ils
 contrôlent 2/5/10 choix, l’absence de lien entre labels et décisions, et le comptage
 des erreurs/abstentions sans exclure les rejets. La variante reste hors ligne ;
 ses échecs sur les vraies copies sont conservés dans les rapports privés.
+
+Les tests [S06](specialized-reader.md) vérifient séparation des acquisitions/groupes,
+permission d’entraînement, revue de géométrie liée aux empreintes, intégrité des images
+et poids, reproductibilité CPU et absence de fuite des labels de développement vers
+l’apprentissage. Le lecteur ML exige l’extra `ml` ; son job CI distinct l’installe.
+Un entraînement synthétique réussi vérifie le circuit, pas sa capacité sur les photos réelles.
