@@ -15,6 +15,7 @@ from psychomark.ml_data import (
     synthetic_dataset,
     validate_groups,
 )
+from psychomark.registration import Registrar, RegistrationError
 
 
 @pytest.fixture
@@ -98,7 +99,22 @@ def test_quality_metadata_cannot_silently_hide_low_resolution(toy_data):
     assert rows[0]["quality_issues"] == ["low_source_resolution"]
 
 
-def test_preparation_preserves_labels_but_does_not_validate_bubble_geometry(tmp_path, sheet):
+@pytest.mark.parametrize("fallback", [False, True])
+def test_preparation_preserves_labels_but_does_not_validate_bubble_geometry(
+    tmp_path, sheet, monkeypatch, fallback
+):
+    original_align = Registrar.align
+    calls = 0
+
+    def fail_normalized_only(self, source):
+        nonlocal calls
+        calls += 1
+        if calls % 2:
+            raise RegistrationError("Synthetic normalized registration failure")
+        return original_align(self, source)
+
+    if fallback:
+        monkeypatch.setattr(Registrar, "align", fail_normalized_only)
     root = tmp_path / "export"
     root.mkdir()
     template_path = root / "template.json"
@@ -137,6 +153,10 @@ def test_preparation_preserves_labels_but_does_not_validate_bubble_geometry(tmp_
     output = tmp_path / "prepared"
     prepare_dataset(manifest, output)
     data, rows, pixels = load_dataset(output / "dataset.json")
+    assert data["provenance"]["registration_preprocessing"] == (
+        "historical_raw_gray" if fallback else "existing_normalized_gray"
+    )
+    assert len(data["provenance"]["registration_attempts"]) == (2 if fallback else 1)
     assert [r["label"] for r in rows] == marks
     assert [r["choice"] for r in rows] == list(range(1, s.choices + 1))
     assert pixels.shape == (s.choices, 2, 32, 32)
@@ -151,3 +171,13 @@ def test_preparation_preserves_labels_but_does_not_validate_bubble_geometry(tmp_
     write_json(manifest, m)
     with pytest.raises(ValueError, match="fingerprint"):
         prepare_dataset(manifest, tmp_path / "bad")
+    m["images"]["source"]["sha256"] = digest(root / "source.png")
+    write_json(manifest, m)
+
+    def reject_every_registration(self, source):
+        raise RegistrationError("Both methods reject this geometry")
+
+    monkeypatch.setattr(Registrar, "align", reject_every_registration)
+    with pytest.raises(RegistrationError, match="Both methods"):
+        prepare_dataset(manifest, tmp_path / "unlocated")
+    assert not (tmp_path / "unlocated").exists()

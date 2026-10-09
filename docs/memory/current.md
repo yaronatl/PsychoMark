@@ -33,7 +33,8 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 - S02 livré : **Annotations** (`#/annotations`), import d’exemples, labels humains
   révisables, source/cadrage manuel après échec d’alignement, groupes et exports privés.
   [Guide](../guides/annotations.md), [ADR 0005](../architecture/decisions/0005-private-annotation-corpus.md).
-  Export réel actualisé de 90 annotations reçu et vérifié ; utilisé pour préparer S06.
+  Deux exports réels vérifiés : 90 questions de développement et une nouvelle copie de
+  240 questions, réaffectée explicitement à l’entraînement dans une version dérivée privée.
 - Annotation mobile accélérée : numéros pour les réponses uniques, absence en un
   appui, cadre par glissement avec déplacement/redimensionnement, réemploi explicite
   du dernier cadre, alias retenu par onglet et bouton de sauvegarde fixe sur téléphone.
@@ -64,9 +65,11 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
   Les chiffres/contours imprimés restent problématiques ; aucune activation web.
 
 - S06 : [premier circuit ML CPU hors ligne](../development/specialized-reader.md), préparation
-  des 360 cases, revue de géométrie distincte, entraînement/export/inférence et
-  comparaison case seule/référence. Poids entraînés sur synthétique uniquement :
-  ils proposent tous les cas réels comme inexploitable, sans gain établi ni activation.
+  des cases, revue de géométrie distincte, entraînement/export/inférence et comparaison
+  case seule/référence. Premier entraînement sur 600 cases réelles + 480 synthétiques ;
+  la photo claire est apprise, mais le transfert vers la photo sombre échoue encore.
+  Repli géométrique historique si le recalage normalisé échoue, sans seuil assoupli.
+  Les sections 6–8 du nouveau lot sont exclues pour dérive des découpes ; aucune activation.
 
 ## Limites et choix ouverts
 
@@ -83,7 +86,7 @@ Mis à jour le 2026-10-09 (Asia/Jerusalem). Cette page décrit le dépôt, pas u
 
 ## Reprise
 
-**Demande actuelle : continuer S06 après réception des 90 annotations.**
+**Demande actuelle : exploiter le nouvel export de 240 annotations pour l’apprentissage.**
 GitHub est débloqué ; premier candidat S05 livré hors ligne, gain réel non établi.
 L’export des 90 annotations est reçu, vérifié et rejoué avec S05. Il remplace le
 précédent pour les prochaines évaluations, sans supprimer son historique.
@@ -93,7 +96,7 @@ est soutenue par l’utilisateur ; le premier circuit ML S06 est désormais livr
 Voir [ADR 0004](../architecture/decisions/0004-hybrid-omr-experiment.md) et
 [ADR 0006](../architecture/decisions/0006-offline-cpu-ml.md).
 
-Consulter [la dernière session](sessions/2026-10-09-05-s06-prototype.md) et vérifier Git.
+Consulter [la dernière session](sessions/2026-10-09-06-corpus-240.md) et vérifier Git.
 Branche actuelle : `feat/specialized-reader`, issue de `feat/classic-reader` (`01dc164`).
 Cette branche contient S02, ses améliorations mobiles et S03 par ascendance.
 Les candidats S03/S04/S05/S06 restent hors ligne ; aucune synchronisation Codespace ni
@@ -123,8 +126,8 @@ privé : `artifacts/private/baselines/s01-photo-v1/summary.md` et `review.html` 
 image réelle ajoutée à Git. Les labels préparés par S01 restent vides ; les 40 annotations
 humaines reçues ensuite sont conservées dans un export S02 distinct. La précision de lecture reste non mesurée.
 
-Lot en cours : **S06, adaptation aux données réelles**. Le premier prototype CPU est livré ;
-les deux modèles entraînés sur synthétique échouent sur les cases réelles. Le premier candidat S05 est mesurable
+Lot en cours : **S06, adaptation aux données réelles**. Le premier prototype CPU et un premier entraînement réel sont livrés ;
+le transfert entre la copie claire et la photo sombre reste mauvais. Le premier candidat S05 est mesurable
 mais ses seuils ne sont pas validés. S03 et S04 sont livrés comme expériences hors
 ligne ; le recalage local des grilles serrées reste une limite ouverte.
 Le premier export est conservé dans `artifacts/private/annotated-export-40/`, rapport S03 dans
@@ -140,7 +143,8 @@ Sa photo est identique au diagnostic monochrome
 (empreinte vérifiée), donc il n’y a que deux photographies distinctes disponibles.
 La normalisation améliore la séparation des signaux sur l’exemple annoté ; les
 traitements supplémentaires ont des effets variables, pas de gain de lecture établi.
-Les 50 nouvelles copies évoquées par l’utilisateur ne sont pas encore fournies.
+Une nouvelle copie entière de 240 questions est désormais fournie ; les autres copies
+évoquées par l’utilisateur restent à recevoir.
 Les rapports S05 sont dans `artifacts/private/baselines/s05-annotated-export-40-v3/`
 et `s05-photo-diagnostic-v3/`. Le rapport actualisé est dans
 `artifacts/private/baselines/s05-annotated-90-v1/` : 90/90 cadres contiennent les centres
@@ -168,8 +172,32 @@ La normalisation locale d’éclairage existe déjà. Mesurer son apport avant d
 Le CNN ne reçoit jamais le corrigé ; ses sorties hors ligne sont toutes à revoir, sans effet sur
 les notes. PyTorch CPU est installé via l’extra optionnel `ml`. Les jeux, revues, poids et
 rapports S06 restent dans `artifacts/private/ml/` ; voir la dernière session pour les chemins.
-La revue des coordonnées et l’entraînement sur des acquisitions réelles variées restent
-à faire avant de passer à la calibration S07. Aucun résultat synthétique ne valide la photo.
+Une revue des coordonnées assistée par Codex a accepté 600 cases des sections 1–5 du
+lot de 240 pour apprendre, et les 360 cases de la première photo pour comparaison.
+Elle ne remplace pas une seconde annotation humaine indépendante. La diversité réelle
+et les déformations locales restent à traiter avant S07. Aucun résultat d’entraînement
+sur la même feuille ne démontre une fiabilité sur de nouvelles copies.
 L’écran S02 réutilise la direction papier/encre et les composants natifs. Les skills
 frontend-design, Emil, Impeccable et UI UX Pro Max ont guidé la finition ; Be UI Button
 a été consulté. Shadcn et Taste n’ont pas entraîné de migration React ou de refonte.
+
+## Nouveau lot de 240 — affectation active
+
+Export original intact dans `artifacts/private/annotated-export-240/` : 101 questions
+simples, 139 blanches, autorisation d’entraînement fournie. Jeu dérivé actif
+`artifacts/private/ml/s06-real-240-train-reviewed-v1/` : 600 cases retenues, 360 rejetées
+par prudence sur les grilles 6–8. Les cadres automatiques confirmés dans S02 ne valident
+pas ces cases individuellement. La transition développement→train est tracée ; l’ancien
+instantané de développement de cette acquisition ne sert plus d’évaluation.
+
+La première photo reste séparée dans `s06-real-90-development-reviewed-v1/`. Les
+modèles `s06-first-real-{source,paired}-model-v1/` ont appris 600 cas réels + 480
+synthétiques (catégories rares absentes du nouveau lot). Sur les 360 cases de l’autre
+photo, seuls 22/360 et 24/360 labels visuels concordent : aucun gain d’automatisation
+validé. Les accords de 595/600 et 600/600 sur les cases d’entraînement ne sont pas
+des précisions indépendantes. Aucune politique S07 ni note modifiée.
+
+Prochaine action utilisateur : deux autres feuilles, environ 20 questions chacune,
+avec éclairages/prises de vue variés et usage entraînement ; aucune ressaisie des
+240 annotations. Prochaine action technique : dérives locales des grilles et
+prétraitement photométrique/version des entrées, avec comparaison sur groupes séparés.

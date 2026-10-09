@@ -36,6 +36,8 @@ ce qui reste à faire et ce qui exige réellement son intervention. Ne pas donne
 sans préciser si elle est une référence facultative ou une action nécessaire maintenant.
 Si son intervention est indispensable, donner l'emplacement, les étapes et le résultat attendu,
 en expliquant pourquoi l'agent ne peut pas l'effectuer. Ne pas déléguer les tâches accessibles.
+Terminer chaque intervention en indiquant concrètement la prochaine action de l'utilisateur,
+ou préciser qu'aucune action n'est nécessaire ; préférence explicitement demandée.
 
 ## Organisation et validation
 

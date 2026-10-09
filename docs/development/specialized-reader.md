@@ -38,10 +38,14 @@ tests du lecteur ML et teste quand même la préparation ; cela ne valide pas l�
 
 L’export extrait doit contenir `manifest.json`, `source.png`, `template.json` et sa
 référence. Les empreintes, dimensions, sections, choix et annotations sont vérifiés.
-Le recalage global normalisé de S03 précède une projection unique de l’image couleur
-originale. Les marques humaines ne participent pas à ce recalage. Un recalage global
-refusé provoque un échec de préparation, sans invention de régions. Un recalage accepté
-ne garantit pas la précision des régions proposées : la revue reste nécessaire.
+Le recalage global normalisé de S03 est essayé en premier. S'il est refusé, le recalage
+historique sur gris brut est essayé avec ses contrôles inchangés. Les deux tentatives,
+le motif de repli et la méthode acceptée sont conservés dans la provenance. Ce repli
+évite qu'une normalisation défavorable bloque une copie lisible géométriquement par
+le moteur historique. Si les deux méthodes échouent, aucune région n'est inventée.
+La transformation acceptée précède une projection unique de l'image couleur originale.
+Les marques humaines ne participent pas au recalage. Un recalage accepté ne garantit
+pas la précision des régions proposées : la revue reste nécessaire.
 
 Chaque sortie exige un dossier neuf. Elle conserve :
 
@@ -143,3 +147,11 @@ constituer plusieurs groupes de copies, puis entraîner et comparer sur un déve
 distinct. Le contexte complet de question et une meilleure normalisation des entrées
 pourront être testés après cette base. S07 n’est pas une activation automatique après
 la réussite des tests synthétiques.
+
+Le [premier lot réel d'entraînement](../memory/sessions/2026-10-09-06-corpus-240.md)
+est maintenant préparé à partir d'un nouvel export de 240 questions. L'export original
+de développement est conservé, et une version dérivée est explicitement affectée à
+`train` avec trace de transition ; elle ne constitue plus une évaluation indépendante.
+La revue technique assistée par Codex des régions est identifiée comme telle, distincte
+d'une seconde annotation humaine. L'entraînement sur une seule copie réelle apprend
+cette copie mais échoue encore sur la photo sombre de développement ; aucune activation.

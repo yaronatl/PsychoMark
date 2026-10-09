@@ -18,7 +18,7 @@ from .images import normalized_gray, read_image, save_image
 from .photometric_trial import _observations
 from .photometry import project_photo
 from .regions import crop, question_region
-from .registration import Registrar
+from .registration import Registrar, RegistrationError
 
 CLASSES = ("empty", "marked", "ambiguous", "unreadable")
 PREPROCESSING = "bubble-gray-letterbox32-v1"
@@ -144,9 +144,22 @@ def prepare_dataset(manifest_path: Path, output: Path) -> dict:
         seen.add(key)
     labels = _observations(manifest_path)
     registrar = Registrar(normalized_gray(engine.reference), engine.template)
-    _, _, _, registration = registrar.align(
-        cv2.cvtColor(normalized_gray(source), cv2.COLOR_GRAY2BGR)
-    )
+    registration_attempts = []
+    registration_preprocessing = "existing_normalized_gray"
+    try:
+        _, _, _, registration = registrar.align(
+            cv2.cvtColor(normalized_gray(source), cv2.COLOR_GRAY2BGR)
+        )
+    except RegistrationError as exc:
+        # Normalization can remove useful print contrast on a clean photocopy.
+        # Reuse the historical registrar with every original geometric guard intact;
+        # no label, saved transform or guessed coordinates can make it pass.
+        registration_attempts.append(
+            {"preprocessing": registration_preprocessing, "error": str(exc)}
+        )
+        registration_preprocessing = "historical_raw_gray"
+        _, _, _, registration = engine.registrar.align(source)
+    registration_attempts.append({"preprocessing": registration_preprocessing, "accepted": True})
     transform = np.asarray(registration["input_to_reference"])
     inverse = np.linalg.inv(transform)
     aligned, available = project_photo(
@@ -227,7 +240,8 @@ def prepare_dataset(manifest_path: Path, output: Path) -> dict:
             "template_sha256": digest(template_path),
             "reference_sha256": engine.template.reference_sha256,
             "registration": registration,
-            "registration_preprocessing": "existing_normalized_gray",
+            "registration_preprocessing": registration_preprocessing,
+            "registration_attempts": registration_attempts,
             "opencv": cv2.__version__,
             "code_sha256": {
                 name: digest(Path(__file__).with_name(name))
